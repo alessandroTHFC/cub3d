@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/02 12:06:07 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/02 12:29:24 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,11 @@ FCLN	:=	$(BUILDIR)
 CC		=	gcc
 COMFLAG	=	-Wall -Wextra -Werror -std=c99 -D_POSIX_C_SOURCE -I $(HDRDIR)
 
-CFLAGS	=	$(COMFLAG) -g
-LFLAGS	=	$(COMFLAG)
-RLFLAGS =	-I/usr/local/opt/readline/include
-RLLIB	=	-L/usr/local/opt/readline/lib
+CFLAGS		=	$(COMFLAG) -g
+LFLAGS		=	$(COMFLAG)
+RLFLAGS 	=	-I/usr/local/opt/readline/include
+RLLIB		=	-L/usr/local/opt/readline/lib
+MLXFLAGS	=	-framework OpenGL -framework AppKit
 
 ################################################################################
 #								EXTERNAL UTILITIES							   #
@@ -84,7 +85,7 @@ libs:
 	@printf "Libraries made: %s\n" $(LIB)
 
 $(NAME): $(OBJECTS)
-	@$(CC) $(OBJECTS) $(LFLAGS) $(RLFLAGS) $(RLLIB) -o $@ $(ALLLIB)
+	@$(CC) $(OBJECTS) $(LFLAGS) $(RLFLAGS) $(RLLIB) $(MLXFLAGS) -o $@ $(ALLLIB)
 	@printf "Built program %s successfully\n" $@
 
 $(BUILDIR)/%.o : $(SRCDIR)/%.c
