@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/02 11:38:43 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/02 12:06:07 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,10 @@ TEMPDIR =	$(BUILDIR) $(IDRDIR)
 ################################################################################
 #								FILES										   #
 ################################################################################
-SOURCES	:=	\
+SOURCES	:=	$(SRCDIR)/*.c
 
-IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h
+IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
+			$(LIBDIR)/mlx/mlx.h
 
 LIB		:=	$(shell find $(LIBDIR) -depth 1 -type d)
 OBJECTS	:=	$(SOURCES:$(SRCDIR)/%.c=$(BUILDIR)/%.o)
@@ -58,7 +59,8 @@ CP		=	cp
 #								LIBRARIES									   #
 ################################################################################
 L42DIR	=	$(LIBDIR)/libft
-LIB42	=	$(L42DIR)/libft.a
+GRAPDIR	=	$(LIBDIR)/mlx
+LIB42	=	$(L42DIR)/libft.a $(GRAPDIR)/libmlx.a
 READLN	=	-lreadline
 
 ALLLIB	=	$(LIB42) $(READLN)
@@ -77,6 +79,7 @@ dirs:
 libs:
 	@$(CP) $(IMPHDR) $(IDRDIR)
 	@$(MAKE) -C $(L42DIR)
+	@$(MAKE) -C $(GRAPDIR)
 	@printf "Imported header: %s\n" $(IMPHDR)
 	@printf "Libraries made: %s\n" $(LIB)
 
