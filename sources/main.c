@@ -25,8 +25,10 @@ int	key_press(int key, t_mlx *mlx)
 
 int	main(int argc, char **argv)
 {
+	t_root	game;
 	t_mlx	mlx;
 
+	game.mlx = &mlx;
 	if (argc != 2)
 	{
 		printf("Incorrect Inputs!");

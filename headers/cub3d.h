@@ -27,6 +27,15 @@
 # define EXIT 53
 # define BUFFER_SIZE 1000
 
+typedef struct s_root
+{
+	t_mlx	*mlx;
+	char	**map;
+	int	player_count;
+
+
+}	t_root;
+
 typedef struct s_mlx
 {
 	void	*mlx;
