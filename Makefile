@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/02 12:29:24 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/02 13:43:31 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ TEMPDIR =	$(BUILDIR) $(IDRDIR)
 ################################################################################
 #								FILES										   #
 ################################################################################
-SOURCES	:=	$(SRCDIR)/*.c
+SOURCES	:=	$(SRCDIR)/main.c $(SRCDIR)/map_check.c
 
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx.h
@@ -85,7 +85,7 @@ libs:
 	@printf "Libraries made: %s\n" $(LIB)
 
 $(NAME): $(OBJECTS)
-	@$(CC) $(OBJECTS) $(LFLAGS) $(RLFLAGS) $(RLLIB) $(MLXFLAGS) -o $@ $(ALLLIB)
+	$(CC) $(OBJECTS) $(LFLAGS) $(RLFLAGS) $(RLLIB) $(MLXFLAGS) -o $@ $(ALLLIB)
 	@printf "Built program %s successfully\n" $@
 
 $(BUILDIR)/%.o : $(SRCDIR)/%.c
