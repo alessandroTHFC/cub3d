@@ -105,7 +105,7 @@ re: fclean all
 	@printf "Cleaned and remade all files!\n"
 
 github: #Pushes to Github repo
-	@git remote set-url origin https://github.com/alessandroTHFC/cub3d.git
+	@git remote set-url origin git@github.com:alessandroTHFC/cub3d.git
 	@clear
 	@git add .
 	@echo "commit msg"
@@ -114,7 +114,7 @@ github: #Pushes to Github repo
 	git push;
 
 42: #Pushes to vogsphere repo
-	@git remote set-url origin https://github.com/alessandroTHFC/cub3d.git
+	@git remote set-url origin git@github.com:alessandroTHFC/cub3d.git
 	@clear
 	@git add .
 	@echo "commit msg"
