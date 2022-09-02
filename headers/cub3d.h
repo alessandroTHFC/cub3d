@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/02 14:55:13 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/02 15:47:01 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,35 @@
 # define EXIT 53
 # define BUFFER_SIZE 1000
 
+typedef struct s_minmap
+{
+	int	win_width;
+	int	win_height;
+	int	x_offset;
+	int	y_offset;
+}	t_minmap;
+
 typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
+	void	*img;
+	char	*addr;
+	int		pixel_bits;
+	int		line_len;
+	int		endian;
 }	t_mlx;
 
 typedef struct s_root
 {
-	t_mlx	*mlx;
-	char	**map;
-	int		player_count;
+	t_mlx		*mlx;
+	t_minmap	*minmap;
+	char		**map;
+	int			player_count;
 }	t_root;
 
 void	import_map(char *map_loc, t_root *game);
 void	clean_exit(t_root *game);
+void	draw_square(t_root *game, int colour);
 
 #endif

@@ -6,15 +6,24 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/02 14:48:55 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/02 16:05:01 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+static void	print_map(char **map)
+{
+	while (*map)
+	{
+		printf("%s\n", *map);
+		map++;
+	}
+}
+
 static void	check_count(t_root *game, int y, int x)
 {
-	if (!ft_strchr("1  0NSEWC", game->map[y][x]))
+	if (!ft_strchr("1 0NSEWC", game->map[y][x]))
 	{
 		printf("\e[31m\e[1mError\nUnknown characters in the map!! \e[0m \n");
 		printf("this char is invalid %c\n", game->map[y][x]);
@@ -80,5 +89,6 @@ void	import_map(char *map_loc, t_root *game)
 	game->map = ft_split(file, '\n');
 	free (file);
 	close (fd);
+	print_map(game->map);
 	valid_chars(game);
 }
