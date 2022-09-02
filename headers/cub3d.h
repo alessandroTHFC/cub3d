@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/02 13:48:15 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/02 14:55:13 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,20 @@
 # define EXIT 53
 # define BUFFER_SIZE 1000
 
-typedef struct s_root
-{
-	t_mlx	*mlx;
-	char	**map;
-	int	player_count;
-
-
-}	t_root;
-
 typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-	char	**map;
 }	t_mlx;
 
-void	import_map(char *map_loc, t_mlx *mlx);
+typedef struct s_root
+{
+	t_mlx	*mlx;
+	char	**map;
+	int		player_count;
+}	t_root;
+
+void	import_map(char *map_loc, t_root *game);
+void	clean_exit(t_root *game);
 
 #endif

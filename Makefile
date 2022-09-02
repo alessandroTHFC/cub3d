@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/02 13:43:31 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/02 14:55:27 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ TEMPDIR =	$(BUILDIR) $(IDRDIR)
 ################################################################################
 #								FILES										   #
 ################################################################################
-SOURCES	:=	$(SRCDIR)/main.c $(SRCDIR)/map_check.c
+SOURCES	:=	$(SRCDIR)/main.c \
+			$(SRCDIR)/map_check.c \
+			$(SRCDIR)/exit.c \
 
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx.h

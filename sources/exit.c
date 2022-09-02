@@ -1,42 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/02 14:55:48 by jbrown           ###   ########.fr       */
+/*   Created: 2022/09/02 14:51:24 by jbrown            #+#    #+#             */
+/*   Updated: 2022/09/02 14:55:05 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	key_press(int key, t_root *game)
+static void	free_map(char **map)
 {
-	printf("%i\n", key);
-	if (key == EXIT)
+	int	i;
+
+	i = 0;
+	while (map[i])
 	{
-		clean_exit(game);
+		free (map[i]);
+		i++;
 	}
-	return (key);
+	free (map);
 }
 
-int	main(int argc, char **argv)
+void	clean_exit(t_root *game)
 {
-	t_root	game;
-	t_mlx	mlx;
-
-	game.mlx = &mlx;
-	if (argc != 2)
-	{
-		printf("Incorrect Inputs!");
-		return (1);
-	}
-	import_map(argv[1], &game);
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, 1920, 1080, "cub3d");
-	mlx_key_hook(mlx.win, key_press, &game);
-	mlx_loop(mlx.mlx);
-	return (0);
+	mlx_destroy_window(game->mlx->mlx, game->mlx->win);
+	free_map(game->map);
+	exit(0);
 }

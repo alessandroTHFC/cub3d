@@ -6,13 +6,49 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/02 13:58:52 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/02 14:48:55 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*buffer_map(int fd)
+static void	check_count(t_root *game, int y, int x)
+{
+	if (!ft_strchr("1  0NSEWC", game->map[y][x]))
+	{
+		printf("\e[31m\e[1mError\nUnknown characters in the map!! \e[0m \n");
+		printf("this char is invalid %c\n", game->map[y][x]);
+	}
+	if (game->map[y][x] == 'N' || game->map[y][x] == 'S' ||
+			game->map[y][x] == 'W' || game->map[y][x] == 'E')
+				game->player_count++;
+}
+
+static void	valid_chars(t_root *game)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (game->map[y])
+	{
+		x = 0;
+		while (game->map[y][x])
+		{
+			check_count(game, y, x);
+			x++;
+		}
+		y++;
+	}
+	if (game->player_count != 1)
+	{
+		printf("\e[31m\e[1mError\nGame components incorrect, ");
+		printf("only 1 player allowed you jackass! \e[0m \n");
+		// free_exit(game);
+	}
+}
+
+static char	*buffer_map(int fd)
 {
 	static char	*buffer;
 	char		*file;
@@ -34,23 +70,15 @@ char	*buffer_map(int fd)
 	return (file);
 }
 
-void	import_map(char *map_loc, t_mlx *mlx)
+void	import_map(char *map_loc, t_root *game)
 {
 	int		fd;
-	int		i;
 	char	*file;
 
 	fd = open(map_loc, O_RDONLY);
 	file = buffer_map(fd);
-	mlx->map = ft_split(file, '\n');
+	game->map = ft_split(file, '\n');
 	free (file);
 	close (fd);
-	i = 0;
-	while (mlx->map[i])
-	{
-		printf("%s\n", mlx->map[i]);
-		free(mlx->map[i]);
-		i++;
-	}
-	free(mlx->map);
+	valid_chars(game);
 }
