@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/02 15:48:02 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/05 09:56:50 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/map_check.c \
 			$(SRCDIR)/exit.c \
 			$(SRCDIR)/draw_map.c \
+			$(SRCDIR)/draw_line.c \
 
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx.h

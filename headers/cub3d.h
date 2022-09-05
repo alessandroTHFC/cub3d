@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/02 15:47:01 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 10:02:26 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ typedef struct s_root
 void	import_map(char *map_loc, t_root *game);
 void	clean_exit(t_root *game);
 void	draw_square(t_root *game, int colour);
+void	draw_line(t_mlx *mlx, int *x, int *y, int colour);
+void	draw_pixel(t_mlx *mlx, int x, int y, int colour);
 
 #endif
