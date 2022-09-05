@@ -1,16 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_check.c                                        :+:      :+:    :+:   */
+/*   read_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/02 16:05:01 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 12:07:23 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	draw_map(t_root *game)
+{
+	int		y;
+	int		x;
+	char	**map;
+
+	x = 0;
+	y = 0;
+	map = game->map;
+	while (map[y])
+	{
+		while (map[y][x])
+		{
+			if (map[y][x] == '1')
+				draw_square(game, 0x00FF0000, x + 30, y + 30);
+			x++;
+		}
+		y++;
+	}
+}
 
 static void	print_map(char **map)
 {
@@ -54,5 +75,6 @@ void	import_map(char *map_loc, t_root *game)
 	free (file);
 	close (fd);
 	print_map(game->map);
-	valid_chars(game);
+	draw_map(game);
+	// valid_chars(game);
 }

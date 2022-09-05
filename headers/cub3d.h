@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 10:02:26 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 11:50:19 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ typedef struct s_root
 	int			player_count;
 }	t_root;
 
-void    check_filetype(char *map_file, t_root *game);
+void	check_filetype(char *map_file, t_root *game);
 void	import_map(char *map_loc, t_root *game);
 void	clean_exit(t_root *game);
-void	draw_square(t_root *game, int colour);
+void	draw_square(t_root *game, int colour, int x_offset, int y_offset);
 void	draw_line(t_mlx *mlx, int *x, int *y, int colour);
 void	draw_pixel(t_mlx *mlx, int x, int y, int colour);
 
