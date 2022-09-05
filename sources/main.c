@@ -22,6 +22,7 @@ int	key_press(int key, t_root *game)
 	return (key);
 }
 
+<<<<<<< HEAD
 void	get_image(t_mlx *mlx)
 {
 	t_img	img;
@@ -31,6 +32,17 @@ void	get_image(t_mlx *mlx)
 			&img.pixel_bits,
 			&img.line_len, &img.endian);
 	mlx->minmap = &img;
+=======
+void	check_filetype(char *map_file, t_root *game)
+{
+	size_t	i;
+
+	i = strlen(map_file) - 4;
+	if (!ft_memcmp(&map_file[i], ".cub", 4))
+		return ;
+	printf("\e[31m\e[1mError\nInvalid Map File \e[0m \n");
+	clean_exit(game);
+>>>>>>> a1900a3ccfc8b423a6715eabb8619fe72400f285
 }
 
 int	main(int argc, char **argv)
@@ -52,7 +64,8 @@ int	main(int argc, char **argv)
 			&img.line_len, &img.endian);
 	mlx.minmap = &img;
 	game.mlx = &mlx;
-	// check_filetype(argv[1], &game);
+	check_filetype(argv[1], &game);
+	//error_checker(&game);
 	import_map(argv[1], &game);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.minmap->img, 0, 0);
 	mlx_key_hook(mlx.win, key_press, &game);
