@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 16:37:08 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 17:31:57 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,14 @@
 # define RIGHT 2
 # define EXIT 53
 # define BUFFER_SIZE 1000
+
+typedef struct s_player
+{
+	int	tile_x;
+	int	tile_y;
+	int	x;
+	int	y;
+}	t_player;
 
 typedef struct s_minmap
 {

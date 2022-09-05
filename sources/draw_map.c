@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 15:32:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 16:36:29 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 17:31:54 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	draw_pixel(t_img *img, int *x_y, int colour)
 		+ (x_y[1] * img->line_len + x_y[0]
 			* (img->pixel_bits / 8));
 	*(unsigned int *)dst = colour;
+	// printf("x: %i, y: %i\n", x_y[0], x_y[1]);
 }
 
 void	draw_square(t_root *game, int colour, int x_offset, int y_offset)

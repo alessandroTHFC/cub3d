@@ -6,11 +6,22 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 12:23:26 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 17:17:28 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	draw_circle(t_mlx *mlx, int x, int y, int colour)
+{
+	int	coor[2];
+
+	coor[0] = x + 15;
+	coor[1] = y + 15;
+	draw_pixel(mlx->minmap, coor, colour);
+	(void) mlx;
+	(void) colour;
+}
 
 static void	draw_map(t_root *game)
 {
@@ -31,6 +42,9 @@ static void	draw_map(t_root *game)
 				draw_square(game, 0x00FF0000, x + x_offset, y + y_offset);
 			if (map[y][x] == '0')
 				draw_square(game, 0x000000FF, x + x_offset, y + y_offset);
+			if (map[y][x] == 'N' || map[y][x] == 'E'
+				|| map[y][x] == 'S' || map[y][x] == 'W')
+				draw_circle(game->mlx, x + x_offset, y + y_offset, 0x00FF0000);
 			x++;
 			x_offset += 30;
 		}

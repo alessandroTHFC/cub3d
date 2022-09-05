@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 15:55:54 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 17:33:39 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 int	key_press(int key, t_root *game)
 {
 	printf("%i\n", key);
+	// if (key == UP || key == DOWN || key == LEFT || key == RIGHT)
+	// {
+		
+	// }
 	if (key == EXIT)
 	{
 		clean_exit(game);
@@ -22,7 +26,6 @@ int	key_press(int key, t_root *game)
 	return (key);
 }
 
-<<<<<<< HEAD
 void	get_image(t_mlx *mlx)
 {
 	t_img	img;
@@ -32,7 +35,8 @@ void	get_image(t_mlx *mlx)
 			&img.pixel_bits,
 			&img.line_len, &img.endian);
 	mlx->minmap = &img;
-=======
+}
+
 void	check_filetype(char *map_file, t_root *game)
 {
 	size_t	i;
@@ -42,7 +46,6 @@ void	check_filetype(char *map_file, t_root *game)
 		return ;
 	printf("\e[31m\e[1mError\nInvalid Map File \e[0m \n");
 	clean_exit(game);
->>>>>>> a1900a3ccfc8b423a6715eabb8619fe72400f285
 }
 
 int	main(int argc, char **argv)
