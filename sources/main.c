@@ -38,6 +38,7 @@ int	main(int argc, char **argv)
 	mlx.addr = mlx_get_data_addr(mlx.img, &mlx.pixel_bits,
 			&mlx.line_len, &mlx.endian);
 	game.mlx = &mlx;
+	check_filetype(argv[1], &game);
 	import_map(argv[1], &game);
 	draw_square(&game, 0x00FF0000);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img, 0, 0);

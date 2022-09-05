@@ -54,6 +54,7 @@ typedef struct s_root
 	int			player_count;
 }	t_root;
 
+void    check_filetype(char *map_file, t_root *game);
 void	import_map(char *map_loc, t_root *game);
 void	clean_exit(t_root *game);
 void	draw_square(t_root *game, int colour);
