@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 11:51:56 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 12:20:49 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	main(int argc, char **argv)
 	game.mlx = &mlx;
 	// check_filetype(argv[1], &game);
 	import_map(argv[1], &game);
-	draw_square(&game, 0x00FF0000, 10, 10);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img, 0, 0);
 	mlx_key_hook(mlx.win, key_press, &game);
 	mlx_loop(mlx.mlx);

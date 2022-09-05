@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 12:07:23 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 12:23:26 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,28 @@
 
 static void	draw_map(t_root *game)
 {
-	int		y;
-	int		x;
-	char	**map;
+	static int		y;
+	static int		x;
+	static int		x_offset;
+	static int		y_offset;
+	char			**map;
 
-	x = 0;
-	y = 0;
 	map = game->map;
 	while (map[y])
 	{
+		x = 0;
+		x_offset = 0;
 		while (map[y][x])
 		{
 			if (map[y][x] == '1')
-				draw_square(game, 0x00FF0000, x + 30, y + 30);
+				draw_square(game, 0x00FF0000, x + x_offset, y + y_offset);
+			if (map[y][x] == '0')
+				draw_square(game, 0x000000FF, x + x_offset, y + y_offset);
 			x++;
+			x_offset += 30;
 		}
 		y++;
+		y_offset += 30;
 	}
 }
 
