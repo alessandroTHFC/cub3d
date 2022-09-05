@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 11:50:19 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 16:37:08 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,26 @@ typedef struct s_minmap
 	int	win_height;
 	int	x_offset;
 	int	y_offset;
+	int	max_x;
+	int	max_y;
 }	t_minmap;
+
+typedef struct s_img
+{
+	void	*img;
+	char	*addr;
+	int		pixel_bits;
+	int		line_len;
+	int		endian;
+}	t_img;
 
 typedef struct s_mlx
 {
 	void	*mlx;
 	void	*win;
-	void	*img;
 	char	*addr;
+	t_img	*minmap;
+	t_img	*player;
 	int		pixel_bits;
 	int		line_len;
 	int		endian;
@@ -59,6 +71,6 @@ void	import_map(char *map_loc, t_root *game);
 void	clean_exit(t_root *game);
 void	draw_square(t_root *game, int colour, int x_offset, int y_offset);
 void	draw_line(t_mlx *mlx, int *x, int *y, int colour);
-void	draw_pixel(t_mlx *mlx, int x, int y, int colour);
+void	draw_pixel(t_img *img, int *x_y, int colour);
 
 #endif

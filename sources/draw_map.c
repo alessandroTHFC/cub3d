@@ -6,17 +6,19 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 15:32:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 11:57:47 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 16:36:29 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_pixel(t_mlx *mlx, int x, int y, int colour)
+void	draw_pixel(t_img *img, int *x_y, int colour)
 {
 	char	*dst;
 
-	dst = mlx->addr + (y * mlx->line_len + x * (mlx->pixel_bits / 8));
+	dst = img->addr
+		+ (x_y[1] * img->line_len + x_y[0]
+			* (img->pixel_bits / 8));
 	*(unsigned int *)dst = colour;
 }
 

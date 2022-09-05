@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 09:23:46 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 10:09:43 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/05 16:37:23 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,29 +32,28 @@ void	gentle_slope(t_mlx *mlx, int *x, int *y, int colour)
 	int	dx;
 	int	dy;
 	int	d;
-	int	x_curr;
-	int	y_curr;
+	int	x_y[2];
 
 	dx = x[1] - x[0];
 	dy = y[1] - y[0];
 	if (dy < 0)
 		dy = -dy;
 	d = (2 * dy) - dx;
-	y_curr = y[0];
-	x_curr = x[0];
-	while (x_curr != x[1])
+	x_y[0] = x[0];
+	x_y[1] = y[0];
+	while (x_y[0] != x[1])
 	{
-		draw_pixel(mlx, x_curr, y_curr, colour);
+		draw_pixel(mlx->minmap, x_y, colour);
 		if (d > 0)
 		{
-			up_or_down(&y_curr, y[1]);
+			up_or_down(&x_y[1], y[1]);
 			d = d + (2 * (dy - dx));
 		}
 		else
 			d = d + 2 * dy;
-		up_or_down(&x_curr, x[1]);
+		up_or_down(&x_y[0], x[1]);
 	}
-	draw_pixel(mlx, x_curr, y_curr, colour);
+	draw_pixel(mlx->minmap, x_y, colour);
 }
 
 void	steep_slope(t_mlx *mlx, int *x, int *y, int colour)
@@ -62,29 +61,28 @@ void	steep_slope(t_mlx *mlx, int *x, int *y, int colour)
 	int	dx;
 	int	dy;
 	int	d;
-	int	x_curr;
-	int	y_curr;
+	int	x_y[2];
 
 	dx = x[1] - x[0];
 	dy = y[1] - y[0];
 	if (dx < 0)
 		dx = -dx;
 	d = (2 * dx) - dy;
-	x_curr = x[0];
-	y_curr = y[0];
-	while (y_curr != y[1])
+	x_y[0] = x[0];
+	x_y[1] = y[0];
+	while (x_y[1] != y[1])
 	{
-		draw_pixel(mlx, x_curr, y_curr, colour);
+		draw_pixel(mlx->minmap, x_y, colour);
 		if (d > 0)
 		{
-			up_or_down(&x_curr, x[1]);
+			up_or_down(&x_y[0], x[1]);
 			d = d + (2 * (dx - dy));
 		}
 		else
 			d = d + 2 * dx;
-		up_or_down(&y_curr, y[1]);
+		up_or_down(&x_y[1], y[1]);
 	}
-	draw_pixel(mlx, x_curr, y_curr, colour);
+	draw_pixel(mlx->minmap, x_y, colour);
 }
 
 void	draw_line(t_mlx *mlx, int *x, int *y, int colour)
