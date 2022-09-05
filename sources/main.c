@@ -22,6 +22,17 @@ int	key_press(int key, t_root *game)
 	return (key);
 }
 
+void	check_filetype(char *map_file, t_root *game)
+{
+	size_t	i;
+
+	i = strlen(map_file) - 4;
+	if (!ft_memcmp(&map_file[i], ".cub", 4))
+		return ;
+	printf("\e[31m\e[1mError\nInvalid Map File \e[0m \n");
+	clean_exit(game);
+}
+
 int	main(int argc, char **argv)
 {
 	t_root		game;
@@ -38,7 +49,8 @@ int	main(int argc, char **argv)
 	mlx.addr = mlx_get_data_addr(mlx.img, &mlx.pixel_bits,
 			&mlx.line_len, &mlx.endian);
 	game.mlx = &mlx;
-	// check_filetype(argv[1], &game);
+	check_filetype(argv[1], &game);
+	//error_checker(&game);
 	import_map(argv[1], &game);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img, 0, 0);
 	mlx_key_hook(mlx.win, key_press, &game);

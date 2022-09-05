@@ -31,7 +31,9 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/exit.c \
 			$(SRCDIR)/draw_map.c \
 			$(SRCDIR)/draw_line.c \
-			$(SRCDIR)/map_errors.c \
+			$(SRCDIR)/ft_splice.c \
+			#$(SRCDIR)/map_errors.c \
+			
 
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx.h

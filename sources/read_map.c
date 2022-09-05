@@ -77,10 +77,10 @@ void	import_map(char *map_loc, t_root *game)
 
 	fd = open(map_loc, O_RDONLY);
 	file = buffer_map(fd);
-	game->map = ft_split(file, '\n');
+	game->map = ft_splice(file, '\n', game);
+	printf("mapHeight val is %d and mapWidth is %d\n", game->map_height, game->map_width);
 	free (file);
 	close (fd);
 	print_map(game->map);
 	draw_map(game);
-	// valid_chars(game);
 }
