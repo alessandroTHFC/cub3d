@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 {
 	t_root		game;
 	t_mlx		mlx;
-
+	///Need to initialise the struct values! (i.e player count to 0);
 	if (argc != 2)
 	{
 		printf("Incorrect Inputs!");

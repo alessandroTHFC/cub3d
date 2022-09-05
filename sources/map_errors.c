@@ -1,5 +1,8 @@
 #include "cub3d.h"
 
+///Function gets length of map file name - 4 places and compares
+///final four characters if they match .cub 
+///if yes, game continues, if no game exits.
 void    check_filetype(char *map_file, t_root *game)
 {
     size_t  i;
@@ -11,6 +14,11 @@ void    check_filetype(char *map_file, t_root *game)
     clean_exit(game);
 }
 
+///check_counting function uses strchr to compare the character at the x, y 
+///grid position passed in to see if it matches the allowed chars in the game
+///(1, space, 0, N, S, E, W), if no, cleanly exits the program.
+///if all valid, checks if there is a NSEW which indicates a player
+///increments the player count to later be checked for valid amount of players.
 static void	check_count(t_root *game, int y, int x)
 {
 	if (!ft_strchr("1 0NSEWC", game->map[y][x]))
@@ -29,6 +37,10 @@ static  void    enclosed_map(t_root *game, int y, int x)
     
 }
 
+///valid_chars function iterates over the 2d map array
+///at each grid position calls the check and counting function
+///once out of the loop and map has valid characters it checks
+///if the player count is valid (only 1 player allowed).
 static void	valid_chars(t_root *game)
 {
 	int	x;
@@ -41,6 +53,7 @@ static void	valid_chars(t_root *game)
 		while (game->map[y][x])
 		{
 			check_count(game, y, x);
+            //enclosed_map(game, y, x);
 			x++;
 		}
 		y++;
