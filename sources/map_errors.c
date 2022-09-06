@@ -2,7 +2,8 @@
 
 void    error_checker(t_root *game)
 {
-    if (horizontal_walls(game) || valid_chars(game))
+    if (horizontal_walls(game) || valid_chars(game) || end_string_validity(game) ||
+			internal_spaces(game))
         clean_exit(game);
 }
 
