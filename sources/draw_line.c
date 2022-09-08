@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 09:23:46 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 16:37:23 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/08 09:43:14 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	up_or_down(int *current, int end)
 		*current += 1;
 }
 
-void	gentle_slope(t_mlx *mlx, int *x, int *y, int colour)
+void	gentle_slope(t_img *img, int *x, int *y, int colour)
 {
 	int	dx;
 	int	dy;
@@ -43,7 +43,7 @@ void	gentle_slope(t_mlx *mlx, int *x, int *y, int colour)
 	x_y[1] = y[0];
 	while (x_y[0] != x[1])
 	{
-		draw_pixel(mlx->minmap, x_y, colour);
+		draw_pixel(img, x_y, colour);
 		if (d > 0)
 		{
 			up_or_down(&x_y[1], y[1]);
@@ -53,10 +53,10 @@ void	gentle_slope(t_mlx *mlx, int *x, int *y, int colour)
 			d = d + 2 * dy;
 		up_or_down(&x_y[0], x[1]);
 	}
-	draw_pixel(mlx->minmap, x_y, colour);
+	draw_pixel(img, x_y, colour);
 }
 
-void	steep_slope(t_mlx *mlx, int *x, int *y, int colour)
+void	steep_slope(t_img *img, int *x, int *y, int colour)
 {
 	int	dx;
 	int	dy;
@@ -72,7 +72,7 @@ void	steep_slope(t_mlx *mlx, int *x, int *y, int colour)
 	x_y[1] = y[0];
 	while (x_y[1] != y[1])
 	{
-		draw_pixel(mlx->minmap, x_y, colour);
+		draw_pixel(img, x_y, colour);
 		if (d > 0)
 		{
 			up_or_down(&x_y[0], x[1]);
@@ -82,23 +82,23 @@ void	steep_slope(t_mlx *mlx, int *x, int *y, int colour)
 			d = d + 2 * dx;
 		up_or_down(&x_y[1], y[1]);
 	}
-	draw_pixel(mlx->minmap, x_y, colour);
+	draw_pixel(img, x_y, colour);
 }
 
-void	draw_line(t_mlx *mlx, int *x, int *y, int colour)
+void	draw_line(t_img *img, int *x, int *y, int colour)
 {
 	if (ft_abs(y[1] - y[0]) < ft_abs(x[1] - x[0]))
 	{
 		if (x[0] > x[1])
-			gentle_slope(mlx, x, y, colour);
+			gentle_slope(img, x, y, colour);
 		else
-			gentle_slope(mlx, x, y, colour);
+			gentle_slope(img, x, y, colour);
 	}
 	else
 	{
 		if (y[0] > y[1])
-			steep_slope(mlx, x, y, colour);
+			steep_slope(img, x, y, colour);
 		else
-			steep_slope(mlx, x, y, colour);
+			steep_slope(img, x, y, colour);
 	}
 }

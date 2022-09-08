@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/05 12:06:57 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/08 10:16:14 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/draw_map.c \
 			$(SRCDIR)/draw_line.c \
 			$(SRCDIR)/ft_splice.c \
+			$(SRCDIR)/init_player.c \
 			#$(SRCDIR)/map_errors.c \
 			
 

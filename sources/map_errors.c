@@ -1,10 +1,10 @@
 #include "cub3d.h"
 
-void    error_checker(t_root *game)
+void	error_checker(t_root *game)
 {
     if (horizontal_walls(game) || valid_chars(game) || end_string_validity(game) ||
 			internal_spaces(game))
-        clean_exit(game);
+		clean_exit(game);
 }
 
 ///Function gets length of map file name - 4 places and compares
@@ -25,7 +25,7 @@ void	check_filetype(char *map_file, t_root *game)
 ///(1, space, 0, N, S, E, W), if no, cleanly exits the program.
 ///if all valid, checks if there is a NSEW which indicates a player
 ///increments the player count to later be checked for valid amount of players.
-static int check_count(t_root *game, int y, int x)
+static int	check_count(t_root *game, int y, int x)
 {
 	if (!ft_strchr("1 0NSEWC", game->map[y][x]))
 	{
@@ -36,7 +36,7 @@ static int check_count(t_root *game, int y, int x)
 	if (game->map[y][x] == 'N' || game->map[y][x] == 'S' ||
 			game->map[y][x] == 'W' || game->map[y][x] == 'E')
 				game->player_count++;
-    return (0);
+	return (0);
 }
 
 ///valid_chars function iterates over the 2d map array
@@ -66,5 +66,5 @@ static int	valid_chars(t_root *game)
 		printf("only 1 player allowed you jackass! \e[0m \n");
 		return (1);
 	}
-    return (0);
+	return (0);
 }

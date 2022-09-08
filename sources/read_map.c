@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 17:17:28 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/08 10:23:33 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ static void	draw_map(t_root *game)
 				draw_square(game, 0x00FF0000, x + x_offset, y + y_offset);
 			if (map[y][x] == '0')
 				draw_square(game, 0x000000FF, x + x_offset, y + y_offset);
-			if (map[y][x] == 'N' || map[y][x] == 'E'
-				|| map[y][x] == 'S' || map[y][x] == 'W')
-				draw_circle(game->mlx, x + x_offset, y + y_offset, 0x00FF0000);
+			if (ft_strchr("NESW", map[y][x]))
+				init_player(game, x + x_offset, y + y_offset, map[y][x]);
 			x++;
 			x_offset += 30;
 		}

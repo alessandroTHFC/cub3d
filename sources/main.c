@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/05 17:33:39 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/08 10:39:57 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 int	key_press(int key, t_root *game)
 {
 	printf("%i\n", key);
-	// if (key == UP || key == DOWN || key == LEFT || key == RIGHT)
-	// {
-		
-	// }
+	rot_player(game);
 	if (key == EXIT)
 	{
 		clean_exit(game);
