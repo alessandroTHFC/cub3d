@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 09:23:46 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/08 09:43:14 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/08 17:32:05 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,86 +19,82 @@ int	ft_abs(int i)
 	return (i);
 }
 
-void	up_or_down(int *current, int end)
+void	ft_swap(int *a, int *b)
 {
-	if (end < *current)
-		*current -= 1;
-	else if (end > *current)
-		*current += 1;
+	int	c;
+
+	c = *a;
+	*a = *b;
+	*b = c;
 }
 
-void	gentle_slope(t_img *img, int *x, int *y, int colour)
+static void	line_draw(t_img *img, t_deltas *dlt, int colour)
 {
-	int	dx;
-	int	dy;
-	int	d;
-	int	x_y[2];
+	int	i;
 
-	dx = x[1] - x[0];
-	dy = y[1] - y[0];
-	if (dy < 0)
-		dy = -dy;
-	d = (2 * dy) - dx;
-	x_y[0] = x[0];
-	x_y[1] = y[0];
-	while (x_y[0] != x[1])
+	i = -1;
+	while ((dlt->x0 != dlt->x1 || dlt->y0 != dlt->y1) && ++i < 50)
 	{
-		draw_pixel(img, x_y, colour);
-		if (d > 0)
+		dlt->x_y[0] = dlt->x0;
+		dlt->x_y[1] = dlt->y1;
+		draw_pixel(img, dlt->x_y, colour);
+		dlt->error[1] = 2 * dlt->error[0];
+		if (dlt->error[1] > dlt->dy)
 		{
-			up_or_down(&x_y[1], y[1]);
-			d = d + (2 * (dy - dx));
+			dlt->error[0] += dlt->dy;
+			dlt->x0 += dlt->sx;
 		}
-		else
-			d = d + 2 * dy;
-		up_or_down(&x_y[0], x[1]);
+		if (dlt->error[1] < dlt->dx)
+		{
+			dlt->error[0] += dlt->dx;
+			dlt->x0 += dlt->sx;
+		}
 	}
-	draw_pixel(img, x_y, colour);
+	printf("Line Drawn.\n");
 }
 
-void	steep_slope(t_img *img, int *x, int *y, int colour)
+void	find_steep(t_img *img, t_deltas *dlt, int colour)
 {
-	int	dx;
-	int	dy;
-	int	d;
-	int	x_y[2];
-
-	dx = x[1] - x[0];
-	dy = y[1] - y[0];
-	if (dx < 0)
-		dx = -dx;
-	d = (2 * dx) - dy;
-	x_y[0] = x[0];
-	x_y[1] = y[0];
-	while (x_y[1] != y[1])
+	if (ft_abs(dlt->y1 - dlt->y0) > ft_abs(dlt->x1 - dlt->x0))
 	{
-		draw_pixel(img, x_y, colour);
-		if (d > 0)
+		if (dlt->x0 <= dlt->x1)
 		{
-			up_or_down(&x_y[0], x[1]);
-			d = d + (2 * (dx - dy));
+			ft_swap(&dlt->x0, &dlt->x1);
+			ft_swap(&dlt->y0, &dlt->y1);
 		}
-		else
-			d = d + 2 * dx;
-		up_or_down(&x_y[1], y[1]);
 	}
-	draw_pixel(img, x_y, colour);
+	else
+	{
+		ft_swap(&dlt->dx, &dlt->dy);
+		if (dlt->y0 <= dlt->y1)
+		{
+			ft_swap(&dlt->x0, &dlt->x1);
+			ft_swap(&dlt->y0, &dlt->y1);
+		}
+	}
+	line_draw(img, dlt, colour);
 }
 
 void	draw_line(t_img *img, int *x, int *y, int colour)
 {
-	if (ft_abs(y[1] - y[0]) < ft_abs(x[1] - x[0]))
-	{
-		if (x[0] > x[1])
-			gentle_slope(img, x, y, colour);
-		else
-			gentle_slope(img, x, y, colour);
-	}
+	t_deltas	dlt;
+
+	dlt.x0 = x[0];
+	dlt.x1 = x[1];
+	dlt.y0 = y[0];
+	dlt.y1 = y[1];
+	dlt.dx = ft_abs(dlt.x1 - dlt.x0);
+	dlt.dy = ft_abs(dlt.y1 - dlt.y0);
+	dlt.error[0] = dlt.dx + dlt.dy;
+	dlt.x_y[0] = dlt.x0;
+	dlt.x_y[1] = dlt.x1;
+	if (dlt.x0 < dlt.x1)
+		dlt.sx = 1;
 	else
-	{
-		if (y[0] > y[1])
-			steep_slope(img, x, y, colour);
-		else
-			steep_slope(img, x, y, colour);
-	}
+		dlt.sx = -1;
+	if (dlt.y0 < dlt.y1)
+		dlt.sy = 1;
+	else
+		dlt.sy = -1;
+	find_steep(img, &dlt, colour);
 }

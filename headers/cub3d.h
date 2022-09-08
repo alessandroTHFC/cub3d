@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/08 10:45:33 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/08 16:45:49 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <errno.h>
 # include <string.h>
 # include <math.h>
+# include <stdbool.h>
 
 # define W 126
 # define A 0
@@ -29,6 +30,20 @@
 # define RIGHT 124
 # define EXIT 53
 # define BUFFER_SIZE 1000
+
+typedef struct s_deltas
+{
+	int	x0;
+	int	x1;
+	int	y0;
+	int	y1;
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+	int	x_y[2];
+	int	error[2];
+}	t_deltas;
 
 typedef struct s_player
 {
