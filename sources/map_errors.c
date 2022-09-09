@@ -1,23 +1,11 @@
 #include "cub3d.h"
 
+static int	valid_chars(t_root *game);
+
 void	error_checker(t_root *game)
 {
-    if (horizontal_walls(game) || valid_chars(game) || end_string_validity(game) ||
-			internal_spaces(game))
+    if (internal_spaces(game) || valid_chars(game) || horizontal_edges(game) || end_string_validity(game))
 		clean_exit(game);
-}
-
-///Function gets length of map file name - 4 places and compares
-///final four characters if they match .cub 
-///if yes, game continues, if no game exits.
-void	check_filetype(char *map_file, t_root *game)
-{
-	size_t	i;
-
-	if (ft_memcmp(&map_file[i], ".cub", 4))
-		return ;
-	printf("\e[31m\e[1mError\nInvalid Map File \e[0m \n");
-	clean_exit(game);
 }
 
 ///check_counting function uses strchr to compare the character at the x, y 
@@ -55,7 +43,6 @@ static int	valid_chars(t_root *game)
 		while (game->map[y][x])
 		{
 			check_count(game, y, x);
-            //internal_spaces(game, y, x);
 			x++;
 		}
 		y++;
@@ -66,5 +53,6 @@ static int	valid_chars(t_root *game)
 		printf("only 1 player allowed you jackass! \e[0m \n");
 		return (1);
 	}
+	printf("returning 0 in valid chars\n");
 	return (0);
 }

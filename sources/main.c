@@ -34,6 +34,9 @@ void	get_image(t_mlx *mlx)
 	mlx->minmap = &img;
 }
 
+///Function gets length of map file name - 4 places and compares
+///final four characters if they match .cub 
+///if yes, game continues, if no game exits.
 void	check_filetype(char *map_file, t_root *game)
 {
 	size_t	i;
@@ -50,7 +53,6 @@ int	main(int argc, char **argv)
 	t_root		game;
 	t_mlx		mlx;
 	t_img		img;
-	///Need to initialise the struct values! (i.e player count to 0);
 	if (argc != 2)
 	{
 		printf("Incorrect Inputs!");
@@ -65,7 +67,6 @@ int	main(int argc, char **argv)
 	mlx.minmap = &img;
 	game.mlx = &mlx;
 	check_filetype(argv[1], &game);
-	//error_checker(&game);
 	import_map(argv[1], &game);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.minmap->img, 0, 0);
 	mlx_key_hook(mlx.win, key_press, &game);
