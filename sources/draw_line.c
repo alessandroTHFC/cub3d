@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 09:23:46 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/08 17:32:05 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/09 13:26:06 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,73 +28,61 @@ void	ft_swap(int *a, int *b)
 	*b = c;
 }
 
-static void	line_draw(t_img *img, t_deltas *dlt, int colour)
+int	direction(int curr, int dst)
 {
-	int	i;
-
-	i = -1;
-	while ((dlt->x0 != dlt->x1 || dlt->y0 != dlt->y1) && ++i < 50)
-	{
-		dlt->x_y[0] = dlt->x0;
-		dlt->x_y[1] = dlt->y1;
-		draw_pixel(img, dlt->x_y, colour);
-		dlt->error[1] = 2 * dlt->error[0];
-		if (dlt->error[1] > dlt->dy)
-		{
-			dlt->error[0] += dlt->dy;
-			dlt->x0 += dlt->sx;
-		}
-		if (dlt->error[1] < dlt->dx)
-		{
-			dlt->error[0] += dlt->dx;
-			dlt->x0 += dlt->sx;
-		}
-	}
-	printf("Line Drawn.\n");
+	if (curr < dst)
+		return (++curr);
+	if (curr > dst)
+		return (--curr);
+	return (curr);
 }
 
-void	find_steep(t_img *img, t_deltas *dlt, int colour)
+static void	bresenham(t_img *img, t_slope *s, bool dec, int colour)
 {
-	if (ft_abs(dlt->y1 - dlt->y0) > ft_abs(dlt->x1 - dlt->x0))
+	int	x_y[2];
+
+	s->m = 2 * s->dy - s->dx;
+	while ((s->x0 != s->x1 || s->y0 != s->y1))
 	{
-		if (dlt->x0 <= dlt->x1)
+		s->x0 = direction(s->x0, s->x1);
+		if (dec)
 		{
-			ft_swap(&dlt->x0, &dlt->x1);
-			ft_swap(&dlt->y0, &dlt->y1);
+			x_y[0] = s->y0;
+			x_y[1] = s->x0;
+		}
+		else
+		{
+			x_y[1] = s->y0;
+			x_y[0] = s->x0;
+		}
+		draw_pixel(img, x_y, colour);
+		if (s->m < 0)
+			s->m = s->m + 2 * s->dy;
+		else
+		{
+			s->y0 = direction(s->y0, s->y1);
+			s->m = s->m + 2 * s->dy - 2 * s->dx;
 		}
 	}
-	else
-	{
-		ft_swap(&dlt->dx, &dlt->dy);
-		if (dlt->y0 <= dlt->y1)
-		{
-			ft_swap(&dlt->x0, &dlt->x1);
-			ft_swap(&dlt->y0, &dlt->y1);
-		}
-	}
-	line_draw(img, dlt, colour);
 }
 
 void	draw_line(t_img *img, int *x, int *y, int colour)
 {
-	t_deltas	dlt;
+	t_slope	s;
 
-	dlt.x0 = x[0];
-	dlt.x1 = x[1];
-	dlt.y0 = y[0];
-	dlt.y1 = y[1];
-	dlt.dx = ft_abs(dlt.x1 - dlt.x0);
-	dlt.dy = ft_abs(dlt.y1 - dlt.y0);
-	dlt.error[0] = dlt.dx + dlt.dy;
-	dlt.x_y[0] = dlt.x0;
-	dlt.x_y[1] = dlt.x1;
-	if (dlt.x0 < dlt.x1)
-		dlt.sx = 1;
+	s.x0 = x[0];
+	s.x1 = x[1];
+	s.y0 = y[0];
+	s.y1 = y[1];
+	s.dx = ft_abs(s.x1 - s.x0);
+	s.dy = ft_abs(s.y1 - s.y0);
+	if (s.dy >= s.dx)
+	{
+		ft_swap(&s.y0, &s.x0);
+		ft_swap(&s.y1, &s.x1);
+		ft_swap(&s.dx, &s.dy);
+		bresenham(img, &s, true, colour);
+	}
 	else
-		dlt.sx = -1;
-	if (dlt.y0 < dlt.y1)
-		dlt.sy = 1;
-	else
-		dlt.sy = -1;
-	find_steep(img, &dlt, colour);
+		bresenham(img, &s, false, colour);
 }

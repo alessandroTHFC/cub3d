@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/08 10:39:57 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/09 13:26:29 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 	t_root		game;
 	t_mlx		mlx;
 	t_img		img;
-	///Need to initialise the struct values! (i.e player count to 0);
+
 	if (argc != 2)
 	{
 		printf("Incorrect Inputs!");
@@ -65,7 +65,6 @@ int	main(int argc, char **argv)
 	mlx.minmap = &img;
 	game.mlx = &mlx;
 	check_filetype(argv[1], &game);
-	//error_checker(&game);
 	import_map(argv[1], &game);
 	mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.minmap->img, 0, 0);
 	mlx_key_hook(mlx.win, key_press, &game);
