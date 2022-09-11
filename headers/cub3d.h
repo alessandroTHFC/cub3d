@@ -97,8 +97,10 @@ typedef struct s_root
 
 char	**ft_splice(char const *s, char c, t_root *game);
 void	check_filetype(char *map_file, t_root *game);
+int		internal_spaces(t_root *game);
 void	error_checker(t_root *game);
 int		horizontal_edges(t_root *game);
+int		end_string_validity(t_root *game);
 void	import_map(char *map_loc, t_root *game);
 void	clean_exit(t_root *game);
 void	draw_square(t_root *game, int colour, int x_offset, int y_offset);

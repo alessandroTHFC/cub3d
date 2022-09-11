@@ -33,7 +33,8 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/draw_line.c \
 			$(SRCDIR)/ft_splice.c \
 			$(SRCDIR)/init_player.c \
-			#$(SRCDIR)/map_errors.c \
+			$(SRCDIR)/map_errors.c \
+			$(SRCDIR)/map_errors2.c \
 			
 
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \

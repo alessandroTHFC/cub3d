@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/09 13:26:29 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 08:52:07 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ void	get_image(t_mlx *mlx)
 	mlx->minmap = &img;
 }
 
+///Function gets length of map file name - 4 places and compares
+///final four characters if they match .cub 
+///if yes, game continues, if no game exits.
 void	check_filetype(char *map_file, t_root *game)
 {
 	size_t	i;
@@ -50,7 +53,6 @@ int	main(int argc, char **argv)
 	t_root		game;
 	t_mlx		mlx;
 	t_img		img;
-
 	if (argc != 2)
 	{
 		printf("Incorrect Inputs!");
