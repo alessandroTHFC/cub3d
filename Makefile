@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/08 10:16:14 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/12 09:04:57 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,20 @@ IDRDIR	=	./headers/imported
 
 TEMPDIR =	$(BUILDIR) $(IDRDIR)
 
+UNAME	=	$(shell uname)
+
 ################################################################################
 #								FILES										   #
 ################################################################################
+
+ifeq ($(UNAME), Linux)
+MLX_FLAGS = -L/usr/lib -Ilibraries/mlx -lXext -lX11 -lm -lz
+MLX_MACRO =	$(HDRDIR)/linux/macros.h
+else
+MLX_FLAGS = -framework OpenGL -framework AppKit
+MLX_MACRO =	$(HDRDIR)/macos/macros.h
+endif
+
 SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/read_map.c \
 			$(SRCDIR)/exit.c \
@@ -36,9 +47,10 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/map_errors.c \
 			$(SRCDIR)/map_errors2.c \
 			
-
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
-			$(LIBDIR)/mlx/mlx.h
+			$(LIBDIR)/mlx/mlx.h \
+			$(LIBDIR)/mlx/mlx_int.h \
+			$(MLX_MACRO)
 
 LIB		:=	$(shell find $(LIBDIR) -depth 1 -type d)
 OBJECTS	:=	$(SOURCES:$(SRCDIR)/%.c=$(BUILDIR)/%.o)
@@ -54,9 +66,6 @@ COMFLAG	=	-Wall -Wextra -Werror -std=c99 -D_POSIX_C_SOURCE -I $(HDRDIR)
 
 CFLAGS		=	$(COMFLAG) -g
 LFLAGS		=	$(COMFLAG)
-RLFLAGS 	=	-I/usr/local/opt/readline/include
-RLLIB		=	-L/usr/local/opt/readline/lib
-MLXFLAGS	=	-framework OpenGL -framework AppKit
 
 ################################################################################
 #								EXTERNAL UTILITIES							   #
@@ -69,12 +78,16 @@ CP		=	cp
 #								LIBRARIES									   #
 ################################################################################
 L42DIR	=	$(LIBDIR)/libft
-GRAPDIR	=	$(LIBDIR)/mlx
-LIB42	=	$(L42DIR)/libft.a $(GRAPDIR)/libmlx.a
-READLN	=	-lreadline
+MLX		=	$(LIBDIR)/mlx
+LIB42	=	$(L42DIR)/libft.a
 
-ALLLIB	=	$(LIB42) $(READLN)
+ifeq ($(UNAME), Linux)
+LIB42	+=	$(MLX)/libmlx_Linux.a
+else
+LIB42	+=	$(MLX)/libmlx.a
+endif
 
+ALLLIB	=	$(LIB42)
 ################################################################################
 #								COMMANDS									   #
 ################################################################################
@@ -86,21 +99,34 @@ dirs:
 	@$(MKDIR) $(TEMPDIR)
 	@printf "Made directories: %s\n" $(TEMPDIR)
 
-libs:
+libs: $(MLX)
 	@$(CP) $(IMPHDR) $(IDRDIR)
 	@$(MAKE) -C $(L42DIR)
-	@$(MAKE) -C $(GRAPDIR)
 	@printf "Imported header: %s\n" $(IMPHDR)
 	@printf "Libraries made: %s\n" $(LIB)
 
 $(NAME): $(OBJECTS)
-	$(CC) $(OBJECTS) $(LFLAGS) $(RLFLAGS) $(RLLIB) $(MLXFLAGS) -o $@ $(ALLLIB)
+	@printf "$(UNAME) \n"
+	$(CC) -I ./headers/imported $(OBJECTS) $(ALLLIB) $(LFLAGS) $(MLX_FLAGS) -o $@
 	@printf "Built program %s successfully\n" $@
 
 $(BUILDIR)/%.o : $(SRCDIR)/%.c
 	@$(MKDIR) '$(@D)'
-	@$(CC) $(CFLAGS) $(RLFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(MLXFLAGS) -c $< -o $@
 	@printf "Linked source: %s into object: %s\n" $< $@
+
+$(MLX):
+	@printf "mlx dependency needed. Download now? [y/N]"
+	@read ans && [ $${ans:-N} = y ]
+	@if [ $(UNAME) != Linux ]; then \
+		git clone https://github.com/dannywillems/minilibx-mac-osx.git $(MLX); \
+		cp -r $(MLX)mlx.h $(HDR_DIR); \
+		cp -r $(MLX)libmlx.a $(ARCH_DIR); \
+	else \
+		git clone https://github.com/42Paris/minilibx-linux.git $(MLX); \
+		cd $(MLX) && bash configure >/dev/null;\
+		cd ../..; \
+	fi
 
 clean:
 	@$(RM) $(CLNDIR)
