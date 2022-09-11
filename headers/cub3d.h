@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/09 11:07:56 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/11 17:31:15 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,13 @@
 
 # include "imported/libft.h"
 # include "imported/mlx.h"
+# include "imported/macros.h"
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
 # include <math.h>
 # include <stdbool.h>
-
-# define W 126
-# define A 0
-# define S 1
-# define D 2
-# define LEFT 123
-# define RIGHT 124
-# define EXIT 53
-# define BUFFER_SIZE 1000
 
 typedef struct s_slope
 {
