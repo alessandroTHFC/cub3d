@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/11 17:37:57 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/12 09:04:57 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ ifeq ($(UNAME), Linux)
 MLX_FLAGS = -L/usr/lib -Ilibraries/mlx -lXext -lX11 -lm -lz
 MLX_MACRO =	$(HDRDIR)/linux/macros.h
 else
-MLX_FLAGS = -Imlx -Lmlx -lmlx -framework OpenGL -framework AppKit
+MLX_FLAGS = -framework OpenGL -framework AppKit
 MLX_MACRO =	$(HDRDIR)/macos/macros.h
 endif
 
@@ -78,7 +78,13 @@ CP		=	cp
 ################################################################################
 L42DIR	=	$(LIBDIR)/libft
 MLX		=	$(LIBDIR)/mlx
-LIB42	=	$(L42DIR)/libft.a $(MLX)/libmlx_Linux.a
+LIB42	=	$(L42DIR)/libft.a
+
+ifeq ($(UNAME), Linux)
+LIB42	+=	$(MLX)/libmlx_Linux.a
+else
+LIB42	+=	$(MLX)/libmlx.a
+endif
 
 ALLLIB	=	$(LIB42)
 ################################################################################
@@ -100,7 +106,7 @@ libs: $(MLX)
 
 $(NAME): $(OBJECTS)
 	@printf "$(UNAME) \n"
-	$(CC) $(OBJECTS) $(MLX_MACRO) $(ALLLIB) $(LFLAGS) $(MLX_FLAGS) -I headers/imported -o $@
+	$(CC) -I ./headers/imported $(OBJECTS) $(ALLLIB) $(LFLAGS) $(MLX_FLAGS) -o $@
 	@printf "Built program %s successfully\n" $@
 
 $(BUILDIR)/%.o : $(SRCDIR)/%.c
