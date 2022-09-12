@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:50:36 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 12:07:00 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 21:43:53 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	error_checker(t_root *game)
 ///increments the player count to later be checked for valid amount of players.
 static int	check_count(t_root *game, int y, int x)
 {
-	// printf("%c\n", game->map[y][x]);
 	if (!ft_strchr("1 0NSEWC", game->map[y][x]))
 	{
 		printf("\e[31m\e[1mError\nUnknown characters in the map!! \e[0m \n");
@@ -51,6 +50,7 @@ static int	valid_chars(t_root *game)
 	int	y;
 
 	y = 0;
+	game->player_count = 0;
 	while (game->map[y])
 	{
 		x = 0;

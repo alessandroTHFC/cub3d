@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_errors2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:51:32 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 12:36:51 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 21:44:59 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ int	internal_spaces(t_root *game)
 	char	c;
 
 	row = 1;
-	//printf("hellooooooo\n");
 	while (row < game->map_height)
 	{
 		idx = 1;
@@ -93,8 +92,7 @@ int	internal_spaces(t_root *game)
 			c = game->map[row][idx];
 			if (c == '0' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
-				//printf(" char is %c, row %i, idx %i\n", c, row, idx);
-				if (game->map[row -1][idx] == ' ' || game->map[row +1][idx] == ' ' ||
+				if (game->map[row - 1][idx] == ' ' || game->map[row +1][idx] == ' ' ||
 						game->map[row][idx -1] == ' ' || game->map[row][idx +1] == ' ')
 				{
 					printf("Surrounding spaces are %c, %c, %c, %c\n", game->map[row -1][idx], game->map[row +1][idx], game->map[row][idx -1], game->map[row][idx +1]);
