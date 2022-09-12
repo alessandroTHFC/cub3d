@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_splice.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/12 12:15:24 by jbrown            #+#    #+#             */
+/*   Updated: 2022/09/12 12:29:29 by jbrown           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	findstring(int *first, int last, char c, char *s)
@@ -20,10 +32,13 @@ static int	numofstrings(char *s, char c, t_root *game)
 	while (s[i])
 	{
 		if ((s[i + 1] == c || !(s[i + 1])) && s[i] != c)
+		{
 			r++;
+		}
 		i++;
 	}
-    game->map_height = r;
+	printf("Height = %i\n", r);
+	game->map_height = r - 1;
 	return (r);
 }
 
@@ -58,23 +73,25 @@ static void	freestrings(char **s, int len)
 	free(s);
 }
 
-char	**ft_splice(char const *s, char c, t_root *game)
+char	**ft_splice(char *s, char c, t_root *game)
 {
 	int		first;
 	int		last;
 	int		i;
 	char	**strs;
+	int		no_of_strs;
 
-	strs = malloc(sizeof(*strs) * (numofstrings((char *) s, c, game) + 1));
+	no_of_strs = numofstrings(s, c, game);
+	strs = malloc(sizeof(*strs) * (no_of_strs + 1));
 	if (!strs)
 		return (strs);
 	first = 0;
 	i = 0;
-	while (s[first] && i < numofstrings((char *) s, c, game))
+	while (s[first] && i < no_of_strs)
 	{
-		last = findstring(&first, last, c, (char *) s);
-        game->map_width = last - first;
-		strs[i] = fillstring((char *) s, first, last);
+		last = findstring(&first, last, c, s);
+		game->map_width = last - first;
+		strs[i] = fillstring(s, first, last);
 		if (!strs[i])
 		{
 			freestrings(strs, i);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_errors2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/12 11:51:32 by jbrown            #+#    #+#             */
+/*   Updated: 2022/09/12 12:36:51 by jbrown           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 ///Horizontal Edges function error checks the top and bottom row of the map.
@@ -11,23 +23,24 @@ int	horizontal_edges(t_root *game)
 	///on one of these permutations of moving things around(adding printfs) it made the valid chars function fuck up and text was apearing inside the map!
 	///output on the notion page very curious
 	i = 0;
-	while (game->map[0][i++] )
+	while (game->map[0][i])
 	{
 		if (game->map[0][i] != '1' && game->map[0][i] != 32)
 		{
-
 			printf("\e[31m\e[1mError\nTop Row has invalid Character %c idx is %i \e[0m \n", game->map[0][i], i);
 			return (1);
 		}
+		i++;
 	}
 	i = 0;
+	printf("Map height: %i\n", game->map_height);
 	while (game->map[game->map_height][i])
 	{
-		if (game->map[game->map_height][i] != '1' ||
+		if (game->map[game->map_height][i] != '1' &&
 				game->map[game->map_height][i] != ' ')
 		{	
 			printf("\e[31m\e[1mError\nBottom Row has invalid Character \e[0m \n");
-			return(1);
+			return (1);
 		}
 		i++;
 	}
@@ -48,8 +61,8 @@ int	end_string_validity(t_root *game)
 	y = 0;
 	while (game->map[y])
 	{
-		len = ft_strlen(game->map[y]);
-		if (game->map[y][len] != '1')
+		len = ft_strlen(game->map[y]) - 1;
+		if (game->map[y][len] != '1' && game->map[y][len] != ' ')
 		{
 			printf("\e[31m\e[1mError\nRight Map Border has invalid Character \e[0m \n");
 			return (1);
@@ -57,7 +70,7 @@ int	end_string_validity(t_root *game)
 		y++;
 	}
 	printf("exiting endstring...\n");
-	return(0);
+	return (0);
 }
 
 ///Internal Spaces function error checks the maps interior. This function looks only at whether

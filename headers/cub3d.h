@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/11 17:31:15 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 12:30:02 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <string.h>
 # include <math.h>
 # include <stdbool.h>
+
+# define M_PI 3.14159265358979323846264338327950288
 
 typedef struct s_slope
 {
@@ -87,7 +89,7 @@ typedef struct s_root
 	int			player_count;
 }	t_root;
 
-char	**ft_splice(char const *s, char c, t_root *game);
+char	**ft_splice(char *s, char c, t_root *game);
 void	check_filetype(char *map_file, t_root *game);
 int		internal_spaces(t_root *game);
 void	error_checker(t_root *game);

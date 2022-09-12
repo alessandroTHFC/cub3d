@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 08:52:07 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 11:48:18 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	main(int argc, char **argv)
 	t_root		game;
 	t_mlx		mlx;
 	t_img		img;
+
 	if (argc != 2)
 	{
 		printf("Incorrect Inputs!");

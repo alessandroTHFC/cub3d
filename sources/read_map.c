@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/08 10:23:33 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 11:59:20 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	import_map(char *map_loc, t_root *game)
 	fd = open(map_loc, O_RDONLY);
 	file = buffer_map(fd);
 	game->map = ft_splice(file, '\n', game);
-	//error_checker(game);
+	error_checker(game);
 	free (file);
 	close (fd);
 	print_map(game->map);

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/08 10:48:31 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 12:30:40 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,20 @@ int	y_rot(int x[2], int y[2], double radian)
 
 void	rot_player(t_root *game)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
+	double	sinx;
+	double	cosx;
 
-	game->me->rad += 5;
+	sinx = sin((M_PI / 4) * (180.0 / M_PI));
+	cosx = cos((M_PI / 4) * (180.0 / M_PI));
+	game->me->rad -= 10;
+	// if (game->me->rad < 0)
+	// 	game->me->rad += 2 * M_PI;
+	// x = (int)round(((game->me->x[0] * cosx) - (game->me->y[0] * sinx))
+	// 		+ game->me->x[0]);
+	// y = (int)round(((game->me->y[0] * cosx) + (game->me->x[0] * sinx))
+	// 		+ game->me->y[0]);
 	x = x_rot(game->me->x, game->me->y, game->me->rad * 0.01745);
 	y = y_rot(game->me->x, game->me->y, game->me->rad * 0.01745);
 	game->me->x[1] = x;
