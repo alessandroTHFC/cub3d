@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 12:49:59 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 16:16:03 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,35 +21,6 @@ void	draw_circle(t_mlx *mlx, int x, int y, int colour)
 	draw_pixel(mlx->minmap, coor, colour);
 	(void) mlx;
 	(void) colour;
-}
-
-static void	draw_map(t_root *game)
-{
-	static int		y;
-	static int		x;
-	static int		x_offset;
-	static int		y_offset;
-	char			**map;
-
-	map = game->map;
-	while (map[y])
-	{
-		x = 0;
-		x_offset = 0;
-		while (map[y][x])
-		{
-			if (map[y][x] == '1')
-				draw_square(game, 0x00FF0000, x + x_offset, y + y_offset);
-			if (map[y][x] == '0')
-				draw_square(game, 0x000000FF, x + x_offset, y + y_offset);
-			if (ft_strchr("NESW", map[y][x]))
-				init_player(game, x + x_offset, y + y_offset, map[y][x]);
-			x++;
-			x_offset += 30;
-		}
-		y++;
-		y_offset += 30;
-	}
 }
 
 static void	print_map(char **map)
@@ -97,5 +68,5 @@ void	import_map(char *map_loc, t_root *game)
 	free (file);
 	close (fd);
 	print_map(game->map);
-	draw_map(game);
+	draw_map(game, true);
 }

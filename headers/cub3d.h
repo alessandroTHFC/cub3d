@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 15:41:13 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 17:27:57 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ typedef struct s_player
 {
 	int		tile_x;
 	int		tile_y;
-	float	x[2];
-	float	y[2];
+	double	x[2];
+	double	y[2];
 	int		xt[2];
 	int		yt[2];
 	double	rad;
@@ -102,7 +102,9 @@ void	clean_exit(t_root *game);
 void	draw_square(t_root *game, int colour, int x_offset, int y_offset);
 void	draw_line(t_img *img, int *x, int *y, int colour);
 void	draw_pixel(t_img *img, int *x_y, int colour);
-void	init_player(t_root *game, int x, int y, char dir);
-void	rot_player(t_root *game);
+void	init_player(t_root *game, int x, int y, char *dir);
+void	rot_player(t_root *game, int dir);
+void	draw_map(t_root *game, bool init);
+void	clear_map(t_root *game);
 
 #endif

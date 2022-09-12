@@ -6,16 +6,28 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 12:44:41 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 17:33:02 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/*	I want to update this to use key events instead of key hooks so that it is
+	more responsive.	*/
+
 int	key_press(int key, t_root *game)
 {
+	int	dir;
+
 	printf("%i\n", key);
-	rot_player(game);
+	if (key == LEFT || key == RIGHT)
+	{
+		if (key == LEFT)
+			dir = -1;
+		else
+			dir = 1;
+		rot_player(game, dir);
+	}
 	if (key == EXIT)
 	{
 		clean_exit(game);
