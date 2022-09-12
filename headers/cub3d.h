@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 12:30:02 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:41:13 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ typedef struct s_player
 {
 	int		tile_x;
 	int		tile_y;
-	int		x[2];
-	int		y[2];
+	float	x[2];
+	float	y[2];
+	int		xt[2];
+	int		yt[2];
 	double	rad;
 }	t_player;
 

@@ -6,13 +6,13 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 12:30:40 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 15:43:07 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_orientation(char dir, int *x, int *y)
+void	init_orientation(char dir, float x[2], float y[2])
 {
 	*x = 15;
 	*y = 15;
@@ -26,6 +26,13 @@ void	init_orientation(char dir, int *x, int *y)
 		*x = 0;
 }
 
+int	*float_to_int(float fval[2], int ival[2])
+{
+	ival[0] = (int)fval[0];
+	ival[1] = (int)fval[1];
+	return (ival);
+}
+
 void	init_player(t_root *game, int x, int y, char dir)
 {
 	static t_player	me;
@@ -34,45 +41,30 @@ void	init_player(t_root *game, int x, int y, char dir)
 	me.tile_y = y;
 	me.x[0] = 15 + x;
 	me.y[0] = 15 + y;
-	me.rad = 0;
+	me.rad = 45 * M_PI / 180;
 	init_orientation(dir, &me.x[1], &me.y[1]);
 	me.x[1] += x;
 	me.y[1] += y;
 	game->me = &me;
-	draw_line(game->mlx->minmap, me.x, me.y, 0x00FF0000);
-}
-
-int	x_rot(int x[2], int y[2], double radian)
-{
-	return (x[0] + ((x[1] - x[0]) * cos(radian) - (y[1] - y[0]) * sin(radian)));
-}
-
-int	y_rot(int x[2], int y[2], double radian)
-{
-	return (y[0] + ((x[1] - x[0]) * sin(radian) + (y[1] - y[0]) * cos(radian)));
+	draw_line(game->mlx->minmap, float_to_int(me.x, me.xt),
+		float_to_int(me.y, me.yt), 0x00FF0000);
 }
 
 void	rot_player(t_root *game)
 {
 	int		x;
 	int		y;
-	double	sinx;
-	double	cosx;
 
-	sinx = sin((M_PI / 4) * (180.0 / M_PI));
-	cosx = cos((M_PI / 4) * (180.0 / M_PI));
-	game->me->rad -= 10;
-	// if (game->me->rad < 0)
-	// 	game->me->rad += 2 * M_PI;
-	// x = (int)round(((game->me->x[0] * cosx) - (game->me->y[0] * sinx))
-	// 		+ game->me->x[0]);
-	// y = (int)round(((game->me->y[0] * cosx) + (game->me->x[0] * sinx))
-	// 		+ game->me->y[0]);
-	x = x_rot(game->me->x, game->me->y, game->me->rad * 0.01745);
-	y = y_rot(game->me->x, game->me->y, game->me->rad * 0.01745);
-	game->me->x[1] = x;
-	game->me->y[1] = y;
-	draw_line(game->mlx->minmap, game->me->x, game->me->y, 0x00FF0000);
+	x = game->me->x[1];
+	y = game->me->y[1];
+	x -= game->me->x[0];
+	y -= game->me->y[0];
+	game->me->x[1] = (x * cos(game->me->rad)) - (y * sin(game->me->rad));
+	game->me->y[1] = (x * sin(game->me->rad)) + (y * cos(game->me->rad));
+	game->me->x[1] += game->me->x[0];
+	game->me->y[1] += game->me->y[0];
+	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
+		float_to_int(game->me->y, game->me->yt), 0x00FF0000);
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
 		game->mlx->minmap->img, 0, 0);
 }
