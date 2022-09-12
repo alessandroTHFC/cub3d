@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 11:59:20 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/12 12:49:59 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,12 @@ static char	*buffer_map(int fd)
 
 	file = malloc(BUFFER_SIZE + 1);
 	bytes_read = read(fd, file, BUFFER_SIZE);
+	file[bytes_read] = 0;
 	while (bytes_read)
 	{
 		buffer = malloc(BUFFER_SIZE + 1);
-		bytes_read = read(fd, file, BUFFER_SIZE);
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		buffer[bytes_read] = 0;
 		tmp = file;
 		file = ft_strjoin(tmp, buffer);
 		free(tmp);
