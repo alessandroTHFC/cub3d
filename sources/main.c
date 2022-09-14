@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 17:33:02 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:47:21 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,17 @@ int	key_press(int key, t_root *game)
 {
 	int	dir;
 
+	if (key == LEFT || key == S)
+			dir = -1;
+	else if (key == RIGHT || key == W)
+			dir = 1;
 	printf("%i\n", key);
 	if (key == LEFT || key == RIGHT)
-	{
-		if (key == LEFT)
-			dir = -1;
-		else
-			dir = 1;
 		rot_player(game, dir);
-	}
+	if (key == W || key == S)
+		move_player(game, dir);
 	if (key == EXIT)
-	{
 		clean_exit(game);
-	}
 	return (key);
 }
 

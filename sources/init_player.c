@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 17:28:25 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/14 14:34:32 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_player(t_root *game, int x, int y, char *dir)
 	me.tile_y = y;
 	me.x[0] = 15 + x;
 	me.y[0] = 15 + y;
-	me.rad = 15 * M_PI / 180;
+	me.rad = 30 * M_PI / 180;
 	init_orientation(*dir, &me.x[1], &me.y[1]);
 	*dir = '0';
 	me.x[1] += x;
@@ -63,8 +63,8 @@ void	init_player(t_root *game, int x, int y, char *dir)
 
 void	rot_player(t_root *game, int dir)
 {
-	int		x;
-	int		y;
+	double	x;
+	double	y;
 	double	rad;
 
 	rad = game->me->rad * dir;
@@ -76,6 +76,24 @@ void	rot_player(t_root *game, int dir)
 	game->me->y[1] = ((x * sin(rad)) + (y * cos(rad)));
 	game->me->x[1] += game->me->x[0];
 	game->me->y[1] += game->me->y[0];
+	clear_map(game);
+	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
+		float_to_int(game->me->y, game->me->yt), 0x00FF0000);
+	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
+		game->mlx->minmap->img, 0, 0);
+}
+
+void	move_player(t_root *game, int dir)
+{
+	int		dx;
+	int		dy;
+
+	dx = (game->me->x[1] - game->me->x[0]) * dir;
+	dy = (game->me->y[1] - game->me->y[0]) * dir;
+	game->me->x[0] += dx / 2;
+	game->me->x[1] += dx / 2;
+	game->me->y[0] += dy / 2;
+	game->me->y[1] += dy / 2;
 	clear_map(game);
 	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
 		float_to_int(game->me->y, game->me->yt), 0x00FF0000);
