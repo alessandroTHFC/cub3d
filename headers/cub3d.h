@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/14 13:47:07 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/14 15:35:44 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,10 @@ void	draw_square(t_root *game, int colour, int x_offset, int y_offset);
 void	draw_line(t_img *img, int *x, int *y, int colour);
 void	draw_pixel(t_img *img, int *x_y, int colour);
 void	init_player(t_root *game, int x, int y, char *dir);
+int		*float_to_int(double fval[2], int ival[2]);
 void	rot_player(t_root *game, int dir);
 void	move_player(t_root *game, int dir);
+void	strafe_player(t_root *game, int dir);
 void	draw_map(t_root *game, bool init);
 void	clear_map(t_root *game);
 

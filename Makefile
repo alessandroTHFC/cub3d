@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
+#    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/12 09:04:57 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/14 15:36:23 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/draw_line.c \
 			$(SRCDIR)/ft_splice.c \
 			$(SRCDIR)/init_player.c \
+			$(SRCDIR)/player_movement.c \
 			$(SRCDIR)/map_errors.c \
 			$(SRCDIR)/map_errors2.c \
 			

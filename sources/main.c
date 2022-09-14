@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/14 13:47:21 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/14 16:13:06 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,17 @@ int	key_press(int key, t_root *game)
 {
 	int	dir;
 
-	if (key == LEFT || key == S)
+	if (key == LEFT || key == S || key == D || key == DOWN)
 			dir = -1;
-	else if (key == RIGHT || key == W)
+	else if (key == RIGHT || key == W || key == A || key == UP)
 			dir = 1;
 	printf("%i\n", key);
 	if (key == LEFT || key == RIGHT)
 		rot_player(game, dir);
-	if (key == W || key == S)
+	if (key == W || key == S || key == UP || key == DOWN)
 		move_player(game, dir);
+	if (key == A || key == D)
+		strafe_player(game, dir);
 	if (key == EXIT)
 		clean_exit(game);
 	return (key);
