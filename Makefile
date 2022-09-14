@@ -6,7 +6,7 @@
 #    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/12 22:00:23 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/14 21:44:57 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,12 +40,15 @@ endif
 SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/read_map.c \
 			$(SRCDIR)/exit.c \
-			$(SRCDIR)/draw_map.c \
-			$(SRCDIR)/draw_line.c \
-			$(SRCDIR)/ft_splice.c \
-			$(SRCDIR)/init_player.c \
-			$(SRCDIR)/map_errors.c \
-			$(SRCDIR)/map_errors2.c \
+			$(SRCDIR)/player_movement.c \
+			$(SRCDIR)/hooks.c \
+			$(SRCDIR)/drawing/draw_line.c \
+			$(SRCDIR)/drawing/draw_map.c \
+			$(SRCDIR)/init/init_player.c \
+			$(SRCDIR)/init/mlx_init.c \
+			$(SRCDIR)/error/ft_splice.c \
+			$(SRCDIR)/error/map_errors.c \
+			$(SRCDIR)/error/map_errors2.c \
 			
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx.h \

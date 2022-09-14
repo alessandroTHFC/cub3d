@@ -6,20 +6,11 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:50:36 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 21:43:53 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/14 22:10:54 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static int	valid_chars(t_root *game);
-
-void	error_checker(t_root *game)
-{
-	if (internal_spaces(game) || valid_chars(game)
-		|| horizontal_edges(game) || end_string_validity(game))
-		clean_exit(game);
-}
 
 ///check_counting function uses strchr to compare the character at the x, y 
 ///grid position passed in to see if it matches the allowed chars in the game
@@ -67,6 +58,12 @@ static int	valid_chars(t_root *game)
 		printf("only 1 player allowed you jackass! \e[0m \n");
 		return (1);
 	}
-	printf("returning 0 in valid chars\n");
 	return (0);
+}
+
+void	error_checker(t_root *game)
+{
+	if (internal_spaces(game) || valid_chars(game)
+		|| horizontal_edges(game) || end_string_validity(game))
+		free_map(game->map);
 }

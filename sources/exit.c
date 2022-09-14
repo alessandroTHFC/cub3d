@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 14:51:24 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 09:22:45 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/14 22:07:51 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	free_map(char **map)
+void	free_map(char **map)
 {
 	int	i;
 
@@ -23,12 +23,13 @@ static void	free_map(char **map)
 		i++;
 	}
 	free (map);
+	exit(0);
 }
 
-void	clean_exit(t_root *game)
+int	clean_exit(t_root *game)
 {
 	mlx_destroy_image(game->mlx->mlx, game->mlx->minmap->img);
 	mlx_destroy_window(game->mlx->mlx, game->mlx->win);
 	free_map(game->map);
-	exit(0);
+	return (0);
 }

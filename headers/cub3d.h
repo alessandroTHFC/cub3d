@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 21:53:46 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/14 22:06:48 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ typedef struct s_slope
 	int	dx;
 	int	dy;
 	int	m;
-	int	x;
-	int	y;
 }	t_slope;
 
 typedef struct s_player
@@ -90,20 +88,33 @@ typedef struct s_root
 	int			player_count;
 }	t_root;
 
+/*	ERROR CHECKING	*/
 char	**ft_splice(char *s, char c, t_root *game);
-void	check_filetype(char *map_file, t_root *game);
+void	check_filetype(char *map_file);
 int		internal_spaces(t_root *game);
 void	error_checker(t_root *game);
 int		horizontal_edges(t_root *game);
 int		end_string_validity(t_root *game);
+/*	INITIALISATION	*/
 void	import_map(char *map_loc, t_root *game);
-void	clean_exit(t_root *game);
+void	init_root(t_root *game);
+void	init_player(t_root *game, int x, int y, char *dir);
+/*	MOVEMENT	*/
+void	rot_player(t_root *game, int dir);
+void	move_player(t_root *game, int dir);
+void	strafe_player(t_root *game, int dir);
+/*	MEMORY FREE	*/
+int		clean_exit(t_root *game);
+void	free_map(char **map);
+/*	MLX DRAWING	*/
 void	draw_square(t_root *game, int colour, int x_offset, int y_offset);
 void	draw_line(t_img *img, int *x, int *y, int colour);
 void	draw_pixel(t_img *img, int *x_y, int colour);
-void	init_player(t_root *game, int x, int y, char *dir);
-void	rot_player(t_root *game, int dir);
 void	draw_map(t_root *game, bool init);
 void	clear_map(t_root *game);
+/*	HOOKS	*/
+int		key_press(int key, t_root *game);
+/*	OTHER	*/
+int		*float_to_int(double fval[2], int ival[2]);
 
 #endif
