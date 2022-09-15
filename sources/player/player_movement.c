@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/14 21:19:05 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:22:18 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int	*float_to_int(double fval[2], int ival[2])
 
 void	update_player(t_root *game)
 {
+	game->me->tile_x = (int)(game->me->x[0] / (TILE + 1));
+	game->me->tile_y = (int)(game->me->y[0] / (TILE + 1));
+	// printf("x: %i, y: %i\n", (int)game->me->x[0], (int)game->me->y[0]);
+	// printf("x: %i, y: %i\n", game->me->tile_x, game->me->tile_y);
 	clear_map(game);
 	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
 		float_to_int(game->me->y, game->me->yt), 0xABCDEFAB);
@@ -56,12 +60,16 @@ void	move_player(t_root *game, int dir)
 	int		dx;
 	int		dy;
 
-	dx = (game->me->x[1] - game->me->x[0]) * dir;
-	dy = (game->me->y[1] - game->me->y[0]) * dir;
-	game->me->x[0] += dx / 2;
-	game->me->x[1] += dx / 2;
-	game->me->y[0] += dy / 2;
-	game->me->y[1] += dy / 2;
+	dx = ((game->me->x[1] - game->me->x[0]) * dir) / 2;
+	dy = ((game->me->y[1] - game->me->y[0]) * dir) / 2;
+	if (!check_collision(game, dx + game->me->x[0], dy + game->me->y[0]))
+	{
+		return ;
+	}
+	game->me->x[0] += dx;
+	game->me->x[1] += dx;
+	game->me->y[0] += dy;
+	game->me->y[1] += dy;
 	update_player(game);
 }
 
@@ -81,6 +89,10 @@ void	strafe_player(t_root *game, int dir)
 		strafe -= M_PI * 2;
 	x = cos(strafe) * dir;
 	y = sin(strafe) * dir;
+	if (!check_collision(game, x + game->me->x[0], y + game->me->y[0]))
+	{
+		return ;
+	}
 	game->me->x[0] += x;
 	game->me->x[1] += x;
 	game->me->y[0] += y;

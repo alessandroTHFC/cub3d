@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:51:32 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/14 21:59:29 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:06:39 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,17 @@ int	end_string_validity(t_root *game)
 	return (0);
 }
 
-static bool	cardinal_space(t_root *game, int row, int idx)
+int	cardinal_space(t_root *game, int row, int idx, char c)
 {
-	if (game->map[row - 1][idx] == ' '
-	|| game->map[row + 1][idx] == ' '
-	|| game->map[row][idx - 1] == ' '
-	|| game->map[row][idx + 1] == ' ')
-		return (true);
-	return (false);
+	if (game->map[row - 1][idx] == c)
+		return (-1);
+	if (game->map[row + 1][idx] == c)
+		return (1);
+	if (game->map[row][idx - 1] == c)
+		return (-2);
+	if (game->map[row][idx + 1] == c)
+		return (2);
+	return (0);
 }
 
 ///Internal Spaces function error checks the maps interior.
@@ -100,7 +103,7 @@ int	internal_spaces(t_root *game)
 			c = game->map[row][idx];
 			if (c == '0' || c == 'N' || c == 'S' || c == 'W' || c == 'E')
 			{
-				if (cardinal_space(game, row, idx))
+				if (cardinal_space(game, row, idx, ' '))
 				{
 					printf("\e[31m\e[1mError\n  Invalid Spaces in the Map.");
 					printf(" Fucked \e[0m \n");

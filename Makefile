@@ -6,7 +6,7 @@
 #    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/14 21:44:57 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/15 11:27:30 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ endif
 SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/read_map.c \
 			$(SRCDIR)/exit.c \
-			$(SRCDIR)/player_movement.c \
+			$(SRCDIR)/player/player_movement.c \
+			$(SRCDIR)/player/player_collision.c \
 			$(SRCDIR)/hooks.c \
 			$(SRCDIR)/drawing/draw_line.c \
 			$(SRCDIR)/drawing/draw_map.c \
@@ -142,7 +143,7 @@ fclean: clean
 re: fclean all
 	@printf "Cleaned and remade all files!\n"
 
-github: #Pushes to Github repo
+github: fclean #Pushes to Github repo
 	@git remote set-url origin git@github.com:alessandroTHFC/cub3d.git
 	@clear
 	@git add .
@@ -151,7 +152,7 @@ github: #Pushes to Github repo
 	git commit -m "$$COMMIT"; \
 	git push;
 
-42: #Pushes to vogsphere repo
+42: fclean #Pushes to vogsphere repo
 	@git remote set-url origin git@github.com:alessandroTHFC/cub3d.git
 	@clear
 	@git add .

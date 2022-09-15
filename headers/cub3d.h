@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/14 22:06:48 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:12:47 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdbool.h>
 
 # define M_PI 3.14159265358979323846264338327950288
+# define TILE 50
 
 typedef struct s_slope
 {
@@ -103,6 +104,7 @@ void	init_player(t_root *game, int x, int y, char *dir);
 void	rot_player(t_root *game, int dir);
 void	move_player(t_root *game, int dir);
 void	strafe_player(t_root *game, int dir);
+bool	check_collision(t_root *game, double x, double y);
 /*	MEMORY FREE	*/
 int		clean_exit(t_root *game);
 void	free_map(char **map);
@@ -116,5 +118,6 @@ void	clear_map(t_root *game);
 int		key_press(int key, t_root *game);
 /*	OTHER	*/
 int		*float_to_int(double fval[2], int ival[2]);
+int		cardinal_space(t_root *game, int row, int idx, char c);
 
 #endif
