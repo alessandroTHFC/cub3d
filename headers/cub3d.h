@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/15 11:12:47 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/17 14:23:33 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_player
 	int		xt[2];
 	int		yt[2];
 	double	rad;
+	double	angle;
 }	t_player;
 
 typedef struct s_minmap
@@ -105,6 +106,9 @@ void	rot_player(t_root *game, int dir);
 void	move_player(t_root *game, int dir);
 void	strafe_player(t_root *game, int dir);
 bool	check_collision(t_root *game, double x, double y);
+void	update_player(t_root *game);
+/*	RAYCASTING	*/
+void	draw_ray(t_root *game);
 /*	MEMORY FREE	*/
 int		clean_exit(t_root *game);
 void	free_map(char **map);

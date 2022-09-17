@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/14 21:49:33 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/17 14:23:52 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	init_root(t_root *game)
 {
 	init_mlx(game);
 	draw_map(game, true);
+	update_player(game);
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
 		game->mlx->minmap->img, 0, 0);
 	mlx_hook(game->mlx->win, 2, 1L << 0, key_press, game);

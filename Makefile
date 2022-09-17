@@ -6,7 +6,7 @@
 #    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/15 11:27:30 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/17 14:31:34 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,8 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/error/ft_splice.c \
 			$(SRCDIR)/error/map_errors.c \
 			$(SRCDIR)/error/map_errors2.c \
+			$(SRCDIR)/rays/raycaster.c \
+			$(SRCDIR)/utils/utils.c \
 			
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx.h \

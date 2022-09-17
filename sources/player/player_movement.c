@@ -6,20 +6,30 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/15 11:22:18 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/17 14:33:16 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-/*	Converts a float array[2] to an int array[2] to be used in the pixel put
-	function.	*/
-
-int	*float_to_int(double fval[2], int ival[2])
+void	draw_player(t_root *game)
 {
-	ival[0] = (int)fval[0];
-	ival[1] = (int)fval[1];
-	return (ival);
+	int	x[2];
+	int	y[2];
+	int	i;
+
+	x[0] = game->me->x[0] - 3;
+	x[1] = x[0] + 5;
+	y[0] = game->me->y[0] - 3;
+	y[1] = y[0];
+	i = 0;
+	while (i < 5)
+	{
+		draw_line(game->mlx->minmap, x, y, 0xABCDEFAB);
+		i++;
+		y[0]++;
+		y[1]++;
+	}
 }
 
 void	update_player(t_root *game)
@@ -29,6 +39,8 @@ void	update_player(t_root *game)
 	// printf("x: %i, y: %i\n", (int)game->me->x[0], (int)game->me->y[0]);
 	// printf("x: %i, y: %i\n", game->me->tile_x, game->me->tile_y);
 	clear_map(game);
+	// draw_ray(game);
+	draw_player(game);
 	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
 		float_to_int(game->me->y, game->me->yt), 0xABCDEFAB);
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
@@ -52,6 +64,8 @@ void	rot_player(t_root *game, int dir)
 	game->me->y[1] = ((x * sin(rad)) + (y * cos(rad)));
 	game->me->x[1] += game->me->x[0];
 	game->me->y[1] += game->me->y[0];
+	game->me->angle = atan2(game->me->y[1] - game->me->y[0],
+			game->me->x[1] - game->me->x[0]);
 	update_player(game);
 }
 
@@ -81,8 +95,7 @@ void	strafe_player(t_root *game, int dir)
 	double	y;
 	double	strafe;
 
-	strafe = atan2(game->me->y[1] - game->me->y[0],
-			game->me->x[1] - game->me->x[0]) - M_PI / 2;
+	strafe = game->me->angle - M_PI / 2;
 	if (strafe < 0)
 		strafe += M_PI * 2;
 	if (strafe > M_PI * 2)

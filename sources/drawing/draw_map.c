@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 15:32:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/15 10:28:28 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/16 20:03:00 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,33 @@ void	draw_square(t_root *game, int colour, int x_offset, int y_offset)
 {
 	int	x_coor[2];
 	int	y_coor[2];
+	int	i;
 
-	x_coor[0] = x_offset;
-	x_coor[1] = x_offset;
-	y_coor[0] = y_offset;
-	y_coor[1] = y_offset + TILE;
-	draw_line(game->mlx->minmap, x_coor, y_coor, colour);
-	x_coor[0] = x_offset + TILE;
-	x_coor[1] = x_offset + TILE;
-	draw_line(game->mlx->minmap, x_coor, y_coor, colour);
-	y_coor[0] = y_offset + TILE;
-	x_coor[1] = x_offset;
-	draw_line(game->mlx->minmap, x_coor, y_coor, colour);
 	y_coor[0] = y_offset;
 	y_coor[1] = y_offset;
-	draw_line(game->mlx->minmap, x_coor, y_coor, colour);
+	x_coor[0] = x_offset;
+	x_coor[1] = x_offset + TILE;
+	i = 0;
+	while (i < TILE)
+	{
+		draw_line(game->mlx->minmap, x_coor, y_coor, colour);
+		y_coor[0]++;
+		y_coor[1]++;
+		i++;
+	}
+
+	// x_coor[0] = x_offset;
+	// x_coor[1] = x_offset;
+	// y_coor[0] = y_offset;
+	// y_coor[1] = y_offset + TILE;
+	// draw_line(game->mlx->minmap, x_coor, y_coor, colour);
+	// x_coor[0] = x_offset + TILE;
+	// x_coor[1] = x_offset + TILE;
+	// draw_line(game->mlx->minmap, x_coor, y_coor, colour);
+	// y_coor[0] = y_offset + TILE;
+	// x_coor[1] = x_offset;
+	// draw_line(game->mlx->minmap, x_coor, y_coor, colour);
+	// y_coor[0] = y_offset;
+	// y_coor[1] = y_offset;
+	// draw_line(game->mlx->minmap, x_coor, y_coor, colour);
 }

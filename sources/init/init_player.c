@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/15 10:29:48 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/17 14:22:05 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	init_player(t_root *game, int x, int y, char *dir)
 	*dir = '0';
 	me.x[1] += x;
 	me.y[1] += y;
+	me.angle = atan2(me.y[1] - me.y[0], me.x[1] - me.x[0]);
 	game->me = &me;
-	draw_line(game->mlx->minmap, float_to_int(me.x, me.xt),
-		float_to_int(me.y, me.yt), 0xABCDEFAB);
 }
