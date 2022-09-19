@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 15:07:10 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 17:14:37 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,4 @@ void	set_ray_angle(t_root *game)
 		y[1] = game->me->y[1];
 		count++;
 	}
-	printf("count: %i\n", count);
 }

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 14:26:15 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 17:13:16 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdbool.h>
 
 # define M_PI 3.14159265358979323846264338327950288
-# define TILE 50
+# define TILE 20
 
 typedef struct s_slope
 {
@@ -83,6 +83,7 @@ typedef struct s_root
 {
 	t_mlx		*mlx;
 	t_minmap	*minmap;
+	t_img		*proj;
 	t_player	*me;
 	char		**map;
 	int			map_height;
@@ -110,6 +111,7 @@ void	update_player(t_root *game);
 /*	RAYCASTING	*/
 void	set_ray_angle(t_root *game);
 void	find_projection(t_root *game, int end[2]);
+void	clear_projection(t_root *game);
 /*	MEMORY FREE	*/
 int		clean_exit(t_root *game);
 void	free_map(char **map);

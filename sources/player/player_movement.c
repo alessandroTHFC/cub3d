@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 10:52:50 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 17:20:35 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ void	update_player(t_root *game)
 	game->me->tile_x = (int)(game->me->x[0] / (TILE + 1));
 	game->me->tile_y = (int)(game->me->y[0] / (TILE + 1));
 	clear_map(game);
+	clear_projection(game);
 	set_ray_angle(game);
 	draw_player(game);
 	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
 		float_to_int(game->me->y, game->me->yt), 0xABCDEFAB);
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
-		game->mlx->minmap->img, 0, 0);
+		game->proj->img, 0, 0);
+	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
+		game->mlx->minmap->img, 0, 700);
 }
 
 /*	Rotates the player on button press.	*/
