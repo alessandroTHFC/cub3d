@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 09:36:52 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 10:59:41 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,31 @@
 
 static bool	is_wall(char **map, int x, int y)
 {
-	printf("5\n");
 	x /= (TILE + 1);
 	y /= (TILE + 1);
-	printf("x: %i, y: %i\n", x, y);
-	printf("%s\n", map[y - 1]);
-	if (map[y][x] && map[y][x] == '1')
+	if (map[y][x] == '1')
 		return (true);
-	printf("6\n");
 	return (false);
 }
 
 static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 {
 	int	x_y[2];
+	int	x_dir;
+	int	y_dir;
 
+	if (s->x0 < s->x1)
+		x_dir = 1;
+	else
+		x_dir = -1;
+	if (s->y0 < s->y1)
+		y_dir = 1;
+	else
+		y_dir = -1;
 	s->m = 2 * s->dy - s->dx;
-	while (!(is_wall(game->map, s->x0, s->y0)))
+	while (1)
 	{
-		s->x0 = direction(s->x0, s->x1);
+		s->x0 += x_dir;
 		if (dec)
 		{
 			x_y[0] = s->y0;
@@ -43,12 +49,14 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 			x_y[1] = s->y0;
 			x_y[0] = s->x0;
 		}
+		if (is_wall(game->map, x_y[0], x_y[1]))
+			break ;
 		draw_pixel(game->mlx->minmap, x_y, colour);
 		if (s->m < 0)
 			s->m = s->m + 2 * s->dy;
 		else
 		{
-			s->y0 = direction(s->y0, s->y1);
+			s->y0 += y_dir;
 			s->m = s->m + 2 * s->dy - 2 * s->dx;
 		}
 	}
@@ -58,7 +66,6 @@ void	draw_ray(t_root *game, int *x, int *y, int colour)
 {
 	t_slope	s;
 
-	printf("3\n");
 	s.x0 = x[0];
 	s.x1 = x[1];
 	s.y0 = y[0];
@@ -74,19 +81,47 @@ void	draw_ray(t_root *game, int *x, int *y, int colour)
 	}
 	else
 		bresenham(game, &s, false, colour);
-	printf("4\n");
+}
+
+void	increment_angle(t_root *game, int x[2], int y[2], double r)
+{
+	double	xt;
+	double	yt;
+	double	rad;
+
+	rad = r;
+	printf("rad: %f\n", rad);
+	xt = x[1];
+	yt = y[1];
+	xt -= x[0];
+	yt -= y[0];
+	x[1] = ((xt * cos(rad)) - (yt * sin(rad)));
+	y[1] = ((xt * sin(rad)) + (yt * cos(rad)));
+	x[1] += x[0];
+	y[1] += y[0];
+	draw_ray(game, x, y, 0xFFFF00);
 }
 
 void	set_ray_angle(t_root *game)
 {
-	int	x[2];
-	int	y[2];
+	int		x[2];
+	int		y[2];
+	int		i;
+	double	rad;
 
-	printf("%s\n", game->map[0]);
 	x[0] = game->me->x[0];
 	x[1] = game->me->x[1];
 	y[0] = game->me->y[0];
 	y[1] = game->me->y[1];
-	printf("2\n");
-	draw_ray(game, x, y, 0x01013492);
+	i = -90;
+	while (i < 90)
+	{
+		increment_angle(game, x, y, rad);
+		rad = game->me->rad + (i * M_PI / 180);
+		draw_ray(game, x, y, 0xFFFF00);
+		i += 5;
+		x[1] = game->me->x[1];
+		y[1] = game->me->y[1];
+	}
+	draw_ray(game, x, y, 0xFFFF00);
 }

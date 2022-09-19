@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 09:24:44 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 11:00:18 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdbool.h>
 
 # define M_PI 3.14159265358979323846264338327950288
-# define TILE 56
+# define TILE 10
 
 typedef struct s_slope
 {
