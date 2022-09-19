@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/17 14:23:33 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:24:44 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdbool.h>
 
 # define M_PI 3.14159265358979323846264338327950288
-# define TILE 50
+# define TILE 56
 
 typedef struct s_slope
 {
@@ -108,7 +108,7 @@ void	strafe_player(t_root *game, int dir);
 bool	check_collision(t_root *game, double x, double y);
 void	update_player(t_root *game);
 /*	RAYCASTING	*/
-void	draw_ray(t_root *game);
+void	set_ray_angle(t_root *game);
 /*	MEMORY FREE	*/
 int		clean_exit(t_root *game);
 void	free_map(char **map);
@@ -123,5 +123,8 @@ int		key_press(int key, t_root *game);
 /*	OTHER	*/
 int		*float_to_int(double fval[2], int ival[2]);
 int		cardinal_space(t_root *game, int row, int idx, char c);
+int		direction(int curr, int dst);
+void	ft_swap(int *a, int *b);
+int		ft_abs(int i);
 
 #endif

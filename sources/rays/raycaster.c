@@ -3,64 +3,90 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/16 21:07:37 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:36:52 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	draw_ray(t_root *game)
+static bool	is_wall(char **map, int x, int y)
 {
-	int		x[2];
-	int		y[2];
-	int		r, mx, my, mp, dof;
-	float	rx, ry, ra, xo, yo;
+	printf("5\n");
+	x /= (TILE + 1);
+	y /= (TILE + 1);
+	printf("x: %i, y: %i\n", x, y);
+	printf("%s\n", map[y - 1]);
+	if (map[y][x] && map[y][x] == '1')
+		return (true);
+	printf("6\n");
+	return (false);
+}
 
-	ra = game->me->angle;
-	for (r = 0;r < 1; r++)
+static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
+{
+	int	x_y[2];
+
+	s->m = 2 * s->dy - s->dx;
+	while (!(is_wall(game->map, s->x0, s->y0)))
 	{
-		dof = 0;
-		float	aTan = -1 / tan(game->me->angle);
-		if (ra > M_PI)
+		s->x0 = direction(s->x0, s->x1);
+		if (dec)
 		{
-			ry = game->me->y[0];
-			rx = (game->me->y[0] - ry) * aTan + game->me->x[0];
-			yo = -TILE;
-			xo = -yo * aTan;
+			x_y[0] = s->y0;
+			x_y[1] = s->x0;
 		}
-		if (ra < M_PI)
+		else
 		{
-			ry = (game->me->y[0] + TILE);
-			rx = (game->me->y[0] - ry) * aTan + game->me->x[0];
-			yo = TILE;
-			xo = -yo * aTan;
+			x_y[1] = s->y0;
+			x_y[0] = s->x0;
 		}
-		(void)xo;
-		(void)dof;
-		(void)mp;
-		(void)my;
-		(void)mx;
-		// while (dof < 3)
-		// {
-		// 	mx = (int)(rx) / TILE;
-		// 	my = (int)(ry) / TILE;
-		// 	mp = my * game->map_width + mx;
-		// 	if (mp < game->map_width * game->map_height && game->map[my][mx] == '1')
-		// 		dof = 3;
-		// 	else
-		// 	{
-		// 		rx += xo;
-		// 		ry += yo;
-		// 		dof += 1;
-		// 	}
-		// }
-		x[0] = game->me->x[0];
-		x[1] = rx;
-		y[0] = game->me->y[0];
-		y[1] = ry;
-		draw_line(game->mlx->minmap, x, y, 0x000FFFFF);
+		draw_pixel(game->mlx->minmap, x_y, colour);
+		if (s->m < 0)
+			s->m = s->m + 2 * s->dy;
+		else
+		{
+			s->y0 = direction(s->y0, s->y1);
+			s->m = s->m + 2 * s->dy - 2 * s->dx;
+		}
 	}
+}
+
+void	draw_ray(t_root *game, int *x, int *y, int colour)
+{
+	t_slope	s;
+
+	printf("3\n");
+	s.x0 = x[0];
+	s.x1 = x[1];
+	s.y0 = y[0];
+	s.y1 = y[1];
+	s.dx = ft_abs(s.x1 - s.x0);
+	s.dy = ft_abs(s.y1 - s.y0);
+	if (s.dy >= s.dx)
+	{
+		ft_swap(&s.y0, &s.x0);
+		ft_swap(&s.y1, &s.x1);
+		ft_swap(&s.dx, &s.dy);
+		bresenham(game, &s, true, colour);
+	}
+	else
+		bresenham(game, &s, false, colour);
+	printf("4\n");
+}
+
+void	set_ray_angle(t_root *game)
+{
+	int	x[2];
+	int	y[2];
+
+	printf("%s\n", game->map[0]);
+	x[0] = game->me->x[0];
+	x[1] = game->me->x[1];
+	y[0] = game->me->y[0];
+	y[1] = game->me->y[1];
+	printf("2\n");
+	draw_ray(game, x, y, 0x01013492);
 }

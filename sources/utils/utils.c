@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 14:26:11 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/17 14:26:42 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:09:02 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,29 @@ int	*float_to_int(double fval[2], int ival[2])
 	ival[0] = (int)fval[0];
 	ival[1] = (int)fval[1];
 	return (ival);
+}
+
+int	ft_abs(int i)
+{
+	if (i < 0)
+		return (-i);
+	return (i);
+}
+
+void	ft_swap(int *a, int *b)
+{
+	int	c;
+
+	c = *a;
+	*a = *b;
+	*b = c;
+}
+
+int	direction(int curr, int dst)
+{
+	if (curr < dst)
+		return (++curr);
+	if (curr > dst)
+		return (--curr);
+	return (curr);
 }

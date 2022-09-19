@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/17 14:33:16 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:24:13 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,8 @@ void	update_player(t_root *game)
 {
 	game->me->tile_x = (int)(game->me->x[0] / (TILE + 1));
 	game->me->tile_y = (int)(game->me->y[0] / (TILE + 1));
-	// printf("x: %i, y: %i\n", (int)game->me->x[0], (int)game->me->y[0]);
-	// printf("x: %i, y: %i\n", game->me->tile_x, game->me->tile_y);
 	clear_map(game);
-	// draw_ray(game);
+	set_ray_angle(game);
 	draw_player(game);
 	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
 		float_to_int(game->me->y, game->me->yt), 0xABCDEFAB);

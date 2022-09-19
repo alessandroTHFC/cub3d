@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:43:27 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/16 19:45:01 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:34:20 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,3 @@ bool	check_collision(t_root *game, double x, double y)
 		return (true);
 	return (check_proximity(game, x, y, wall));
 }
-
