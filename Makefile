@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/17 14:31:34 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/19 14:26:32 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/error/map_errors.c \
 			$(SRCDIR)/error/map_errors2.c \
 			$(SRCDIR)/rays/raycaster.c \
+			$(SRCDIR)/rays/projection.c \
 			$(SRCDIR)/utils/utils.c \
 			
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 10:59:41 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 15:07:10 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 			x_y[1] = s->y0;
 			x_y[0] = s->x0;
 		}
+		draw_pixel(game->mlx->minmap, x_y, colour);
 		if (is_wall(game->map, x_y[0], x_y[1]))
 			break ;
-		draw_pixel(game->mlx->minmap, x_y, colour);
 		if (s->m < 0)
 			s->m = s->m + 2 * s->dy;
 		else
@@ -60,6 +60,7 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 			s->m = s->m + 2 * s->dy - 2 * s->dx;
 		}
 	}
+	find_projection(game, x_y);
 }
 
 void	draw_ray(t_root *game, int *x, int *y, int colour)
@@ -90,7 +91,6 @@ void	increment_angle(t_root *game, int x[2], int y[2], double r)
 	double	rad;
 
 	rad = r;
-	printf("rad: %f\n", rad);
 	xt = x[1];
 	yt = y[1];
 	xt -= x[0];
@@ -108,20 +108,22 @@ void	set_ray_angle(t_root *game)
 	int		y[2];
 	int		i;
 	double	rad;
+	int		count;
 
 	x[0] = game->me->x[0];
 	x[1] = game->me->x[1];
 	y[0] = game->me->y[0];
 	y[1] = game->me->y[1];
-	i = -90;
-	while (i < 90)
+	i = -45;
+	count = 0;
+	while (i < 45)
 	{
-		increment_angle(game, x, y, rad);
 		rad = game->me->rad + (i * M_PI / 180);
-		draw_ray(game, x, y, 0xFFFF00);
-		i += 5;
+		increment_angle(game, x, y, rad);
+		i += 1;
 		x[1] = game->me->x[1];
 		y[1] = game->me->y[1];
+		count++;
 	}
-	draw_ray(game, x, y, 0xFFFF00);
+	printf("count: %i\n", count);
 }
