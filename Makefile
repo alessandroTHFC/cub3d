@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/12 09:04:57 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/19 14:26:32 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,12 +40,19 @@ endif
 SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/read_map.c \
 			$(SRCDIR)/exit.c \
-			$(SRCDIR)/draw_map.c \
-			$(SRCDIR)/draw_line.c \
-			$(SRCDIR)/ft_splice.c \
-			$(SRCDIR)/init_player.c \
-			$(SRCDIR)/map_errors.c \
-			$(SRCDIR)/map_errors2.c \
+			$(SRCDIR)/player/player_movement.c \
+			$(SRCDIR)/player/player_collision.c \
+			$(SRCDIR)/hooks.c \
+			$(SRCDIR)/drawing/draw_line.c \
+			$(SRCDIR)/drawing/draw_map.c \
+			$(SRCDIR)/init/init_player.c \
+			$(SRCDIR)/init/mlx_init.c \
+			$(SRCDIR)/error/ft_splice.c \
+			$(SRCDIR)/error/map_errors.c \
+			$(SRCDIR)/error/map_errors2.c \
+			$(SRCDIR)/rays/raycaster.c \
+			$(SRCDIR)/rays/projection.c \
+			$(SRCDIR)/utils/utils.c \
 			
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx.h \
@@ -139,7 +146,7 @@ fclean: clean
 re: fclean all
 	@printf "Cleaned and remade all files!\n"
 
-github: #Pushes to Github repo
+github: fclean #Pushes to Github repo
 	@git remote set-url origin git@github.com:alessandroTHFC/cub3d.git
 	@clear
 	@git add .
@@ -148,7 +155,7 @@ github: #Pushes to Github repo
 	git commit -m "$$COMMIT"; \
 	git push;
 
-42: #Pushes to vogsphere repo
+42: fclean #Pushes to vogsphere repo
 	@git remote set-url origin git@github.com:alessandroTHFC/cub3d.git
 	@clear
 	@git add .

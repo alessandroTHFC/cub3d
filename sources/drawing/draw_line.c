@@ -6,36 +6,11 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 09:23:46 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 15:38:29 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/19 09:08:57 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	ft_abs(int i)
-{
-	if (i < 0)
-		return (-i);
-	return (i);
-}
-
-void	ft_swap(int *a, int *b)
-{
-	int	c;
-
-	c = *a;
-	*a = *b;
-	*b = c;
-}
-
-int	direction(int curr, int dst)
-{
-	if (curr < dst)
-		return (++curr);
-	if (curr > dst)
-		return (--curr);
-	return (curr);
-}
 
 static void	bresenham(t_img *img, t_slope *s, bool dec, int colour)
 {

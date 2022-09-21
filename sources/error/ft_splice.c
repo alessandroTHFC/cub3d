@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splice.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 12:15:24 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/12 12:29:29 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/14 22:16:07 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static int	numofstrings(char *s, char c, t_root *game)
 		}
 		i++;
 	}
-	printf("Height = %i\n", r);
 	game->map_height = r - 1;
 	return (r);
 }
@@ -60,7 +59,7 @@ static char	*fillstring(char *s1, int first, int last)
 	return (s2);
 }
 
-static void	freestrings(char **s, int len)
+static char	**freestrings(char **s, int len)
 {
 	int	i;
 
@@ -71,6 +70,7 @@ static void	freestrings(char **s, int len)
 		i++;
 	}
 	free(s);
+	return (NULL);
 }
 
 char	**ft_splice(char *s, char c, t_root *game)
@@ -93,10 +93,7 @@ char	**ft_splice(char *s, char c, t_root *game)
 		game->map_width = last - first;
 		strs[i] = fillstring(s, first, last);
 		if (!strs[i])
-		{
-			freestrings(strs, i);
-			return (NULL);
-		}
+			return (freestrings(strs, i));
 		first = last;
 		i++;
 	}
