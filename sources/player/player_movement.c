@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 17:20:35 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/23 09:09:11 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	rot_player(t_root *game, int dir)
 	game->me->y[1] = ((x * sin(rad)) + (y * cos(rad)));
 	game->me->x[1] += game->me->x[0];
 	game->me->y[1] += game->me->y[0];
+	printf("[x0: %f, x1: %f\ny0: %f, y1: %f]\n",
+	game->me->x[0], game->me->x[1], game->me->y[0], game->me->y[1]);
 	game->me->angle = atan2(game->me->y[1] - game->me->y[0],
 			game->me->x[1] - game->me->x[0]);
 	update_player(game);

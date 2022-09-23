@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 17:13:16 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/23 16:06:29 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@
 # include <stdbool.h>
 
 # define M_PI 3.14159265358979323846264338327950288
+# define D_RAD 0.01745329251
 # define TILE 20
+# define FOV 60
 
 typedef struct s_slope
 {
@@ -47,6 +49,9 @@ typedef struct s_player
 	int		yt[2];
 	double	rad;
 	double	angle;
+	double	ray_angle;
+	double	col_x;
+	double	col_y;
 }	t_player;
 
 typedef struct s_minmap

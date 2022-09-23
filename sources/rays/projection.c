@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 17:41:35 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/23 10:18:55 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ void	draw_wall(t_root *game, int x, int y, int colour)
 
 	i = y;
 	x_end[0] = x;
-	x_end[1] = x + 100;
+	x_end[1] = x;
 	y_end[0] = y;
-	y_end[1] = y;
-	while (y_end[0] < 1080 - y)
-	{
+	y_end[1] = 1080 - y;
+	// while (y_end[0] < 1080 - y)
+	// {
 		draw_line(game->proj, x_end, y_end, colour);
-		y_end[0]++;
-		y_end[1]++;
-	}
+	// 	y_end[0]++;
+	// 	y_end[1]++;
+	// }
 }
 
 int	create_trgb(int t, int r, int g, int b)
@@ -67,22 +67,25 @@ void	find_projection(t_root *game, int end[2])
 {
 	static int	scan;
 	double		dist;
-	int			height;
 	double		angle;
+	int			height;
 
-	angle = atan2(end[1] - game->me->y[0], end[0] - game->me->x[0]);
-	dist = sqrt(ft_square(ft_abs(game->me->x[0] - end[0]))
-			+ ft_square(ft_abs(game->me->y[0] - end[1])));
-	dist *= cos(angle);
+	angle = atan2(end[1] - game->me->y[0],
+			end[0] - game->me->x[0]);
+	dist = sqrt(ft_square(game->me->x[0] - end[0])
+			+ ft_square(game->me->y[0] - end[1]));
+	printf("dist: %f\n", dist);
+	// dist *= cos(angle);
 	if (dist < 0)
 		dist *= -1;
 	printf("dist: %f\n", dist);
 	height = 500 - ((TILE * 50) / (dist)) * 10;
 	if (height < 0)
 		height = 0;
+	printf("height: %i\n", height);
 	draw_wall(game, scan, height, create_trgb(0, 3 * dist + 50, 0, 255));
-	scan += 21;
-	if (scan == 21 * 90)
+	scan += 1920 / FOV;
+	if (scan == (1920 / FOV) * FOV)
 		scan = 0;
-	(void)scan;
+	(void)angle;
 }

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 17:14:37 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/23 16:06:36 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,32 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 			s->m = s->m + 2 * s->dy - 2 * s->dx;
 		}
 	}
+	// printf("x1: %i\ny1: %i\n", x_y[0], x_y[1]);
 	find_projection(game, x_y);
 }
 
-void	draw_ray(t_root *game, int *x, int *y, int colour)
+void	draw_ray(t_root *game, double *x, double *y, int colour)
 {
-	t_slope	s;
+	t_slope		s;
+	static int	xl;
+	static int	yl;
 
-	s.x0 = x[0];
-	s.x1 = x[1];
-	s.y0 = y[0];
-	s.y1 = y[1];
+	s.x0 = (int)x[0];
+	s.x1 = (int)x[1];
+	s.y0 = (int)y[0];
+	s.y1 = (int)y[1];
 	s.dx = ft_abs(s.x1 - s.x0);
 	s.dy = ft_abs(s.y1 - s.y0);
+	if (xl && yl)
+		printf("x1: %i\ny1: %i\n", xl, yl);
+	if (xl && xl == s.x1 && yl && yl == s.y1)
+	{
+		s.x1--;
+		s.y1--;
+	}
+	xl = s.x1;
+	yl = s.y1;
+	printf("x1: %i\ny1: %i\n", xl, yl);
 	if (s.dy >= s.dx)
 	{
 		ft_swap(&s.y0, &s.x0);
@@ -84,19 +97,19 @@ void	draw_ray(t_root *game, int *x, int *y, int colour)
 		bresenham(game, &s, false, colour);
 }
 
-void	increment_angle(t_root *game, int x[2], int y[2], double r)
+void	increment_angle(t_root *game, double x[2], double y[2], double r)
 {
 	double	xt;
 	double	yt;
-	double	rad;
 
-	rad = r;
+	game->me->col_x = x[1];
+	game->me->col_y = y[1];
 	xt = x[1];
 	yt = y[1];
 	xt -= x[0];
 	yt -= y[0];
-	x[1] = ((xt * cos(rad)) - (yt * sin(rad)));
-	y[1] = ((xt * sin(rad)) + (yt * cos(rad)));
+	x[1] = ((xt * cos(r)) - (yt * sin(r)));
+	y[1] = ((xt * sin(r)) + (yt * cos(r)));
 	x[1] += x[0];
 	y[1] += y[0];
 	draw_ray(game, x, y, 0xFFFF00);
@@ -104,22 +117,21 @@ void	increment_angle(t_root *game, int x[2], int y[2], double r)
 
 void	set_ray_angle(t_root *game)
 {
-	int		x[2];
-	int		y[2];
+	double	x[2];
+	double	y[2];
 	int		i;
-	double	rad;
 	int		count;
 
 	x[0] = game->me->x[0];
 	x[1] = game->me->x[1];
 	y[0] = game->me->y[0];
 	y[1] = game->me->y[1];
-	i = -45;
+	i = -(FOV / 2);
 	count = 0;
-	while (i < 45)
+	while (i < FOV / 2)
 	{
-		rad = game->me->rad + (i * M_PI / 180);
-		increment_angle(game, x, y, rad);
+		game->me->ray_angle = i * D_RAD;
+		increment_angle(game, x, y, game->me->ray_angle);
 		i += 1;
 		x[1] = game->me->x[1];
 		y[1] = game->me->y[1];
