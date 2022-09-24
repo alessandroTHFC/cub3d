@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 17:14:37 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/24 13:12:24 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,8 @@ void	increment_angle(t_root *game, int x[2], int y[2], double r)
 	double	rad;
 
 	rad = r;
-	xt = x[1];
-	yt = y[1];
-	xt -= x[0];
-	yt -= y[0];
+	xt = (x[1] - x[0]) * 100;
+	yt = (y[1] - y[0]) * 100;
 	x[1] = ((xt * cos(rad)) - (yt * sin(rad)));
 	y[1] = ((xt * sin(rad)) + (yt * cos(rad)));
 	x[1] += x[0];
@@ -108,21 +106,19 @@ void	set_ray_angle(t_root *game)
 	int		y[2];
 	int		i;
 	double	rad;
-	int		count;
 
 	x[0] = game->me->x[0];
 	x[1] = game->me->x[1];
 	y[0] = game->me->y[0];
 	y[1] = game->me->y[1];
-	i = -45;
-	count = 0;
-	while (i < 45)
+	i = 0;
+	rad = (-POV / 2) * (M_PI / 180);
+	while (i <= 1920)
 	{
-		rad = game->me->rad + (i * M_PI / 180);
 		increment_angle(game, x, y, rad);
+		rad += (M_PI / 180) / (POV / 2);
 		i += 1;
 		x[1] = game->me->x[1];
 		y[1] = game->me->y[1];
-		count++;
 	}
 }

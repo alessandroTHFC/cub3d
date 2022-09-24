@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 17:13:16 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/24 12:24:15 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # include <math.h>
 # include <stdbool.h>
 
-# define M_PI 3.14159265358979323846264338327950288
-# define TILE 20
+# define M_PI	3.14159265358979323846264338327950288
+# define TILE	20
+# define POV	60
 
 typedef struct s_slope
 {
