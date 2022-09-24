@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/17 14:22:05 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/24 16:13:08 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 
 void	init_orientation(char dir, double x[2], double y[2])
 {
-	*x = TILE / 2;
-	*y = TILE / 2;
+	*x = TILE;
+	*y = TILE;
 	if (dir == 'N')
 		*y = 0;
 	if (dir == 'E')
-		*x = TILE;
+		*x = TILE * 2;
 	if (dir == 'S')
-		*y = TILE;
+		*y = TILE * 2;
 	if (dir == 'W')
 		*x = 0;
 }
@@ -37,9 +37,9 @@ void	init_player(t_root *game, int x, int y, char *dir)
 
 	me.tile_x = x;
 	me.tile_y = y;
-	me.x[0] = TILE / 2 + x;
-	me.y[0] = TILE / 2 + y;
-	me.rad = 5 * M_PI / 180;
+	me.x[0] = TILE + x;
+	me.y[0] = TILE + y;
+	me.rad = 3 * M_PI / 180;
 	init_orientation(*dir, &me.x[1], &me.y[1]);
 	*dir = '0';
 	me.x[1] += x;

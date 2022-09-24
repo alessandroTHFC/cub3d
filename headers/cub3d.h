@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/24 12:24:15 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/24 15:48:08 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <stdbool.h>
 
 # define M_PI	3.14159265358979323846264338327950288
-# define TILE	20
-# define POV	60
+# define TILE	30
+# define FOV	60
 
 typedef struct s_slope
 {
@@ -90,6 +90,7 @@ typedef struct s_root
 	int			map_height;
 	int			map_width;
 	int			player_count;
+	bool		map_toggle;
 }	t_root;
 
 /*	ERROR CHECKING	*/
@@ -112,18 +113,21 @@ void	update_player(t_root *game);
 /*	RAYCASTING	*/
 void	set_ray_angle(t_root *game);
 void	find_projection(t_root *game, int end[2]);
-void	clear_projection(t_root *game);
+int		ray_direction(int i, int j);
+void	ray_vector(int vect[2], int x, int y, int dec);
 /*	MEMORY FREE	*/
 int		clean_exit(t_root *game);
 void	free_map(char **map);
 /*	MLX DRAWING	*/
 void	draw_square(t_root *game, int colour, int x_offset, int y_offset);
+void	draw_background(t_root *game, int floor, int ceiling);
 void	draw_line(t_img *img, int *x, int *y, int colour);
 void	draw_pixel(t_img *img, int *x_y, int colour);
 void	draw_map(t_root *game, bool init);
 void	clear_map(t_root *game);
 /*	HOOKS	*/
 int		key_press(int key, t_root *game);
+int		mouse_move(int move, t_root *game);
 /*	OTHER	*/
 int		*float_to_int(double fval[2], int ival[2]);
 int		cardinal_space(t_root *game, int row, int idx, char c);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 17:20:35 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/24 16:14:18 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	draw_player(t_root *game)
 	int	y[2];
 	int	i;
 
+	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
+		float_to_int(game->me->y, game->me->yt), 0xABCDEFAB);
 	x[0] = game->me->x[0] - 3;
 	x[1] = x[0] + 5;
 	y[0] = game->me->y[0] - 3;
@@ -36,16 +38,21 @@ void	update_player(t_root *game)
 {
 	game->me->tile_x = (int)(game->me->x[0] / (TILE + 1));
 	game->me->tile_y = (int)(game->me->y[0] / (TILE + 1));
-	clear_map(game);
-	clear_projection(game);
+	draw_background(game, 0xFF9913e6, 0xFFf7d8f9);
+	if (game->map_toggle)
+	{
+		clear_map(game);
+	}
 	set_ray_angle(game);
-	draw_player(game);
-	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
-		float_to_int(game->me->y, game->me->yt), 0xABCDEFAB);
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
 		game->proj->img, 0, 0);
-	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
-		game->mlx->minmap->img, 0, 700);
+	if (game->map_toggle)
+	{
+		draw_player(game);
+		mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
+			game->mlx->minmap->img, 0,
+			1080 - ((game->map_height + 4) * (TILE + 1)));
+	}
 }
 
 /*	Rotates the player on button press.	*/
@@ -75,8 +82,8 @@ void	move_player(t_root *game, int dir)
 	int		dx;
 	int		dy;
 
-	dx = ((game->me->x[1] - game->me->x[0]) * dir) / 2;
-	dy = ((game->me->y[1] - game->me->y[0]) * dir) / 2;
+	dx = ((game->me->x[1] - game->me->x[0]) * dir) / 4;
+	dy = ((game->me->y[1] - game->me->y[0]) * dir) / 4;
 	if (!check_collision(game, dx + game->me->x[0], dy + game->me->y[0]))
 	{
 		return ;

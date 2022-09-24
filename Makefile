@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
+#    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/19 14:26:32 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/24 15:34:32 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,12 +45,14 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/hooks.c \
 			$(SRCDIR)/drawing/draw_line.c \
 			$(SRCDIR)/drawing/draw_map.c \
+			$(SRCDIR)/drawing/draw_background.c \
 			$(SRCDIR)/init/init_player.c \
 			$(SRCDIR)/init/mlx_init.c \
 			$(SRCDIR)/error/ft_splice.c \
 			$(SRCDIR)/error/map_errors.c \
 			$(SRCDIR)/error/map_errors2.c \
 			$(SRCDIR)/rays/raycaster.c \
+			$(SRCDIR)/rays/draw_ray.c \
 			$(SRCDIR)/rays/projection.c \
 			$(SRCDIR)/utils/utils.c \
 			
