@@ -6,11 +6,20 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:40:18 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/24 16:23:09 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/25 20:06:14 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	toggles(int key, t_root *game)
+{
+	if (key == FTOGGLE)
+		game->fish_toggle = !game->fish_toggle;
+	if (key == MTOGGLE)
+		game->map_toggle = !game->map_toggle;
+	update_player(game);
+}
 
 int	key_press(int key, t_root *game)
 {
@@ -26,13 +35,10 @@ int	key_press(int key, t_root *game)
 		move_player(game, dir);
 	if (key == A || key == D)
 		strafe_player(game, dir);
-	if (key == MTOGGLE)
-	{
-		game->map_toggle = !game->map_toggle;
-		update_player(game);
-	}
 	if (key == EXIT)
 		clean_exit(game);
+	if (key == FTOGGLE || key == MTOGGLE)
+		toggles(key, game);
 	return (key);
 }
 

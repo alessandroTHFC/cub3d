@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/24 15:43:51 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/25 19:41:56 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 	int	x_y[2];
 	int	x_dir;
 	int	y_dir;
+	int	x;
 
 	x_dir = ray_direction(s->x0, s->x1);
 	y_dir = ray_direction(s->y0, s->y1);
-	s->m = 2 * s->dy - s->dx;
-	while (1)
+	x = s->x0;
+	while (ft_abs(s->x0 - x) < (TILE) * 50)
 	{
 		s->x0 += x_dir;
 		ray_vector(x_y, s->x0, s->y0, dec);
@@ -60,7 +61,9 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 void	draw_ray(t_root *game, int *x, int *y, int colour)
 {
 	t_slope	s;
+	bool	dec;
 
+	dec = false;
 	s.x0 = x[0];
 	s.x1 = x[1];
 	s.y0 = y[0];
@@ -72,10 +75,10 @@ void	draw_ray(t_root *game, int *x, int *y, int colour)
 		ft_swap(&s.y0, &s.x0);
 		ft_swap(&s.y1, &s.x1);
 		ft_swap(&s.dx, &s.dy);
-		bresenham(game, &s, true, colour);
+		dec = true;
 	}
-	else
-		bresenham(game, &s, false, colour);
+	s.m = 2 * s.dy - s.dx;
+	bresenham(game, &s, dec, colour);
 }
 
 void	increment_angle(t_root *game, int x[2], int y[2], double r)
@@ -85,8 +88,8 @@ void	increment_angle(t_root *game, int x[2], int y[2], double r)
 	double	rad;
 
 	rad = r;
-	xt = (x[1] - x[0]) * 100;
-	yt = (y[1] - y[0]) * 100;
+	xt = (x[1] - x[0]) * 50;
+	yt = (y[1] - y[0]) * 50;
 	x[1] = ((xt * cos(rad)) - (yt * sin(rad)));
 	y[1] = ((xt * sin(rad)) + (yt * cos(rad)));
 	x[1] += x[0];
@@ -109,6 +112,7 @@ void	set_ray_angle(t_root *game)
 	rad = (-FOV / 2) * (M_PI / 180);
 	while (i <= 1920)
 	{
+		game->me->rangle = rad;
 		increment_angle(game, x, y, rad);
 		rad += (M_PI / 180) / (FOV / 2);
 		i += 1;

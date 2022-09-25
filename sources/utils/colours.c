@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macros.h                                           :+:      :+:    :+:   */
+/*   colours.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/11 17:21:07 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/25 10:11:13 by jbrown           ###   ########.fr       */
+/*   Created: 2022/09/24 19:40:56 by jbrown            #+#    #+#             */
+/*   Updated: 2022/09/24 19:42:42 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROS_H
-# define MACROS_H
+#include "cub3d.h"
 
-# define W 119
-# define A 97
-# define S 115
-# define D 100
-# define UP 65362
-# define DOWN 65364
-# define LEFT 65361
-# define RIGHT 65363
-# define EXIT 65307
-# define REDX -110848592
-# define MTOGGLE 109
-# define FTOGGLE 102
-# define BUFFER_SIZE 1000
-
-#endif
+int	create_trgb(int t, int r, int g, int b)
+{
+	if (g > 200)
+		g = 200;
+	return (t << 24 | r << 16 | g << 8 | b);
+}

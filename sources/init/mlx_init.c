@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/24 16:24:58 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/25 10:12:57 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	init_projection(t_root *game)
 void	init_root(t_root *game)
 {
 	game->map_toggle = true;
+	game->fish_toggle = true;
 	init_mlx(game);
 	init_projection(game);
 	draw_map(game, true);

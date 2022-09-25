@@ -6,7 +6,7 @@
 #    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/24 15:34:32 by jbrown           ###   ########.fr        #
+#    Updated: 2022/09/24 19:42:24 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/rays/draw_ray.c \
 			$(SRCDIR)/rays/projection.c \
 			$(SRCDIR)/utils/utils.c \
+			$(SRCDIR)/utils/colours.c \
 			
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx.h \

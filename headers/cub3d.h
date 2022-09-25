@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/24 15:48:08 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/25 10:11:37 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdbool.h>
 
 # define M_PI	3.14159265358979323846264338327950288
-# define TILE	30
+# define TILE	50
 # define FOV	60
 
 typedef struct s_slope
@@ -48,6 +48,7 @@ typedef struct s_player
 	int		yt[2];
 	double	rad;
 	double	angle;
+	double	rangle;
 }	t_player;
 
 typedef struct s_minmap
@@ -91,6 +92,7 @@ typedef struct s_root
 	int			map_width;
 	int			player_count;
 	bool		map_toggle;
+	bool		fish_toggle;
 }	t_root;
 
 /*	ERROR CHECKING	*/
@@ -134,5 +136,6 @@ int		cardinal_space(t_root *game, int row, int idx, char c);
 int		direction(int curr, int dst);
 void	ft_swap(int *a, int *b);
 int		ft_abs(int i);
+int		create_trgb(int t, int r, int g, int b);
 
 #endif
