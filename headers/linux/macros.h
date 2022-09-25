@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 17:21:07 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/25 10:11:13 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/25 20:16:58 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # define LEFT 65361
 # define RIGHT 65363
 # define EXIT 65307
-# define REDX -110848592
 # define MTOGGLE 109
 # define FTOGGLE 102
 # define BUFFER_SIZE 1000
