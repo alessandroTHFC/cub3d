@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/24 16:14:18 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/02 15:06:07 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,8 @@ void	strafe_player(t_root *game, int dir)
 		strafe += M_PI * 2;
 	if (strafe > M_PI * 2)
 		strafe -= M_PI * 2;
-	x = cos(strafe) * dir;
-	y = sin(strafe) * dir;
+	x = cos(strafe) * dir * 2;
+	y = sin(strafe) * dir * 2;
 	if (!check_collision(game, x + game->me->x[0], y + game->me->y[0]))
 	{
 		return ;

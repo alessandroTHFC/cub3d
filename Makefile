@@ -6,7 +6,7 @@
 #    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/24 19:42:24 by jbrown           ###   ########.fr        #
+#    Updated: 2022/10/02 21:44:21 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/rays/raycaster.c \
 			$(SRCDIR)/rays/draw_ray.c \
 			$(SRCDIR)/rays/projection.c \
+			$(SRCDIR)/rays/find_collision.c \
 			$(SRCDIR)/utils/utils.c \
 			$(SRCDIR)/utils/colours.c \
 			
@@ -117,7 +118,7 @@ libs: $(MLX)
 
 $(NAME): $(OBJECTS)
 	@printf "$(UNAME) \n"
-	$(CC) -I ./headers/imported $(OBJECTS) $(ALLLIB) $(LFLAGS) $(MLX_FLAGS) -o $@
+	scan-build $(CC) -I ./headers/imported $(OBJECTS) $(ALLLIB) $(LFLAGS) $(MLX_FLAGS) -o $@
 	@printf "Built program %s successfully\n" $@
 
 $(BUILDIR)/%.o : $(SRCDIR)/%.c

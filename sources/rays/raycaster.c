@@ -6,7 +6,7 @@
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/25 19:41:56 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/02 15:15:28 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	increment_angle(t_root *game, int x[2], int y[2], double r)
 	double	rad;
 
 	rad = r;
-	xt = (x[1] - x[0]) * 50;
-	yt = (y[1] - y[0]) * 50;
+	xt = (x[1] - x[0]) * 90;
+	yt = (y[1] - y[0]) * 90;
 	x[1] = ((xt * cos(rad)) - (yt * sin(rad)));
 	y[1] = ((xt * sin(rad)) + (yt * cos(rad)));
 	x[1] += x[0];
