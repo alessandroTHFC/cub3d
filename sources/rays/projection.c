@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 13:26:43 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/03 16:37:06 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	find_projection(t_root *game, int end[2])
 	height = 500 - ((TILE * 50) / (dist)) * 10;
 	if (height < 0)
 		height = 0;
-	draw_wall(game, scan, height, create_trgb(0, 255 - side, dist / 4, 255));
+	draw_wall(game, scan, height, create_trgb(0, 255 - side, 255, dist / 4));
 	scan += 1;
 	if (scan == 1921)
 	{
