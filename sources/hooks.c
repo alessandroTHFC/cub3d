@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:40:18 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/02 19:20:24 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/03 11:24:27 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	toggles(int key, t_root *game)
 int	key_press(int key, t_root *game)
 {
 	key = (short)key + OFFSET;
-	// printf("key pressed: %i\n", key);
+	printf("key pressed: %i\n", key);
 	if (key == EXIT)
 		clean_exit(game);
 	if (key == FTOGGLE || key == MTOGGLE)

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jbrown <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/10/02 21:44:21 by jbrown           ###   ########.fr        #
+#    Updated: 2022/10/03 11:19:43 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,7 +118,7 @@ libs: $(MLX)
 
 $(NAME): $(OBJECTS)
 	@printf "$(UNAME) \n"
-	scan-build $(CC) -I ./headers/imported $(OBJECTS) $(ALLLIB) $(LFLAGS) $(MLX_FLAGS) -o $@
+	$(CC) -I ./headers/imported $(OBJECTS) $(ALLLIB) $(LFLAGS) $(MLX_FLAGS) -o $@
 	@printf "Built program %s successfully\n" $@
 
 $(BUILDIR)/%.o : $(SRCDIR)/%.c
@@ -141,10 +141,12 @@ $(MLX):
 
 clean:
 	@$(RM) $(CLNDIR)
+	@$(MAKE) clean -C $(L42DIR)
 	@printf "Cleaned: %s\n" $(CLNDIR)
 
 fclean: clean
 	@$(RM) $(FCLN)
+	@$(MAKE) fclean -C $(L42DIR)
 	@printf "Cleaned: %s\n" $(FCLN)
 
 re: fclean all
