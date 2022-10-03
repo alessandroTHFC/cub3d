@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:43:27 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/19 09:34:20 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/09/24 16:19:55 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ bool	check_proximity(t_root *game, double x, double y, int wall)
 	int	y_map;
 
 	if (wall == 1)
-		y += TILE / 4;
+		y += TILE / 8;
 	if (wall == -1)
-		y -= TILE / 4;
+		y -= TILE / 8;
 	if (wall == 2)
-		x += TILE / 4;
+		x += TILE / 8;
 	if (wall == -2)
-		x -= TILE / 4;
+		x -= TILE / 8;
 	x_map = (int)(x / (TILE + 1));
 	y_map = (int)(y / (TILE + 1));
 	if (game->map[y_map][x_map] == '1')

@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macros.h                                           :+:      :+:    :+:   */
+/*   draw_background.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/11 17:21:07 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/25 20:16:58 by jbrown           ###   ########.fr       */
+/*   Created: 2022/09/24 13:25:05 by jbrown            #+#    #+#             */
+/*   Updated: 2022/09/24 13:32:00 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROS_H
-# define MACROS_H
+#include "cub3d.h"
 
-# define W 119
-# define A 97
-# define S 115
-# define D 100
-# define UP 65362
-# define DOWN 65364
-# define LEFT 65361
-# define RIGHT 65363
-# define EXIT 65307
-# define MTOGGLE 109
-# define FTOGGLE 102
-# define BUFFER_SIZE 1000
+void	draw_background(t_root *game, int floor, int ceiling)
+{
+	int	x[2];
+	int	y[2];
 
-#endif
+	x[0] = 0;
+	x[1] = 1920;
+	y[0] = 0;
+	y[1] = 0;
+	while (y[0] <= 1080 / 2)
+	{
+		draw_line(game->proj, x, y, ceiling);
+		y[0]++;
+		y[1]++;
+	}
+	while (y[0] <= 1080)
+	{
+		draw_line(game->proj, x, y, floor);
+		y[0]++;
+		y[1]++;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/23 10:18:55 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/03 11:00:26 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,75 +17,82 @@ double	ft_square(double d)
 	return (d * d);
 }
 
-void	clear_projection(t_root *game)
+void	draw_cursor(t_root *game)
 {
-	int	x;
-	int	y;
-	int	x_y[2];
+	int	x[2];
+	int	y[2];
 
-	y = 0;
-	while (y < 1080)
-	{
-		x = 0;
-		while (x < 1920)
-		{
-			x_y[0] = x;
-			x_y[1] = y;
-			draw_pixel(game->proj, x_y, 0x00000000);
-			x++;
-		}
-		y++;
-	}
-	draw_map(game, false);
+	x[0] = 1920 / 2 - 10;
+	x[1] = x[0] + 19;
+	y[0] = 1080 / 2;
+	y[1] = y[0];
+	draw_line(game->proj, x, y, 0xFF000000);
+	x[0] += 10;
+	x[1] -= 9;
+	y[0] -= 10;
+	y[1] += 9;
+	draw_line(game->proj, x, y, 0xFF000000);
 }
 
 void	draw_wall(t_root *game, int x, int y, int colour)
 {
 	int	x_end[2];
 	int	y_end[2];
-	int	i;
 
-	i = y;
 	x_end[0] = x;
 	x_end[1] = x;
 	y_end[0] = y;
 	y_end[1] = 1080 - y;
-	// while (y_end[0] < 1080 - y)
-	// {
-		draw_line(game->proj, x_end, y_end, colour);
-	// 	y_end[0]++;
-	// 	y_end[1]++;
-	// }
+	draw_line(game->proj, x_end, y_end, colour);
 }
 
-int	create_trgb(int t, int r, int g, int b)
+// void	print_index(t_root *game, char c, int i, int j)
+// {
+// 	if (c == 'N' || c == 'S')
+// 		i -= (TILE + 1) * (game->map[j][0]);
+// 	else
+// 		i -= (TILE + 1) * (game->map[0][j]);
+// 	printf("index of square: %i\n", i);
+// }
+
+int	print_side(t_root *game, int x, int y)
 {
-	return (t << 24 | r << 16 | g << 8 | b);
+	int	count;
+
+	count = 0;
+	if (game->map[y / (TILE + 1)][(x - 1) / (TILE + 1)] == '0')
+		count++;
+	if (game->map[y / (TILE + 1)][(x + 1) / (TILE + 1)] == '0')
+		count += 2;
+	if (game->map[(y - 1) / (TILE + 1)][x / (TILE + 1)] == '0')
+		count += 3;
+	if (game->map[(y + 1) / (TILE + 1)][x / (TILE + 1)] == '0')
+		count += 4;
+	if (count > 2 && count < 8)
+		return (10);
+	return (0);
 }
 
 void	find_projection(t_root *game, int end[2])
 {
 	static int	scan;
 	double		dist;
-	double		angle;
 	int			height;
+	int			side;
 
-	angle = atan2(end[1] - game->me->y[0],
-			end[0] - game->me->x[0]);
+	side = print_side(game, end[0], end[1]);
 	dist = sqrt(ft_square(game->me->x[0] - end[0])
 			+ ft_square(game->me->y[0] - end[1]));
-	printf("dist: %f\n", dist);
-	// dist *= cos(angle);
-	if (dist < 0)
-		dist *= -1;
-	printf("dist: %f\n", dist);
+	if (game->fish_toggle)
+		dist *= cos(game->me->rangle);
 	height = 500 - ((TILE * 50) / (dist)) * 10;
 	if (height < 0)
 		height = 0;
-	printf("height: %i\n", height);
-	draw_wall(game, scan, height, create_trgb(0, 3 * dist + 50, 0, 255));
-	scan += 1920 / FOV;
-	if (scan == (1920 / FOV) * FOV)
+	draw_wall(game, scan, height, create_trgb(0, 255 - side, dist / 4, 255));
+	scan += 1;
+	if (scan == 1921)
+	{
+		draw_cursor(game);
 		scan = 0;
-	(void)angle;
+	}
 }

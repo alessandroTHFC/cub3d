@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macros.h                                           :+:      :+:    :+:   */
+/*   draw_ray.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/11 17:21:07 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/25 20:16:58 by jbrown           ###   ########.fr       */
+/*   Created: 2022/09/24 15:28:37 by jbrown            #+#    #+#             */
+/*   Updated: 2022/09/24 15:34:49 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROS_H
-# define MACROS_H
+#include "cub3d.h"
 
-# define W 119
-# define A 97
-# define S 115
-# define D 100
-# define UP 65362
-# define DOWN 65364
-# define LEFT 65361
-# define RIGHT 65363
-# define EXIT 65307
-# define MTOGGLE 109
-# define FTOGGLE 102
-# define BUFFER_SIZE 1000
+int	ray_direction(int i, int j)
+{
+	if (i < j)
+		return (1);
+	return (-1);
+}
 
-#endif
+void	ray_vector(int vect[2], int x, int y, int dec)
+{
+	if (dec)
+	{
+		vect[0] = y;
+		vect[1] = x;
+	}
+	else
+	{
+		vect[1] = y;
+		vect[0] = x;
+	}
+}

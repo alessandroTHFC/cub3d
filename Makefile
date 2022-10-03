@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/19 14:26:32 by jbrown           ###   ########.fr        #
+#    Updated: 2022/10/03 11:05:36 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,14 +45,17 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/hooks.c \
 			$(SRCDIR)/drawing/draw_line.c \
 			$(SRCDIR)/drawing/draw_map.c \
+			$(SRCDIR)/drawing/draw_background.c \
 			$(SRCDIR)/init/init_player.c \
 			$(SRCDIR)/init/mlx_init.c \
 			$(SRCDIR)/error/ft_splice.c \
 			$(SRCDIR)/error/map_errors.c \
 			$(SRCDIR)/error/map_errors2.c \
 			$(SRCDIR)/rays/raycaster.c \
+			$(SRCDIR)/rays/draw_ray.c \
 			$(SRCDIR)/rays/projection.c \
 			$(SRCDIR)/utils/utils.c \
+			$(SRCDIR)/utils/colours.c \
 			
 IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx.h \
@@ -137,10 +140,12 @@ $(MLX):
 
 clean:
 	@$(RM) $(CLNDIR)
+	@$(MAKE) clean -C $(L42DIR)
 	@printf "Cleaned: %s\n" $(CLNDIR)
 
 fclean: clean
 	@$(RM) $(FCLN)
+	@$(MAKE) fclean -C $(L42DIR)
 	@printf "Cleaned: %s\n" $(FCLN)
 
 re: fclean all
