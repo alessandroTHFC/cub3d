@@ -6,9 +6,10 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 11:00:11 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/03 13:52:13 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "cub3d.h"
 
@@ -55,11 +56,10 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 			s->m = s->m + 2 * s->dy - 2 * s->dx;
 		}
 	}
-	// printf("x1: %i\ny1: %i\n", x_y[0], x_y[1]);
 	find_projection(game, x_y);
 }
 
-void	draw_ray(t_root *game, double *x, double *y, int colour)
+void	draw_ray(t_root *game, int *x, int *y, int colour)
 {
 	t_slope	s;
 	bool	dec;
@@ -71,16 +71,6 @@ void	draw_ray(t_root *game, double *x, double *y, int colour)
 	s.y1 = y[1];
 	s.dx = ft_abs(s.x1 - s.x0);
 	s.dy = ft_abs(s.y1 - s.y0);
-	if (xl && yl)
-		printf("x1: %i\ny1: %i\n", xl, yl);
-	if (xl && xl == s.x1 && yl && yl == s.y1)
-	{
-		s.x1--;
-		s.y1--;
-	}
-	xl = s.x1;
-	yl = s.y1;
-	printf("x1: %i\ny1: %i\n", xl, yl);
 	if (s.dy >= s.dx)
 	{
 		ft_swap(&s.y0, &s.x0);
@@ -92,14 +82,15 @@ void	draw_ray(t_root *game, double *x, double *y, int colour)
 	bresenham(game, &s, dec, colour);
 }
 
-void	increment_angle(t_root *game, double x[2], double y[2], double r)
+void	increment_angle(t_root *game, int x[2], int y[2], double r)
 {
 	double	xt;
 	double	yt;
+	double	rad;
 
 	rad = r;
-	xt = (x[1] - x[0]) * 50;
-	yt = (y[1] - y[0]) * 50;
+	xt = (x[1] - x[0]) * 90;
+	yt = (y[1] - y[0]) * 90;
 	x[1] = ((xt * cos(rad)) - (yt * sin(rad)));
 	y[1] = ((xt * sin(rad)) + (yt * cos(rad)));
 	x[1] += x[0];
@@ -109,8 +100,8 @@ void	increment_angle(t_root *game, double x[2], double y[2], double r)
 
 void	set_ray_angle(t_root *game)
 {
-	double	x[2];
-	double	y[2];
+	int		x[2];
+	int		y[2];
 	int		i;
 	double	rad;
 

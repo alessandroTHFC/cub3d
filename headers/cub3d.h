@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 11:00:09 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/03 13:27:33 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_root
 	int			map_height;
 	int			map_width;
 	int			player_count;
+	bool		key_pressed[512];
 	bool		map_toggle;
 	bool		fish_toggle;
 }	t_root;
@@ -117,6 +118,7 @@ void	set_ray_angle(t_root *game);
 void	find_projection(t_root *game, int end[2]);
 int		ray_direction(int i, int j);
 void	ray_vector(int vect[2], int x, int y, int dec);
+int		find_side(t_root *game, int x, int y);
 /*	MEMORY FREE	*/
 int		clean_exit(t_root *game);
 void	free_map(char **map);
@@ -129,7 +131,9 @@ void	draw_map(t_root *game, bool init);
 void	clear_map(t_root *game);
 /*	HOOKS	*/
 int		key_press(int key, t_root *game);
+int		key_release(int key, t_root *game);
 int		mouse_move(int move, t_root *game);
+int		game_hook(t_root *game);
 /*	OTHER	*/
 int		*float_to_int(double fval[2], int ival[2]);
 int		cardinal_space(t_root *game, int row, int idx, char c);

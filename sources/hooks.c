@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:40:18 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/25 20:06:14 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/03 11:24:27 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	toggles(int key, t_root *game)
+void	toggles(int key, t_root *game)
 {
 	if (key == FTOGGLE)
 		game->fish_toggle = !game->fish_toggle;
@@ -23,23 +23,28 @@ static void	toggles(int key, t_root *game)
 
 int	key_press(int key, t_root *game)
 {
-	int	dir;
-
-	if (key == LEFT || key == S || key == D || key == DOWN)
-			dir = -1;
-	if (key == RIGHT || key == W || key == A || key == UP)
-			dir = 1;
-	if (key == LEFT || key == RIGHT)
-		rot_player(game, dir);
-	if (key == W || key == S || key == UP || key == DOWN)
-		move_player(game, dir);
-	if (key == A || key == D)
-		strafe_player(game, dir);
+	key = (short)key + OFFSET;
+	printf("key pressed: %i\n", key);
 	if (key == EXIT)
 		clean_exit(game);
 	if (key == FTOGGLE || key == MTOGGLE)
+	{
 		toggles(key, game);
-	return (key);
+		return (1);
+	}
+	game->key_pressed[key] = true;
+	return (0);
+}
+
+int	key_release(int key, t_root *game)
+{
+	key = (short)key + OFFSET;
+	if (key == FTOGGLE || key == MTOGGLE)
+	{
+		return (1);
+	}
+	game->key_pressed[key] = false;
+	return (0);
 }
 
 int	mouse_move(int move, t_root *game)
@@ -48,12 +53,39 @@ int	mouse_move(int move, t_root *game)
 	if (move < 960)
 	{
 		printf("Going left\n");
-		rot_player(game, -1);
+		game->key_pressed[LEFT] = true;
+		game->key_pressed[RIGHT] = false;
 	}
 	else
 	{
 		printf("Going right\n");
-		rot_player(game, 1);
+		game->key_pressed[LEFT] = false;
+		game->key_pressed[RIGHT] = true;
 	}
-	return (move);
+	return (0);
+}
+
+static bool	key_b(t_root *game, int key)
+{
+	return (game->key_pressed[key]);
+}
+
+int	game_hook(t_root *game)
+{
+	int	dir;
+
+	if (key_b(game, LEFT) || key_b(game, S)
+		|| key_b(game, D) || key_b(game, DOWN))
+			dir = -1;
+	if (key_b(game, RIGHT) || key_b(game, W)
+		|| key_b(game, A) || key_b(game, UP))
+			dir = 1;
+	if (key_b(game, LEFT) || key_b(game, RIGHT))
+		rot_player(game, dir);
+	if (key_b(game, W) || key_b(game, S)
+		|| key_b(game, UP) || key_b(game, DOWN))
+		move_player(game, dir);
+	if (key_b(game, A) || key_b(game, D))
+		strafe_player(game, dir);
+	return (0);
 }

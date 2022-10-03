@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/25 10:12:57 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/03 13:52:43 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	set_false(t_root *game)
+{
+	game->key_pressed[W] = false;
+	game->key_pressed[A] = false;
+	game->key_pressed[S] = false;
+	game->key_pressed[D] = false;
+	game->key_pressed[UP] = false;
+	game->key_pressed[DOWN] = false;
+	game->key_pressed[LEFT] = false;
+	game->key_pressed[RIGHT] = false;
+}
 
 static void	get_image(t_root *game)
 {
@@ -54,11 +66,16 @@ void	init_root(t_root *game)
 {
 	game->map_toggle = true;
 	game->fish_toggle = true;
+	set_false(game);
 	init_mlx(game);
 	init_projection(game);
 	draw_map(game, true);
 	update_player(game);
+	mlx_do_key_autorepeatoff(game->mlx->mlx);
 	mlx_hook(game->mlx->win, 2, 1L << 0, key_press, game);
+	mlx_hook(game->mlx->win, 3, 1L << 1, key_release, game);
+	// mlx_hook(game->mlx->win, 6, 1L << 6, mouse_move, game);
 	mlx_hook(game->mlx->win, 17, 0, clean_exit, game);
+	mlx_loop_hook(game->mlx->mlx, game_hook, game);
 	mlx_loop(game->mlx->mlx);
 }

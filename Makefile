@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/10/03 11:05:36 by jbrown           ###   ########.fr        #
+#    Updated: 2022/10/03 13:27:41 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,7 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/rays/raycaster.c \
 			$(SRCDIR)/rays/draw_ray.c \
 			$(SRCDIR)/rays/projection.c \
+			$(SRCDIR)/rays/find_collision.c \
 			$(SRCDIR)/utils/utils.c \
 			$(SRCDIR)/utils/colours.c \
 			

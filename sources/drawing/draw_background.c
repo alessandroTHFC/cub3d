@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_background.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 13:25:05 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/24 13:32:00 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/03 11:23:24 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	draw_background(t_root *game, int floor, int ceiling)
 		y[0]++;
 		y[1]++;
 	}
-	while (y[0] <= 1080)
+	while (y[0] < 1079)
 	{
 		draw_line(game->proj, x, y, floor);
 		y[0]++;

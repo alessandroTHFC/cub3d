@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 11:01:17 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/03 14:39:12 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	update_player(t_root *game)
 {
 	game->me->tile_x = (int)(game->me->x[0] / (TILE + 1));
 	game->me->tile_y = (int)(game->me->y[0] / (TILE + 1));
-	draw_background(game, 0xFF9913e6, 0xFFf7d8f9);
+	draw_background(game, 0x009913e6, 0x00f7d8f9);
 	if (game->map_toggle)
 	{
 		clear_map(game);
@@ -72,8 +72,6 @@ void	rot_player(t_root *game, int dir)
 	game->me->y[1] = ((x * sin(rad)) + (y * cos(rad)));
 	game->me->x[1] += game->me->x[0];
 	game->me->y[1] += game->me->y[0];
-	printf("[x0: %f, x1: %f\ny0: %f, y1: %f]\n",
-	game->me->x[0], game->me->x[1], game->me->y[0], game->me->y[1]);
 	game->me->angle = atan2(game->me->y[1] - game->me->y[0],
 			game->me->x[1] - game->me->x[0]);
 	update_player(game);
