@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 13:52:13 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/06 09:18:44 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	draw_ray(t_root *game, int *x, int *y, int colour)
 	s.y1 = y[1];
 	s.dx = ft_abs(s.x1 - s.x0);
 	s.dy = ft_abs(s.y1 - s.y0);
-	if (s.dy >= s.dx)
+	if (s.dy > s.dx)
 	{
 		ft_swap(&s.y0, &s.x0);
 		ft_swap(&s.y1, &s.x1);
