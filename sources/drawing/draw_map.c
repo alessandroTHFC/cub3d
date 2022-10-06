@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 15:32:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 13:52:23 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/06 15:16:26 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	clear_map(t_root *game)
 		{
 			x_y[0] = x;
 			x_y[1] = y;
-			draw_pixel(game->mlx->minmap, x_y, 0x00);
+			draw_pixel(game->mlx->minmap, x_y, 0xFF000000);
 			x++;
 		}
 		y++;

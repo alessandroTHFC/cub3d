@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 19:19:09 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/06 10:23:52 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/06 14:54:51 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int	find_side(t_root *game, int x, int y)
 	if (!((y + 1) % (TILE + 1)) && !((x + 1) % (TILE + 1)))
 		return (-20);
 	if (count > 2)
-		return (20);
+		return (-1);
 	return (0);
 }
