@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 13:27:33 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/07 12:31:09 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_player
 	double	y[2];
 	int		xt[2];
 	int		yt[2];
+	int		text_i;
 	double	rad;
 	double	angle;
 	double	rangle;
@@ -87,6 +88,9 @@ typedef struct s_root
 	t_minmap	*minmap;
 	t_img		*proj;
 	t_player	*me;
+	void		*wall_texture;
+	int			tex_w;
+	int			tex_h;
 	char		**map;
 	int			map_height;
 	int			map_width;

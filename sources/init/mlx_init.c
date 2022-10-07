@@ -6,11 +6,39 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 13:52:43 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/07 12:39:14 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	test(t_root *game)
+{
+	int		w;
+	int		h;
+	int		i;
+	int		j;
+	void	*test;
+
+	test = mlx_xpm_file_to_image(game->mlx->mlx, "./textures/test.xpm", &w, &h);
+	i = 0;
+	printf("height: %i, width: %i\n", h, w);
+	while (i < h)
+	{
+		j = 0;
+		while (j < w)
+		{
+			printf("%i, ", *(int *)(test + (i) + (j)));
+			j++;
+		}
+		j = 0;
+		printf("\n");
+		i++;
+	}
+	game->wall_texture = test;
+	game->tex_h = h;
+	game->tex_w = w;
+}
 
 static void	set_false(t_root *game)
 {
@@ -64,10 +92,11 @@ static void	init_projection(t_root *game)
 
 void	init_root(t_root *game)
 {
-	game->map_toggle = true;
+	game->map_toggle = false;
 	game->fish_toggle = true;
 	set_false(game);
 	init_mlx(game);
+	test(game);
 	init_projection(game);
 	draw_map(game, true);
 	update_player(game);

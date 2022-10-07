@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 14:39:12 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/07 10:44:27 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,16 @@ void	move_player(t_root *game, int dir)
 	int		dx;
 	int		dy;
 
-	dx = ((game->me->x[1] - game->me->x[0]) * dir) / 4;
-	dy = ((game->me->y[1] - game->me->y[0]) * dir) / 4;
-	if (!check_collision(game, dx + game->me->x[0], dy + game->me->y[0]))
+	dx = ((game->me->x[1] - game->me->x[0]) * dir) * 20;
+	dy = ((game->me->y[1] - game->me->y[0]) * dir) * 20;
+	if (!check_collision(game, dx / 20 + game->me->x[0], dy / 20 + game->me->y[0]))
 	{
 		return ;
 	}
-	game->me->x[0] += dx;
-	game->me->x[1] += dx;
-	game->me->y[0] += dy;
-	game->me->y[1] += dy;
+	game->me->x[0] += dx / 20;
+	game->me->x[1] += dx / 20;
+	game->me->y[0] += dy / 20;
+	game->me->y[1] += dy / 20;
 	update_player(game);
 }
 

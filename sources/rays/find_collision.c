@@ -6,19 +6,23 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 19:19:09 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/06 14:54:51 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/07 10:13:16 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	print_index(t_root *game, char c, int i, int j)
+void	set_index(t_root *game, int x, int y, int dir)
 {
-	if (c == 'N' || c == 'S')
-		i -= (TILE + 1) * (game->map[j][0]);
+	int	i;
+
+	if (dir < 3)
+		i = x - (x / (TILE + 1)) * (TILE + 1);
 	else
-		i -= (TILE + 1) * (game->map[0][j]);
-	printf("index of square: %i\n", i);
+		i = y - (y / (TILE + 1)) * (TILE + 1);
+	if (!(dir % 2))
+		i = TILE - i;
+	game->me->text_i = i;
 }
 
 int	corner_collide(t_root *game, int x, int y)
@@ -69,6 +73,7 @@ int	find_side(t_root *game, int x, int y)
 	{
 		count = corner_collide(game, x, y);
 	}
+	set_index(game, x, y, count);
 	if (!((y + 1) % (TILE + 1)) && !((x + 1) % (TILE + 1)))
 		return (-20);
 	if (count > 2)
