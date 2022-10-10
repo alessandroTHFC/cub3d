@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/07 12:39:14 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/10 15:16:17 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,29 @@ void	test(t_root *game)
 	int		h;
 	int		i;
 	int		j;
-	void	*test;
+	static t_img	wall;
+	static char	*wall_pointer;
 
-	test = mlx_xpm_file_to_image(game->mlx->mlx, "./textures/test.xpm", &w, &h);
+	wall.img = mlx_xpm_file_to_image(game->mlx->mlx, "./textures/this.xpm", &w, &h);
 	i = 0;
-	printf("height: %i, width: %i\n", h, w);
+	// printf("height: %i, width: %i\n{", h, w);
+	wall_pointer = mlx_get_data_addr(wall.img, &wall.pixel_bits, &wall.line_len, &wall.endian);
 	while (i < h)
 	{
 		j = 0;
 		while (j < w)
 		{
-			printf("%i, ", *(int *)(test + (i) + (j)));
+			// printf("0x%X, ", *(int *)(wall_pointer + (i * wall.line_len + j * (wall.pixel_bits / 8))));
 			j++;
 		}
 		j = 0;
-		printf("\n");
+		// printf("},\n{");
 		i++;
 	}
-	game->wall_texture = test;
+	game->wall = &wall;
 	game->tex_h = h;
 	game->tex_w = w;
+	game->wall_pointer = wall_pointer;
 }
 
 static void	set_false(t_root *game)

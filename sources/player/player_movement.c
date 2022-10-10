@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/07 10:44:27 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/10 10:40:42 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	update_player(t_root *game)
 	set_ray_angle(game);
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
 		game->proj->img, 0, 0);
+	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win, game->wall->img, 0, 0);
 	if (game->map_toggle)
 	{
 		draw_player(game);
