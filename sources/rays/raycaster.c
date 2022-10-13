@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/13 15:43:33 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/13 21:06:54 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static bool	is_wall(char **map, int x, int y)
 {
-	int	tx;
-	int	ty;
+	// int	tx;
+	// int	ty;
 
-	tx = x + 1;
-	ty = y + 1;
-	tx /= (TILE + 1);
-	ty /= (TILE + 1);
+	// tx = x + 1;
+	// ty = y + 1;
+	// tx /= (TILE + 1);
+	// ty /= (TILE + 1);
 	x /= (TILE + 1);
 	y /= (TILE + 1);
-	if (map[y][x] == '1' || map[ty][tx] == '1'
-			|| map[y][tx] == '1' || map[ty][x] == '1')
+	if (map[y][x] == '1') //|| map[ty][tx] == '1'
+			//|| map[y][tx] == '1' || map[ty][x] == '1')
 		return (true);
 	return (false);
 }

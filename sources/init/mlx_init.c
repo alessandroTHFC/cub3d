@@ -3,44 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/13 17:28:46 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/13 20:45:10 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+char *strs[4] = {
+	"./textures/colours.xpm",
+	"./textures/shit.xpm",
+	"./textures/tex.xpm",
+	"./textures/floral.xpm"
+};
+
 void	test(t_root *game)
 {
-	int				w;
-	int				h;
-	static t_img	wall;
-	static char		*wall_pointer;
-	t_textures		*tex;
+	int				i;
+	t_textures		*tmp;
+	t_textures		**tex;
 
 	tex = malloc(sizeof(*tex) * 4);
-	wall.img = mlx_xpm_file_to_image(game->mlx->mlx, "./textures/colours.xpm", &tex[0].w, &tex[0].h);
-	tex[0].img = &wall;
-	wall.img = mlx_xpm_file_to_image(game->mlx->mlx, "./textures/colours.xpm", &tex[1].w, &tex[1].h);
-	tex[1].img = &wall;
-	wall.img = mlx_xpm_file_to_image(game->mlx->mlx, "./textures/colours.xpm", &tex[2].w, &tex[2].h);
-	tex[2].img = &wall;
-	wall.img = mlx_xpm_file_to_image(game->mlx->mlx, "./textures/colours.xpm", &tex[3].w, &tex[3].h);
-	tex[3].img = &wall;
-	tex[0].img->img = mlx_xpm_file_to_image(game->mlx->mlx, "./textures/text.xpm", &tex[0].w, &tex[0].h);
-	tex[0].addr = mlx_get_data_addr(tex[0].img->img, &tex[0].img->pixel_bits, &tex[0].img->line_len, &tex[0].img->endian);
-	tex[1].addr = mlx_get_data_addr(tex[1].img->img, &tex[1].img->pixel_bits, &tex[1].img->line_len, &tex[1].img->endian);
-	tex[2].addr = mlx_get_data_addr(tex[2].img->img, &tex[2].img->pixel_bits, &tex[2].img->line_len, &tex[2].img->endian);
-	tex[3].addr = mlx_get_data_addr(tex[3].img->img, &tex[3].img->pixel_bits, &tex[3].img->line_len, &tex[3].img->endian);
-	wall.img = mlx_xpm_file_to_image(game->mlx->mlx, "./textures/colours.xpm", &w, &h);
-	wall_pointer = mlx_get_data_addr(wall.img, &wall.pixel_bits, &wall.line_len, &wall.endian);
-	game->wall = &wall;
-	game->tex_h = h;
-	game->tex_w = w;
-	game->wall_pointer = wall_pointer;
-	game->texts = &tex;
+	i = 0;
+	while (i < 4)
+	{
+		tmp = malloc(sizeof(*tmp));
+		tmp->img.img = mlx_xpm_file_to_image(game->mlx->mlx,
+				strs[i], &tmp->w, &tmp->h);
+		tex[i] = tmp;
+		tex[i]->addr = mlx_get_data_addr(tex[i]->img.img,
+				&tex[i]->img.pixel_bits, &tex[i]->img.line_len,
+				&tex[i]->img.endian);
+		printf("h: %i, w: %i\n", tex[i]->w, tex[i]->h);
+		i++;
+	}
+	game->texts = tex;
 }
 
 static void	set_false(t_root *game)

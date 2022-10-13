@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   projection.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/13 17:27:55 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/13 20:53:32 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,17 @@ void	draw_wall(t_root *game, int x, int y, int side)
 	x_y[0] = x;
 	x_y[1] = y;
 	y_end = 1080 - y;
-	step = ((float)(game->tex_h) / (float)(y_end - y));//game->texts[game->index]->h / (float)(y_end - y);
+	step = game->texts[game->i]->h / (float)(y_end - y);
 	i = 0;
-	x_err = (game->me->text_i * game->tex_w) / (TILE);//(game->me->text_i * game->texts[game->index]->w) / (TILE);
+	x_err = (game->me->text_i * game->texts[game->i]->w) / (TILE);
+	x_err *= game->texts[game->i]->img.pixel_bits / 8;
 	while (x_y[1] != y_end)
 	{
 		if (x_y[1] > 0 && x_y[1] < 1080)
-			draw_pixel(game->proj, x_y, add_shade(*(int *)(game->wall_pointer
-						+ ((int)i * game->wall->line_len
-							+ x_err * (game->wall->pixel_bits / 8))), side, y));
-		// if (x_y[1] > 0 && x_y[1] < 1080)
-		// 	draw_pixel(game->proj, x_y, add_shade(*(int *)(game->texts[game->index]->addr
-		// 				+ ((int)i * game->texts[game->index]->img->line_len
-		// 					+ x_err * (game->texts[game->index]->img->pixel_bits / 8))), side, y)); //Some issue here
+			draw_pixel(game->proj, x_y,
+				add_shade(*(int *)(game->texts[game->i]->addr
+						+ ((int)i * game->texts[game->i]->img.line_len
+							+ x_err)), side, y));
 		i += step;
 		x_y[1]++;
 	}

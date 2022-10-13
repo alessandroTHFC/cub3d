@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/13 16:43:47 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/13 20:47:45 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_mlx
 
 typedef struct s_textures
 {
-	t_img	*img;
+	t_img	img;
 	char	*addr;
 	int		h;
 	int		w;
@@ -97,9 +97,7 @@ typedef struct s_root
 	t_img		*proj;
 	t_player	*me;
 	t_textures	**texts;
-	int			index;
-	t_img		*wall;
-	char		*wall_pointer;
+	int			i;
 	int			tex_w;
 	int			tex_h;
 	char		**map;
