@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/10 15:17:06 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/13 16:43:47 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdbool.h>
 
 # define M_PI	3.14159265358979323846264338327950288
-# define TILE	110
+# define TILE	50
 # define FOV	60
 
 typedef struct s_slope
@@ -82,12 +82,22 @@ typedef struct s_mlx
 	int		endian;
 }	t_mlx;
 
+typedef struct s_textures
+{
+	t_img	*img;
+	char	*addr;
+	int		h;
+	int		w;
+}	t_textures;
+
 typedef struct s_root
 {
 	t_mlx		*mlx;
 	t_minmap	*minmap;
 	t_img		*proj;
 	t_player	*me;
+	t_textures	**texts;
+	int			index;
 	t_img		*wall;
 	char		*wall_pointer;
 	int			tex_w;

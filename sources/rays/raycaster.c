@@ -6,10 +6,9 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/10 08:59:22 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/13 15:43:33 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "cub3d.h"
 
@@ -114,6 +113,8 @@ void	set_ray_angle(t_root *game)
 	while (i <= 1920)
 	{
 		game->me->rangle = rad;
+		// if (rad > -0.0001 && rad < 0.0001)
+		// printf("%.20f\n", rad * (180 / M_PI));
 		increment_angle(game, x, y, rad);
 		rad += (M_PI / 180) / (FOV / 2);
 		i += 1;
