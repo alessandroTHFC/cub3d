@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/13 20:45:10 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 09:00:08 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char *strs[4] = {
 	"./textures/colours.xpm",
-	"./textures/shit.xpm",
+	"./textures/happy.xpm",
 	"./textures/tex.xpm",
 	"./textures/floral.xpm"
 };
@@ -62,8 +62,8 @@ static void	get_image(t_root *game)
 
 	width = game->map_width + 4;
 	height = game->map_height + 1;
-	width *= (TILE + 1);
-	height *= (TILE + 1);
+	width *= (TILE);
+	height *= (TILE);
 	img.img = mlx_new_image(game->mlx->mlx, width, 1080);
 	img.addr = mlx_get_data_addr(img.img,
 			&img.pixel_bits,

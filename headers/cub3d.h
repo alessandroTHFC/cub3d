@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/13 20:47:45 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 12:47:53 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@
 # include <math.h>
 # include <stdbool.h>
 
-# define M_PI	3.14159265358979323846264338327950288
-# define TILE	50
-# define FOV	60
+# define M_PI		3.14159265358979323846264338327950288
+# define TILE_DRAW	50
+# define TILE		1000
+# define FOV		60
 
 typedef struct s_slope
 {
@@ -109,6 +110,8 @@ typedef struct s_root
 	bool		fish_toggle;
 }	t_root;
 
+/*	MAP_READING */
+void	get_textures(t_root *game, char *file);
 /*	ERROR CHECKING	*/
 char	**ft_splice(char *s, char c, t_root *game);
 void	check_filetype(char *map_file);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   projection.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/13 20:53:32 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 09:59:28 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	find_projection(t_root *game, int end[2])
 	height = 550 - ((TILE * 50) / (dist)) * 10;
 	draw_wall(game, scan, height, side);
 	scan += 1;
-	if (scan == 1921)
+	if (scan == 1920)
 	{
 		draw_cursor(game);
 		scan = 0;

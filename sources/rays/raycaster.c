@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/13 21:06:54 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 12:43:56 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,34 @@
 
 static bool	is_wall(char **map, int x, int y)
 {
-	// int	tx;
-	// int	ty;
+	int	tx;
+	int	ty;
 
-	// tx = x + 1;
-	// ty = y + 1;
-	// tx /= (TILE + 1);
-	// ty /= (TILE + 1);
-	x /= (TILE + 1);
-	y /= (TILE + 1);
-	if (map[y][x] == '1') //|| map[ty][tx] == '1'
-			//|| map[y][tx] == '1' || map[ty][x] == '1')
+	// printf("4\n");
+	tx = x + 1;
+	ty = y + 1;
+	tx /= (TILE);
+	ty /= (TILE);
+	x /= (TILE);
+	y /= (TILE);
+	if (map[y][x] == '1' || map[ty][tx] == '1'
+		|| map[y][tx] == '1' || map[ty][x] == '1')
 		return (true);
 	return (false);
+}
+
+void	normailse_ray(t_root *game, int x_y[2], int colour)
+{
+	int	x[2];
+	int	y[2];
+
+	x[0] = game->me->x[0] * TILE_DRAW / TILE;
+	x[1] = x_y[0] * TILE_DRAW / TILE;
+	y[0] = game->me->y[0] * TILE_DRAW / TILE;
+	y[1] = x_y[1] * TILE_DRAW / TILE;
+	// printf("x0 %i, x1 %i\n", x[0], x[1]);
+	// printf("y0 %i, y1 %i\n", y[0], y[1]);
+	draw_line(game->mlx->minmap, x, y, colour);
 }
 
 static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
@@ -43,8 +58,8 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 	{
 		s->x0 += x_dir;
 		ray_vector(x_y, s->x0, s->y0, dec);
-		if (game->map_toggle)
-			draw_pixel(game->mlx->minmap, x_y, colour);
+		// if (game->map_toggle)
+		// 	draw_pixel(game->mlx->minmap, x_y, colour);
 		if (is_wall(game->map, x_y[0], x_y[1]))
 			break ;
 		if (s->m < 0)
@@ -55,7 +70,10 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 			s->m = s->m + 2 * s->dy - 2 * s->dx;
 		}
 	}
+	if (game->map_toggle)
+		normailse_ray(game, x_y, colour);
 	find_projection(game, x_y);
+	(void)colour;
 }
 
 void	draw_ray(t_root *game, int *x, int *y, int colour)
@@ -87,6 +105,7 @@ void	increment_angle(t_root *game, int x[2], int y[2], double r)
 	double	yt;
 	double	rad;
 
+	// printf("2\n");
 	rad = r;
 	xt = (x[1] - x[0]) * 90;
 	yt = (y[1] - y[0]) * 90;
@@ -110,13 +129,11 @@ void	set_ray_angle(t_root *game)
 	y[1] = game->me->y[1];
 	i = 0;
 	rad = (-FOV / 2) * (M_PI / 180);
-	while (i <= 1920)
+	while (i < 1920)
 	{
 		game->me->rangle = rad;
-		// if (rad > -0.0001 && rad < 0.0001)
-		// printf("%.20f\n", rad * (180 / M_PI));
 		increment_angle(game, x, y, rad);
-		rad += (M_PI / 180) / (FOV / 2);
+		rad += (FOV * (M_PI / 180)) / 1920;
 		i += 1;
 		x[1] = game->me->x[1];
 		y[1] = game->me->y[1];

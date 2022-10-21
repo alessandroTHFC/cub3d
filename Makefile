@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/10/03 13:27:41 by jbrown           ###   ########.fr        #
+#    Updated: 2022/10/14 10:08:32 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/player/player_movement.c \
 			$(SRCDIR)/player/player_collision.c \
 			$(SRCDIR)/hooks.c \
+			$(SRCDIR)/get_textures.c \
 			$(SRCDIR)/drawing/draw_line.c \
 			$(SRCDIR)/drawing/draw_map.c \
 			$(SRCDIR)/drawing/draw_background.c \

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 10:43:27 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 13:52:29 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 09:37:16 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ bool	check_proximity(t_root *game, double x, double y, int wall)
 		x += TILE / 8;
 	if (wall == -2)
 		x -= TILE / 8;
-	x_map = (int)(x / (TILE + 1));
-	y_map = (int)(y / (TILE + 1));
+	x_map = (int)(x / (TILE));
+	y_map = (int)(y / (TILE));
 	if (game->map[y_map][x_map] == '1')
 		return (false);
 	return (true);
@@ -38,8 +38,8 @@ bool	check_collision(t_root *game, double x, double y)
 	int	y_map;
 	int	wall;
 
-	x_map = (int)(x / (TILE + 1));
-	y_map = (int)(y / (TILE + 1));
+	x_map = (int)(x / (TILE));
+	y_map = (int)(y / (TILE));
 	if (game->map[y_map][x_map] == '1')
 		return (false);
 	wall = cardinal_space(game, y_map, x_map, '1');

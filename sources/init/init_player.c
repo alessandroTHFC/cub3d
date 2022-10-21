@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/07 09:01:48 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 10:30:03 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,20 @@ void	init_player(t_root *game, int x, int y, char *dir)
 {
 	static t_player	me;
 
+	x /= TILE_DRAW;
+	x *= TILE;
+	y /= TILE_DRAW;
+	y *= TILE;
+	printf("x: %i, y: %i\n", x, y);
 	me.tile_x = x;
 	me.tile_y = y;
-	me.x[0] = TILE / 2 + x;
-	me.y[0] = TILE / 2 + y;
+	me.x[0] = TILE / 2 + me.tile_x;
+	me.y[0] = TILE / 2 + me.tile_y;
 	me.rad = 5 * M_PI / 180;
 	init_orientation(*dir, &me.x[1], &me.y[1]);
 	*dir = '0';
-	me.x[1] += x;
-	me.y[1] += y;
+	me.x[1] += me.tile_x;
+	me.y[1] += me.tile_y;
 	me.angle = atan2(me.y[1] - me.y[0], me.x[1] - me.x[0]);
 	game->me = &me;
 }

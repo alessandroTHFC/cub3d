@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/13 13:41:05 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 10:38:31 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@ void	draw_player(t_root *game)
 	int	y[2];
 	int	i;
 
-	draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
-		float_to_int(game->me->y, game->me->yt), 0xABCDEFAB);
-	x[0] = game->me->x[0] - 3;
+	x[0] = (game->me->x[0] / TILE) * TILE_DRAW;
+	x[1] = (game->me->x[1] / TILE) * TILE_DRAW;
+	y[0] = (game->me->y[0] / TILE) * TILE_DRAW;
+	y[1] = (game->me->y[1] / TILE) * TILE_DRAW;
+	draw_line(game->mlx->minmap, x, y, 0xABCDEFAB);
+	// draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
+	// 	float_to_int(game->me->y, game->me->yt), 0xABCDEFAB);
+	x[0] -= 3;
 	x[1] = x[0] + 5;
-	y[0] = game->me->y[0] - 3;
+	y[0] -= 3;
 	y[1] = y[0];
 	i = 0;
 	while (i < 5)
@@ -36,8 +41,8 @@ void	draw_player(t_root *game)
 
 void	update_player(t_root *game)
 {
-	game->me->tile_x = (int)(game->me->x[0] / (TILE + 1));
-	game->me->tile_y = (int)(game->me->y[0] / (TILE + 1));
+	game->me->tile_x = (int)(game->me->x[0] / (TILE));
+	game->me->tile_y = (int)(game->me->y[0] / (TILE));
 	draw_background(game, 0x009913e6, 0x00f7d8f9);
 	if (game->map_toggle)
 	{
@@ -50,8 +55,8 @@ void	update_player(t_root *game)
 	{
 		draw_player(game);
 		mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
-			game->mlx->minmap->img, 0,
-			1080 - ((game->map_height + 4) * (TILE + 1)));
+			game->mlx->minmap->img, 0, 0);
+			//1080 - ((game->map_height + 4) * (TILE)));
 	}
 }
 

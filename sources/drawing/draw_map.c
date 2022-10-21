@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 15:32:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/10 09:46:15 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 09:43:21 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	draw_map(t_root *game, bool init)
 				init_player(game, x + x_offset, y + y_offset, &map[y][x]);
 			if (map[y][x] == '0')
 				draw_square(game, 0x000000FF, x + x_offset, y + y_offset);
-			x_offset += TILE;
+			x_offset += TILE_DRAW - 1;
 		}
-		y_offset += TILE;
+		y_offset += TILE_DRAW - 1;
 	}
 }
 
@@ -82,9 +82,9 @@ void	draw_square(t_root *game, int colour, int x_offset, int y_offset)
 	y_coor[0] = y_offset;
 	y_coor[1] = y_offset;
 	x_coor[0] = x_offset;
-	x_coor[1] = x_offset + TILE;
+	x_coor[1] = x_offset + TILE_DRAW - 1;
 	i = 0;
-	while (i < TILE)
+	while (i < TILE_DRAW - 1)
 	{
 		draw_line(game->mlx->minmap, x_coor, y_coor, colour);
 		y_coor[0]++;
