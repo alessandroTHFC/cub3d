@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/07 11:58:23 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 16:15:45 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@ void	check_filetype(char *map_file)
 {
 	size_t	i;
 
+	void	*leak = malloc(100); //delete this
 	i = strlen(map_file) - 4;
 	if (!ft_memcmp(&map_file[i], ".cub", 4))
 		return ;
 	printf("\e[31m\e[1mError\nInvalid Map File \e[0m \n");
 	exit(1);
+	(void)leak;
 }
 
 int	main(int argc, char **argv)

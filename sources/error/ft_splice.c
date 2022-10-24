@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splice.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 12:15:24 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/14 22:16:07 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/24 15:45:08 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ char	**ft_splice(char *s, char c, t_root *game)
 		i++;
 	}
 	strs[i] = NULL;
+	printf("Map h: %i, map w: %i\n", game->map_height, game->map_width);
 	return (strs);
 }

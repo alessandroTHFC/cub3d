@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 15:32:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/21 09:43:21 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/21 16:02:10 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	draw_square(t_root *game, int colour, int x_offset, int y_offset)
 	int	y_coor[2];
 	int	i;
 
+	// printf("x: %i\ny: %i\n", x_offset, y_offset);
 	y_coor[0] = y_offset;
 	y_coor[1] = y_offset;
 	x_coor[0] = x_offset;

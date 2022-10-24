@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/21 12:47:53 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/24 09:08:45 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define M_PI		3.14159265358979323846264338327950288
 # define TILE_DRAW	50
-# define TILE		1000
+# define TILE		100
 # define FOV		60
 
 typedef struct s_slope

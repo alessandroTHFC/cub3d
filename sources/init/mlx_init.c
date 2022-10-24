@@ -6,14 +6,14 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/21 09:00:08 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/24 14:38:07 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 char *strs[4] = {
-	"./textures/colours.xpm",
+	"./textures/shit.xpm",
 	"./textures/happy.xpm",
 	"./textures/tex.xpm",
 	"./textures/floral.xpm"

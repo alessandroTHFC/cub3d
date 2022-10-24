@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/21 12:43:56 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/24 15:56:35 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,86 @@ void	normailse_ray(t_root *game, int x_y[2], int colour)
 	int	x[2];
 	int	y[2];
 
+	if (x[1] < 0 || x[1] >= 1920)
+		return ;
 	x[0] = game->me->x[0] * TILE_DRAW / TILE;
 	x[1] = x_y[0] * TILE_DRAW / TILE;
 	y[0] = game->me->y[0] * TILE_DRAW / TILE;
 	y[1] = x_y[1] * TILE_DRAW / TILE;
-	// printf("x0 %i, x1 %i\n", x[0], x[1]);
-	// printf("y0 %i, y1 %i\n", y[0], y[1]);
+	// printf("x: %i\ny: %i\n", x_y[0], x_y[1]);
 	draw_line(game->mlx->minmap, x, y, colour);
+	// (void)colour;
+}
+
+void	ray_test(t_root *game, t_slope *s)
+{
+	// int		y_int;
+	// int		x_other;
+	float	curr_angle;
+	// int	y_step;
+	// int	x_step;
+	int		x_y[2];
+	int		tmpxy[2];
+	int		i = 0;
+	static int count;
+
+	curr_angle = -(game->me->angle + game->me->rangle);
+	// if (!(count % 10))
+	// 	printf("angle: %i\n", (int)(curr_angle * (180 / M_PI)));
+	tmpxy[1] = (s->y0 / TILE) * TILE;
+	if (s->y0 > s->y1)
+		tmpxy[1] -= 1;
+	else
+		tmpxy[1] += TILE;
+	tmpxy[0] = s->x0 + (s->y0 - tmpxy[1]) / tan(curr_angle);
+	printf("y check\nx: %i\ny: %i\n", tmpxy[0], tmpxy[1]);
+	if (tmpxy[1] < 1400 && tmpxy[1] > 0 && tmpxy[0] < 2900 && tmpxy[0] > 0)
+	{
+		while (game->map[tmpxy[1] / TILE][tmpxy[0] / TILE] != '1' && i < 30)
+		{
+			x_y[0] = tmpxy[0];
+			x_y[1] = tmpxy[1];
+			tmpxy[0] += TILE / tan(curr_angle);
+			if (s->y0 > s->y1)
+				tmpxy[1] -= TILE;
+			else
+				tmpxy[1] += TILE;
+			i++;
+			if ((tmpxy[1] / TILE) < 0 || (tmpxy[1] / TILE) >= 1400
+				|| (tmpxy[0] / TILE) < 0 || (tmpxy[0] / TILE) >= 2900)
+				break ;
+		}
+		normailse_ray(game, x_y, 0xFF00FF);
+	}
+	tmpxy[0] = (s->x0 / TILE) * TILE;
+	// printf("x: %i\n", s->x0 / TILE);
+	if (s->x0 < s->x1)
+		tmpxy[0] -= 1;
+	else
+		tmpxy[0] += TILE;
+	tmpxy[1] = s->y0 + (s->x0 - tmpxy[0]) * tan(curr_angle);
+	printf("x check\nx: %i\ny: %i\n", tmpxy[0], tmpxy[1]);
+	if (tmpxy[1] < 1100 && tmpxy[1] > 0 && tmpxy[0] < 2900 && tmpxy[0] > 0)
+	{
+		i = 0;
+		while (game->map[tmpxy[1] / TILE][tmpxy[0] / TILE] != '1' && i < 5)
+		{
+			x_y[0] = tmpxy[0];
+			x_y[1] = tmpxy[1];
+			tmpxy[1] += TILE * tan(curr_angle);
+			if (s->x0 > s->x1)
+				tmpxy[0] -= TILE;
+			else
+				tmpxy[0] += TILE;
+			i++;
+			if ((tmpxy[1] / TILE) < 0 || (tmpxy[1] / TILE) >= 1400
+				|| (tmpxy[0] / TILE) < 0 || (tmpxy[0] / TILE) >= 2900)
+				break ;
+		}
+		count++;
+		// printf("x: %i\ny: %i\n", x_y[0] / TILE, x_y[1] / TILE);
+		normailse_ray(game, x_y, 0xF0F0FF);
+	}
 }
 
 static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
@@ -58,8 +131,6 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 	{
 		s->x0 += x_dir;
 		ray_vector(x_y, s->x0, s->y0, dec);
-		// if (game->map_toggle)
-		// 	draw_pixel(game->mlx->minmap, x_y, colour);
 		if (is_wall(game->map, x_y[0], x_y[1]))
 			break ;
 		if (s->m < 0)
@@ -70,8 +141,8 @@ static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
 			s->m = s->m + 2 * s->dy - 2 * s->dx;
 		}
 	}
-	if (game->map_toggle)
-		normailse_ray(game, x_y, colour);
+	// if (game->map_toggle)
+	// 	normailse_ray(game, x_y, colour);
 	find_projection(game, x_y);
 	(void)colour;
 }
@@ -88,6 +159,7 @@ void	draw_ray(t_root *game, int *x, int *y, int colour)
 	s.y1 = y[1];
 	s.dx = ft_abs(s.x1 - s.x0);
 	s.dy = ft_abs(s.y1 - s.y0);
+	// ray_test(game, &s);
 	if (s.dy > s.dx)
 	{
 		ft_swap(&s.y0, &s.x0);
@@ -103,14 +175,12 @@ void	increment_angle(t_root *game, int x[2], int y[2], double r)
 {
 	double	xt;
 	double	yt;
-	double	rad;
 
-	// printf("2\n");
-	rad = r;
 	xt = (x[1] - x[0]) * 90;
 	yt = (y[1] - y[0]) * 90;
-	x[1] = ((xt * cos(rad)) - (yt * sin(rad)));
-	y[1] = ((xt * sin(rad)) + (yt * cos(rad)));
+	// printf("xt: %f\nxy: %f\n", xt, yt);
+	x[1] = ((xt * cos(r)) - (yt * sin(r)));
+	y[1] = ((xt * sin(r)) + (yt * cos(r)));
 	x[1] += x[0];
 	y[1] += y[0];
 	draw_ray(game, x, y, 0xFFFF00);
