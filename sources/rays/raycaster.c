@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/24 15:56:35 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/27 15:30:45 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,117 +35,232 @@ void	normailse_ray(t_root *game, int x_y[2], int colour)
 	int	x[2];
 	int	y[2];
 
-	if (x[1] < 0 || x[1] >= 1920)
-		return ;
+	// if (x[1] < 0 || x[1] >= 1920)
+	// 	return ;
 	x[0] = game->me->x[0] * TILE_DRAW / TILE;
 	x[1] = x_y[0] * TILE_DRAW / TILE;
 	y[0] = game->me->y[0] * TILE_DRAW / TILE;
 	y[1] = x_y[1] * TILE_DRAW / TILE;
-	// printf("x: %i\ny: %i\n", x_y[0], x_y[1]);
+	// printf("normalised\nx: %i\ny: %i\n\n", x[1], y[1]);
 	draw_line(game->mlx->minmap, x, y, colour);
 	// (void)colour;
+}
+
+float	dist(float ax, float ay, int bx, int by)
+{
+	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
+}
+
+void	more_ray(t_root *game)
+{
+	t_dda	dda;
+	float	angle;
+	float	distx;
+	float	disty;
+
+	angle = game->me->rangle + game->me->angle;
+	dda.a_tan = -1 / tan(angle);
+	dda.n_tan = -tan(angle);
+	dda.x_y[0] = game->me->x[0];
+	dda.x_y[1] = game->me->y[0];
+	if (angle > M_PI)
+	{
+		dda.h_check[1] = (dda.x_y[1] / TILE) * TILE - 1;
+		dda.h_check[0] = (dda.x_y[1] - dda.h_check[1]) * dda.a_tan + dda.x_y[0];
+		dda.h_step[1] = -TILE;
+	}
+	if (angle < M_PI)
+	{
+		dda.h_check[1] = (dda.x_y[1] / TILE) * TILE + TILE;
+		dda.h_check[0] = (dda.x_y[1] - dda.h_check[1]) * dda.a_tan + dda.x_y[0];
+		dda.h_step[1] = TILE;
+	}
+	dda.h_step[0] = -dda.h_step[1] * dda.a_tan;
+	if (angle > (M_PI / 2) && angle < (3 * M_PI / 2))
+	{
+		dda.v_check[0] = (dda.x_y[0] / TILE) * TILE - 1;
+		dda.v_check[1] = (dda.x_y[0] - dda.h_check[0]) * dda.n_tan + dda.x_y[1];
+		dda.v_step[0] = -TILE;
+	}
+	if (angle < (M_PI / 2) || angle > (3 * M_PI / 2))
+	{
+		dda.v_check[0] = (dda.x_y[0] / TILE) * TILE + TILE;
+		dda.v_check[1] = (dda.x_y[0] - dda.h_check[0]) * dda.n_tan + dda.x_y[1];
+		dda.v_step[0] = TILE;
+	}
+	dda.v_step[1] = -dda.v_step[0] * dda.n_tan;
+	if (angle == M_PI || !angle)
+	{
+		dda.v_check[0] = dda.x_y[0];
+		dda.v_check[1] = dda.x_y[1];
+		dda.h_check[0] = dda.x_y[0];
+		dda.h_check[1] = dda.x_y[1];
+		dda.h_step[1] = TILE;
+		dda.h_step[0] = 0;
+		dda.v_step[0] = TILE;
+		dda.v_step[1] = 0;
+	}
+	dda.dx = dist(dda.x_y[0], dda.x_y[1], dda.v_step[0], dda.v_step[1]);
+	distx = dda.dx;
+	dda.dy = dist(dda.x_y[0], dda.x_y[1], dda.h_step[0], dda.h_step[1]);
+	disty = dda.dy;
+	while (!is_wall(game->map, dda.x_y[0], dda.x_y[1]))
+	{
+		if (dda.dx < dda.dy)
+		{
+			dda.x_y[0] += dda.h_step[0];
+			dda.x_y[1] += dda.h_step[1];
+			dda.dx += distx;
+		}
+		if (dda.dx > dda.dy)
+		{
+			dda.x_y[0] += dda.v_step[0];
+			dda.x_y[1] += dda.v_step[1];
+			dda.dy += disty;
+		}
+	}
+	normailse_ray(game, dda.x_y, 0xF0000F);
 }
 
 void	ray_test(t_root *game, t_slope *s)
 {
 	// int		y_int;
 	// int		x_other;
-	float	curr_angle;
-	// int	y_step;
-	// int	x_step;
+	double	curr_angle;
+	int		y_step;
+	int		x_step;
 	int		x_y[2];
 	int		tmpxy[2];
+	float	distH, distV;
 	int		i = 0;
-	static int count;
 
-	curr_angle = -(game->me->angle + game->me->rangle);
-	// if (!(count % 10))
-	// 	printf("angle: %i\n", (int)(curr_angle * (180 / M_PI)));
-	tmpxy[1] = (s->y0 / TILE) * TILE;
-	if (s->y0 > s->y1)
-		tmpxy[1] -= 1;
-	else
-		tmpxy[1] += TILE;
-	tmpxy[0] = s->x0 + (s->y0 - tmpxy[1]) / tan(curr_angle);
-	printf("y check\nx: %i\ny: %i\n", tmpxy[0], tmpxy[1]);
-	if (tmpxy[1] < 1400 && tmpxy[1] > 0 && tmpxy[0] < 2900 && tmpxy[0] > 0)
+	curr_angle = (game->me->rangle + game->me->angle);
+	float	aTan = -1 / tan(curr_angle);
+	if (curr_angle > M_PI)
 	{
-		while (game->map[tmpxy[1] / TILE][tmpxy[0] / TILE] != '1' && i < 30)
-		{
-			x_y[0] = tmpxy[0];
-			x_y[1] = tmpxy[1];
-			tmpxy[0] += TILE / tan(curr_angle);
-			if (s->y0 > s->y1)
-				tmpxy[1] -= TILE;
-			else
-				tmpxy[1] += TILE;
-			i++;
-			if ((tmpxy[1] / TILE) < 0 || (tmpxy[1] / TILE) >= 1400
-				|| (tmpxy[0] / TILE) < 0 || (tmpxy[0] / TILE) >= 2900)
-				break ;
-		}
-		normailse_ray(game, x_y, 0xFF00FF);
+		tmpxy[1] = (s->y0 / TILE) * TILE - 1;
+		tmpxy[0] = (s->y0 - tmpxy[1]) * aTan + s->x0;
+		y_step = -TILE;
+		x_step = -y_step * aTan;
 	}
-	tmpxy[0] = (s->x0 / TILE) * TILE;
-	// printf("x: %i\n", s->x0 / TILE);
-	if (s->x0 < s->x1)
-		tmpxy[0] -= 1;
-	else
-		tmpxy[0] += TILE;
-	tmpxy[1] = s->y0 + (s->x0 - tmpxy[0]) * tan(curr_angle);
-	printf("x check\nx: %i\ny: %i\n", tmpxy[0], tmpxy[1]);
-	if (tmpxy[1] < 1100 && tmpxy[1] > 0 && tmpxy[0] < 2900 && tmpxy[0] > 0)
+	else// if (curr_angle < M_PI)
 	{
-		i = 0;
-		while (game->map[tmpxy[1] / TILE][tmpxy[0] / TILE] != '1' && i < 5)
-		{
-			x_y[0] = tmpxy[0];
-			x_y[1] = tmpxy[1];
-			tmpxy[1] += TILE * tan(curr_angle);
-			if (s->x0 > s->x1)
-				tmpxy[0] -= TILE;
-			else
-				tmpxy[0] += TILE;
-			i++;
-			if ((tmpxy[1] / TILE) < 0 || (tmpxy[1] / TILE) >= 1400
-				|| (tmpxy[0] / TILE) < 0 || (tmpxy[0] / TILE) >= 2900)
-				break ;
-		}
-		count++;
-		// printf("x: %i\ny: %i\n", x_y[0] / TILE, x_y[1] / TILE);
-		normailse_ray(game, x_y, 0xF0F0FF);
+		tmpxy[1] = (s->y0 / TILE) * TILE + TILE;
+		tmpxy[0] = (s->y0 - tmpxy[1]) * aTan + s->x0;
+		y_step = TILE;
+		x_step = -y_step * aTan;
 	}
-}
-
-static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
-{
-	int	x_y[2];
-	int	x_dir;
-	int	y_dir;
-	int	x;
-
-	x_dir = ray_direction(s->x0, s->x1);
-	y_dir = ray_direction(s->y0, s->y1);
-	x = s->x0;
-	while (ft_abs(s->x0 - x) < (TILE) * 50)
+	if (curr_angle == M_PI || !curr_angle)
 	{
-		s->x0 += x_dir;
-		ray_vector(x_y, s->x0, s->y0, dec);
-		if (is_wall(game->map, x_y[0], x_y[1]))
+		tmpxy[0] = s->x0;
+		tmpxy[1] = s->y0;
+		y_step = TILE;
+		x_step = 0;
+	}
+	x_y[0] = tmpxy[0];
+	x_y[1] = tmpxy[1];
+	while (i < 20)
+	{
+		if (x_y[0] <= 0 || x_y[0] >= 2900 || x_y[1] <= 0 || x_y[1] >= 1400)
+		{
 			break ;
-		if (s->m < 0)
-			s->m = s->m + 2 * s->dy;
+		}
+		if (is_wall(game->map, x_y[0], x_y[1]))
+		{
+			break ;
+		}
 		else
 		{
-			s->y0 += y_dir;
-			s->m = s->m + 2 * s->dy - 2 * s->dx;
+			x_y[0] += x_step;
+			x_y[1] += y_step;
+			i++;
 		}
 	}
-	// if (game->map_toggle)
-	// 	normailse_ray(game, x_y, colour);
+	distH = dist(s->x0, s->y0, x_y[0], x_y[1]);
+
+	tmpxy[0] = x_y[0];
+	tmpxy[1] = x_y[1];
+
+	float nTan = -tan(curr_angle);
+	if (curr_angle > (M_PI / 2) && curr_angle < (3 * M_PI / 2))
+	{
+		x_y[0] = (s->x0 / TILE) * TILE - 1;
+		x_y[1] = (s->x0 - x_y[0]) * nTan + s->y0;
+		x_step = -TILE;
+		y_step = -x_step * nTan;
+	}
+	else// if (curr_angle < (M_PI / 2) || curr_angle > (3 * M_PI / 2))
+	{
+		x_y[0] = (s->x0 / TILE) * TILE + TILE;
+		x_y[1] = (s->x0 - x_y[0]) * nTan + s->y0;
+		x_step = TILE;
+		y_step = -x_step * nTan;
+	}
+	if (curr_angle == M_PI || !curr_angle)
+	{
+		x_y[0] = s->x0;
+		x_y[1] = s->y0;
+		x_step = TILE;
+		y_step = 0;
+	}
+	while (i < 20)
+	{
+		if (x_y[0] <= 0 || x_y[0] >= 2900 || x_y[1] <= 0 || x_y[1] >= 1400)
+		{
+			break ;
+		}
+		if (game->map[x_y[1] / TILE][x_y[0] / TILE] == '1')
+		{
+			break ;
+		}
+		else
+		{
+			x_y[0] += x_step;
+			x_y[1] += y_step;
+			i++;
+		}
+	}
+	distV = dist(s->x0, s->y0, x_y[0], x_y[1]);
+
+	if (distV > distH)
+	{
+		x_y[0] = tmpxy[0];
+		x_y[1] = tmpxy[1];
+	}
+	// printf("x0: %i, x1: %i\ny0: %i, y1: %i\n", game->me->x[0], x_y[0], s->y0, x_y[1]);
+	// normailse_ray(game, x_y, 0xFF00FF);
 	find_projection(game, x_y);
-	(void)colour;
 }
+
+// static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
+// {
+// 	int	x_y[2];
+// 	int	x_dir;
+// 	int	y_dir;
+// 	int	x;
+
+// 	x_dir = ray_direction(s->x0, s->x1);
+// 	y_dir = ray_direction(s->y0, s->y1);
+// 	x = s->x0;
+// 	while (ft_abs(s->x0 - x) < (TILE) * 50)
+// 	{
+// 		s->x0 += x_dir;
+// 		ray_vector(x_y, s->x0, s->y0, dec);
+// 		if (is_wall(game->map, x_y[0], x_y[1]))
+// 			break ;
+// 		if (s->m < 0)
+// 			s->m = s->m + 2 * s->dy;
+// 		else
+// 		{
+// 			s->y0 += y_dir;
+// 			s->m = s->m + 2 * s->dy - 2 * s->dx;
+// 		}
+// 	}
+// 	// if (game->map_toggle)
+// 	// 	normailse_ray(game, x_y, colour);
+// 	find_projection(game, x_y);
+// 	(void)colour;
+// }
 
 void	draw_ray(t_root *game, int *x, int *y, int colour)
 {
@@ -159,16 +274,18 @@ void	draw_ray(t_root *game, int *x, int *y, int colour)
 	s.y1 = y[1];
 	s.dx = ft_abs(s.x1 - s.x0);
 	s.dy = ft_abs(s.y1 - s.y0);
-	// ray_test(game, &s);
-	if (s.dy > s.dx)
-	{
-		ft_swap(&s.y0, &s.x0);
-		ft_swap(&s.y1, &s.x1);
-		ft_swap(&s.dx, &s.dy);
-		dec = true;
-	}
-	s.m = 2 * s.dy - s.dx;
-	bresenham(game, &s, dec, colour);
+	ray_test(game, &s);
+	more_ray(game);
+	(void)colour;
+	// if (s.dy > s.dx)
+	// {
+	// 	ft_swap(&s.y0, &s.x0);
+	// 	ft_swap(&s.y1, &s.x1);
+	// 	ft_swap(&s.dx, &s.dy);
+	// 	dec = true;
+	// }
+	// s.m = 2 * s.dy - s.dx;
+	// bresenham(game, &s, dec, colour);
 }
 
 void	increment_angle(t_root *game, int x[2], int y[2], double r)
@@ -204,8 +321,25 @@ void	set_ray_angle(t_root *game)
 		game->me->rangle = rad;
 		increment_angle(game, x, y, rad);
 		rad += (FOV * (M_PI / 180)) / 1920;
-		i += 1;
+		i++;
 		x[1] = game->me->x[1];
 		y[1] = game->me->y[1];
 	}
+	// game->me->rangle = game->me->angle + (-FOV / 2) * (M_PI / 180);
+	// printf("rangle: %f\n", game->me->rangle);
+	// printf("angle: %f\n", game->me->angle);
+	// while (i < 1920)
+	// {
+	// 	if (game->me->rangle < 0)
+	// 		game->me->rangle += 2 * M_PI;
+	// 	if (game->me->rangle > 2 * M_PI)
+	// 		game->me->rangle -= 2 * M_PI;
+	// 	increment_angle(game, x, y, rad);
+	// 	rad += (FOV * (M_PI / 180)) / 1920;
+	// 	i++;
+	// 	x[1] = game->me->x[1];
+	// 	y[1] = game->me->y[1];
+	// 	game->me->rangle += (FOV * (M_PI / 180) / 1920);
+	// 	printf("i: %i\n", i);
+	// }
 }

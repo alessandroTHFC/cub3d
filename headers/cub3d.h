@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/24 09:08:45 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/27 14:47:23 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,19 @@ typedef struct s_slope
 	int	dy;
 	int	m;
 }	t_slope;
+
+typedef struct s_dda
+{
+	int		x_y[2];
+	int		h_check[2];
+	int		v_check[2];
+	int		v_step[2];
+	int		h_step[2];
+	float	dx;
+	float	dy;
+	float	a_tan;
+	float	n_tan;
+}	t_dda;
 
 typedef struct s_player
 {
