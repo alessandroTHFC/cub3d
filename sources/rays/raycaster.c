@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/27 15:30:45 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/10/31 16:37:01 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ void	more_ray(t_root *game)
 	if (angle > (M_PI / 2) && angle < (3 * M_PI / 2))
 	{
 		dda.v_check[0] = (dda.x_y[0] / TILE) * TILE - 1;
-		dda.v_check[1] = (dda.x_y[0] - dda.h_check[0]) * dda.n_tan + dda.x_y[1];
+		dda.v_check[1] = (dda.x_y[0] - dda.v_check[0]) * dda.n_tan + dda.x_y[1];
 		dda.v_step[0] = -TILE;
 	}
 	if (angle < (M_PI / 2) || angle > (3 * M_PI / 2))
 	{
 		dda.v_check[0] = (dda.x_y[0] / TILE) * TILE + TILE;
-		dda.v_check[1] = (dda.x_y[0] - dda.h_check[0]) * dda.n_tan + dda.x_y[1];
+		dda.v_check[1] = (dda.x_y[0] - dda.v_check[0]) * dda.n_tan + dda.x_y[1];
 		dda.v_step[0] = TILE;
 	}
 	dda.v_step[1] = -dda.v_step[0] * dda.n_tan;
@@ -100,26 +100,44 @@ void	more_ray(t_root *game)
 		dda.v_step[0] = TILE;
 		dda.v_step[1] = 0;
 	}
-	dda.dx = dist(dda.x_y[0], dda.x_y[1], dda.v_step[0], dda.v_step[1]);
-	distx = dda.dx;
-	dda.dy = dist(dda.x_y[0], dda.x_y[1], dda.h_step[0], dda.h_step[1]);
-	disty = dda.dy;
-	while (!is_wall(game->map, dda.x_y[0], dda.x_y[1]))
+	dda.dx = dist(dda.x_y[0], dda.x_y[1], dda.v_check[0], dda.v_check[1]);
+	distx = dist(dda.x_y[0], dda.x_y[1], game->me->x[0] + dda.v_step[0], game->me->y[0] + dda.v_step[1]);
+	dda.dy = dist(dda.x_y[0], dda.x_y[1], dda.h_check[0], dda.h_check[1]);
+	disty = dist(dda.x_y[0], dda.x_y[1], game->me->x[0] + dda.h_step[0], game->me->y[0] + dda.h_step[1]);
+	if (dda.dx > dda.dy)
 	{
-		if (dda.dx < dda.dy)
+		dda.x_y[0] = dda.h_check[0];
+		dda.x_y[1] = dda.h_check[1];
+	}
+	else
+	{
+		dda.x_y[0] = dda.v_check[0];
+		dda.x_y[1] = dda.v_check[1];
+	}
+	dda.dx += distx;
+	dda.dy += disty;
+	int	i	= 0;
+	/*	This loop should calculate the shortest distance to the next square and then check if
+		that square is a wall. Currently it is not functioning correctly.	*/
+	while (game->map[dda.x_y[1] / TILE][dda.x_y[0] / TILE] != '1')
+	{
+		if (distx > disty)
 		{
 			dda.x_y[0] += dda.h_step[0];
 			dda.x_y[1] += dda.h_step[1];
-			dda.dx += distx;
+			dda.dy += disty;
 		}
-		if (dda.dx > dda.dy)
+		else
 		{
 			dda.x_y[0] += dda.v_step[0];
 			dda.x_y[1] += dda.v_step[1];
-			dda.dy += disty;
+			dda.dx += distx;
 		}
+		i++;
+		if (i > 1)
+			break ;
 	}
-	normailse_ray(game, dda.x_y, 0xF0000F);
+	normailse_ray(game, dda.x_y, 0xFF00FF);
 }
 
 void	ray_test(t_root *game, t_slope *s)
@@ -136,6 +154,7 @@ void	ray_test(t_root *game, t_slope *s)
 
 	curr_angle = (game->me->rangle + game->me->angle);
 	float	aTan = -1 / tan(curr_angle);
+	// printf("init x: %i\ninit y: %i\n", s->x0, s->y0);
 	if (curr_angle > M_PI)
 	{
 		tmpxy[1] = (s->y0 / TILE) * TILE - 1;
@@ -159,6 +178,7 @@ void	ray_test(t_root *game, t_slope *s)
 	}
 	x_y[0] = tmpxy[0];
 	x_y[1] = tmpxy[1];
+	// printf("working init x: %d\nworking init y: %d\n", x_y[0], x_y[1]);
 	while (i < 20)
 	{
 		if (x_y[0] <= 0 || x_y[0] >= 2900 || x_y[1] <= 0 || x_y[1] >= 1400)
@@ -175,6 +195,7 @@ void	ray_test(t_root *game, t_slope *s)
 			x_y[1] += y_step;
 			i++;
 		}
+		// printf("x: %d\ny: %d\n", x_y[0], x_y[1]);
 	}
 	distH = dist(s->x0, s->y0, x_y[0], x_y[1]);
 
@@ -203,8 +224,11 @@ void	ray_test(t_root *game, t_slope *s)
 		x_step = TILE;
 		y_step = 0;
 	}
+	// printf("working init x: %d\nworking init y: %d\n", x_y[0], x_y[1]);
 	while (i < 20)
 	{
+		// printf("rayx: %i\nrayy: %i\n", x_y[0], x_y[1]);
+		// printf("x: %d\ny: %d\n", x_y[0], x_y[1]);
 		if (x_y[0] <= 0 || x_y[0] >= 2900 || x_y[1] <= 0 || x_y[1] >= 1400)
 		{
 			break ;
@@ -232,35 +256,35 @@ void	ray_test(t_root *game, t_slope *s)
 	find_projection(game, x_y);
 }
 
-// static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
-// {
-// 	int	x_y[2];
-// 	int	x_dir;
-// 	int	y_dir;
-// 	int	x;
+static void	bresenham(t_root *game, t_slope *s, bool dec, int colour)
+{
+	int	x_y[2];
+	int	x_dir;
+	int	y_dir;
+	int	x;
 
-// 	x_dir = ray_direction(s->x0, s->x1);
-// 	y_dir = ray_direction(s->y0, s->y1);
-// 	x = s->x0;
-// 	while (ft_abs(s->x0 - x) < (TILE) * 50)
-// 	{
-// 		s->x0 += x_dir;
-// 		ray_vector(x_y, s->x0, s->y0, dec);
-// 		if (is_wall(game->map, x_y[0], x_y[1]))
-// 			break ;
-// 		if (s->m < 0)
-// 			s->m = s->m + 2 * s->dy;
-// 		else
-// 		{
-// 			s->y0 += y_dir;
-// 			s->m = s->m + 2 * s->dy - 2 * s->dx;
-// 		}
-// 	}
-// 	// if (game->map_toggle)
-// 	// 	normailse_ray(game, x_y, colour);
-// 	find_projection(game, x_y);
-// 	(void)colour;
-// }
+	x_dir = ray_direction(s->x0, s->x1);
+	y_dir = ray_direction(s->y0, s->y1);
+	x = s->x0;
+	while (ft_abs(s->x0 - x) < (TILE) * 50)
+	{
+		s->x0 += x_dir;
+		ray_vector(x_y, s->x0, s->y0, dec);
+		if (is_wall(game->map, x_y[0], x_y[1]))
+			break ;
+		if (s->m < 0)
+			s->m = s->m + 2 * s->dy;
+		else
+		{
+			s->y0 += y_dir;
+			s->m = s->m + 2 * s->dy - 2 * s->dx;
+		}
+	}
+	// if (game->map_toggle)
+	// 	normailse_ray(game, x_y, colour);
+	find_projection(game, x_y);
+	(void)colour;
+}
 
 void	draw_ray(t_root *game, int *x, int *y, int colour)
 {
@@ -274,18 +298,18 @@ void	draw_ray(t_root *game, int *x, int *y, int colour)
 	s.y1 = y[1];
 	s.dx = ft_abs(s.x1 - s.x0);
 	s.dy = ft_abs(s.y1 - s.y0);
-	ray_test(game, &s);
-	more_ray(game);
-	(void)colour;
-	// if (s.dy > s.dx)
-	// {
-	// 	ft_swap(&s.y0, &s.x0);
-	// 	ft_swap(&s.y1, &s.x1);
-	// 	ft_swap(&s.dx, &s.dy);
-	// 	dec = true;
-	// }
-	// s.m = 2 * s.dy - s.dx;
-	// bresenham(game, &s, dec, colour);
+	// ray_test(game, &s);
+	// more_ray(game);
+	// (void)colour;
+	if (s.dy > s.dx)
+	{
+		ft_swap(&s.y0, &s.x0);
+		ft_swap(&s.y1, &s.x1);
+		ft_swap(&s.dx, &s.dy);
+		dec = true;
+	}
+	s.m = 2 * s.dy - s.dx;
+	bresenham(game, &s, dec, colour);
 }
 
 void	increment_angle(t_root *game, int x[2], int y[2], double r)
