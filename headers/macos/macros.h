@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 17:21:07 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/03 13:27:16 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/03 14:33:22 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@
 # define FTOGGLE 3
 # define BUFFER_SIZE 1000
 # define OFFSET 0
+# define FOVUP	69
+# define FOVDOWN	78
 
 #endif

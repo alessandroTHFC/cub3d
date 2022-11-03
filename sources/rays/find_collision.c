@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 19:19:09 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 13:26:05 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/03 13:47:43 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	find_side(t_root *game, int x, int y)
 		count = 3;
 	else
 		count = 2;
-	if ((north == '1' && south == '0' && east == '1' && west == '0')
-		|| (north == '0' && south == '1' && east == '0' && west == '1'))
-		count = corner_collide(game, x, y);
+	// if ((north == '1' && south == '0' && east == '1' && west == '0')
+	// 	|| (north == '0' && south == '1' && east == '0' && west == '1'))
+	// 	count = corner_collide(game, x, y);
 	set_index(game, x, y, count);
 	// printf("side: %i\n", count);
 	if (count > 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/11 17:21:07 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/02 19:12:15 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/03 14:38:13 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@
 # define FTOGGLE 358
 # define BUFFER_SIZE 1000
 # define OFFSET 256
+# define FOVUP	69 //redefine these on linux
+# define FOVDOWN	78
 
 #endif

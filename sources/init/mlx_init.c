@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/24 14:38:07 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/03 16:18:49 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,11 @@ static void	init_mlx(t_root *game)
 {
 	static t_mlx	mlx;
 
+	game->win_width = 1920;
+	game->win_height = 1080;
+	game->fov = FOV;
 	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, 1920, 1080, "cub3d");
+	mlx.win = mlx_new_window(mlx.mlx, game->win_width, game->win_height, "cub3d");
 	game->mlx = &mlx;
 	get_image(game);
 }
@@ -85,7 +88,7 @@ static void	init_projection(t_root *game)
 {
 	static t_img	img;
 
-	img.img = mlx_new_image(game->mlx->mlx, 1920, 1080);
+	img.img = mlx_new_image(game->mlx->mlx, game->win_width, game->win_height);
 	img.addr = mlx_get_data_addr(img.img,
 			&img.pixel_bits,
 			&img.line_len, &img.endian);

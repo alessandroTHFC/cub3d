@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 13:20:17 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/03 16:22:07 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@ void	draw_player(t_root *game)
 	int	y[2];
 	int	i;
 
-	x[0] = (game->me->x[0] / TILE) * TILE_DRAW;
-	x[1] = (game->me->x[1] / TILE) * TILE_DRAW;
-	y[0] = (game->me->y[0] / TILE) * TILE_DRAW;
-	y[1] = (game->me->y[1] / TILE) * TILE_DRAW;
-	draw_line(game->mlx->minmap, x, y, 0xABCDEFAB);
-	// draw_line(game->mlx->minmap, float_to_int(game->me->x, game->me->xt),
-	// 	float_to_int(game->me->y, game->me->yt), 0xABCDEFAB);
+	x[0] = (game->me->x[0] / TILE) * game->tile;
+	x[1] = (game->me->x[1] / TILE) * game->tile;
+	y[0] = (game->me->y[0] / TILE) * game->tile;
+	y[1] = (game->me->y[1] / TILE) * game->tile;
+	draw_line(game->proj, x, y, 0xABCDEFAB);
 	x[0] -= 3;
 	x[1] = x[0] + 5;
 	y[0] -= 3;
@@ -32,7 +30,7 @@ void	draw_player(t_root *game)
 	i = 0;
 	while (i < 5)
 	{
-		draw_line(game->mlx->minmap, x, y, 0xABCDEFAB);
+		draw_line(game->proj, x, y, 0xABCDEFAB);
 		i++;
 		y[0]++;
 		y[1]++;
@@ -44,20 +42,19 @@ void	update_player(t_root *game)
 	game->me->tile_x = (int)(game->me->x[0] / (TILE));
 	game->me->tile_y = (int)(game->me->y[0] / (TILE));
 	draw_background(game, 0x009913e6, 0x00f7d8f9);
+	set_ray_angle(game);
 	if (game->map_toggle)
 	{
-		clear_map(game);
+		draw_map(game, false);
 	}
-	set_ray_angle(game);
-	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
-		game->proj->img, 0, 0);
 	if (game->map_toggle)
 	{
 		draw_player(game);
-		mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
-			game->mlx->minmap->img, 0, 0);
-			//1080 - ((game->map_height + 4) * (TILE)));
+		// mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
+		// 	game->mlx->minmap->img, 0, 0);
 	}
+	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
+		game->proj->img, 0, 0);
 }
 
 /*	Rotates the player on button press.	*/

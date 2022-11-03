@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/21 10:30:03 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/03 16:13:12 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	init_player(t_root *game, int x, int y, char *dir)
 {
 	static t_player	me;
 
-	x /= TILE_DRAW;
+	x /= game->tile;
 	x *= TILE;
-	y /= TILE_DRAW;
+	y /= game->tile;
 	y *= TILE;
 	printf("x: %i, y: %i\n", x, y);
 	me.tile_x = x;

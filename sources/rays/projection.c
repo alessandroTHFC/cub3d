@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/21 09:59:28 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/03 15:36:00 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	draw_cursor(t_root *game)
 	int	x[2];
 	int	y[2];
 
-	x[0] = 1920 / 2 - 10;
+	x[0] = game->win_width / 2 - 10;
 	x[1] = x[0] + 19;
-	y[0] = 1080 / 2;
+	y[0] = game->win_height / 2;
 	y[1] = y[0];
 	draw_line(game->proj, x, y, 0xFF000000);
 	x[0] += 10;
@@ -60,14 +60,14 @@ void	draw_wall(t_root *game, int x, int y, int side)
 
 	x_y[0] = x;
 	x_y[1] = y;
-	y_end = 1080 - y;
+	y_end = game->win_height - y;
 	step = game->texts[game->i]->h / (float)(y_end - y);
 	i = 0;
 	x_err = (game->me->text_i * game->texts[game->i]->w) / (TILE);
 	x_err *= game->texts[game->i]->img.pixel_bits / 8;
 	while (x_y[1] != y_end)
 	{
-		if (x_y[1] > 0 && x_y[1] < 1080)
+		if (x_y[1] > 0 && x_y[1] < game->win_height)
 			draw_pixel(game->proj, x_y,
 				add_shade(*(int *)(game->texts[game->i]->addr
 						+ ((int)i * game->texts[game->i]->img.line_len
@@ -92,7 +92,7 @@ void	find_projection(t_root *game, int end[2])
 	height = 550 - ((TILE * 50) / (dist)) * 10;
 	draw_wall(game, scan, height, side);
 	scan += 1;
-	if (scan == 1920)
+	if (scan == game->win_width)
 	{
 		draw_cursor(game);
 		scan = 0;

@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/10/14 10:08:32 by jbrown           ###   ########.fr        #
+#    Updated: 2022/11/03 14:42:11 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ UNAME	=	$(shell uname)
 
 ifeq ($(UNAME), Linux)
 MLX_FLAGS = -L/usr/lib -Ilibraries/mlx -lXext -lX11 -lm -lz
-MLX_MACRO =	$(HDRDIR)/linux/macros.h
+MLX_MACRO =	$(HDRDIR)/linux/macros.h #use a define macro instead
 else
 MLX_FLAGS = -framework OpenGL -framework AppKit
 MLX_MACRO =	$(HDRDIR)/macos/macros.h

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 13:13:07 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/03 16:58:40 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <stdbool.h>
 
 # define M_PI		3.14159265358979323846264338327950288
-# define TILE_DRAW	50
 # define TILE		10000
 # define FOV		60
 
@@ -68,8 +67,6 @@ typedef struct s_player
 
 typedef struct s_minmap
 {
-	int	win_width;
-	int	win_height;
 	int	x_offset;
 	int	y_offset;
 	int	max_x;
@@ -117,6 +114,10 @@ typedef struct s_root
 	char		**map;
 	int			map_height;
 	int			map_width;
+	int			win_height;
+	int			win_width;
+	int			fov;
+	int			tile;
 	int			player_count;
 	bool		key_pressed[512];
 	bool		map_toggle;
@@ -157,7 +158,7 @@ void	draw_background(t_root *game, int floor, int ceiling);
 void	draw_line(t_img *img, int *x, int *y, int colour);
 void	draw_pixel(t_img *img, int *x_y, int colour);
 void	draw_map(t_root *game, bool init);
-void	clear_map(t_root *game);
+void	tile_size(t_root *game);
 /*	HOOKS	*/
 int		key_press(int key, t_root *game);
 int		key_release(int key, t_root *game);
