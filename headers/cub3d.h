@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/27 14:47:23 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/03 13:13:07 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define M_PI		3.14159265358979323846264338327950288
 # define TILE_DRAW	50
-# define TILE		100
+# define TILE		10000
 # define FOV		60
 
 typedef struct s_slope
@@ -46,10 +46,10 @@ typedef struct s_dda
 	int		v_check[2];
 	int		v_step[2];
 	int		h_step[2];
-	float	dx;
-	float	dy;
-	float	a_tan;
-	float	n_tan;
+	double	dx;
+	double	dy;
+	double	a_tan;
+	double	n_tan;
 }	t_dda;
 
 typedef struct s_player
