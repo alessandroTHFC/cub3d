@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 19:19:09 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 13:47:43 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 12:07:10 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	find_side(t_root *game, int x, int y)
 	south = game->map[(y + 1) / (TILE)][x / (TILE)];
 	east = game->map[y / (TILE)][(x + 1) / (TILE)];
 	west = game->map[y / (TILE)][(x - 1) / (TILE)];
-	// printf("N: %c, S: %c, E: %c, W: %c\n", north, south, east, west);
 	if ((north == '1' && south == '0'))
 		count = 0;
 	else if (north == '0' && south == '1' && west == '1')
@@ -65,11 +64,7 @@ int	find_side(t_root *game, int x, int y)
 		count = 3;
 	else
 		count = 2;
-	// if ((north == '1' && south == '0' && east == '1' && west == '0')
-	// 	|| (north == '0' && south == '1' && east == '0' && west == '1'))
-	// 	count = corner_collide(game, x, y);
 	set_index(game, x, y, count);
-	// printf("side: %i\n", count);
 	if (count > 1)
 		return (-1);
 	return (0);

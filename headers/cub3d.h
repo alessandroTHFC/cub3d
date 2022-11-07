@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 16:58:40 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 12:07:03 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ typedef struct s_root
 	t_img		*proj;
 	t_player	*me;
 	t_textures	**texts;
+	int			colours[2];
+	char		**paths;
 	int			i;
 	int			tex_w;
 	int			tex_h;
@@ -125,7 +127,7 @@ typedef struct s_root
 }	t_root;
 
 /*	MAP_READING */
-void	get_textures(t_root *game, char *file);
+char	*get_textures(t_root *game, char *file);
 /*	ERROR CHECKING	*/
 char	**ft_splice(char *s, char c, t_root *game);
 void	check_filetype(char *map_file);
@@ -137,6 +139,9 @@ int		end_string_validity(t_root *game);
 void	import_map(char *map_loc, t_root *game);
 void	init_root(t_root *game);
 void	init_player(t_root *game, int x, int y, char *dir);
+void	apply_textures(t_root *game);
+int		add_texture(t_root *game, int dir, char *file, int i);
+int		add_colour(t_root *game, int type, char *file, int i);
 /*	MOVEMENT	*/
 void	rot_player(t_root *game, int dir);
 void	move_player(t_root *game, int dir);
@@ -149,12 +154,15 @@ void	find_projection(t_root *game, int end[2]);
 int		ray_direction(int i, int j);
 void	ray_vector(int vect[2], int x, int y, int dec);
 int		find_side(t_root *game, int x, int y);
+bool	is_wall(char **map, int x, int y);
+void	normalise_ray(t_root *game, int x_y[2], int colour);
+float	dist(float ax, float ay, int bx, int by);
 /*	MEMORY FREE	*/
 int		clean_exit(t_root *game);
 void	free_map(char **map);
 /*	MLX DRAWING	*/
 void	draw_square(t_root *game, int colour, int x_offset, int y_offset);
-void	draw_background(t_root *game, int floor, int ceiling);
+void	draw_background(t_root *game);
 void	draw_line(t_img *img, int *x, int *y, int colour);
 void	draw_pixel(t_img *img, int *x_y, int colour);
 void	draw_map(t_root *game, bool init);

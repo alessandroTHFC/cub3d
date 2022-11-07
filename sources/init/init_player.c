@@ -6,11 +6,35 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 16:13:12 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 11:29:03 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	apply_textures(t_root *game)
+{
+	int				i;
+	t_textures		*tmp;
+	t_textures		**tex;
+
+	tex = malloc(sizeof(*tex) * 4);
+	i = 0;
+	while (i < 4)
+	{
+		tmp = malloc(sizeof(*tmp));
+		printf("%s\n", game->paths[i]);
+		tmp->img.img = mlx_xpm_file_to_image(game->mlx->mlx,
+				game->paths[i], &tmp->w, &tmp->h);
+		tex[i] = tmp;
+		tex[i]->addr = mlx_get_data_addr(tex[i]->img.img,
+				&tex[i]->img.pixel_bits, &tex[i]->img.line_len,
+				&tex[i]->img.endian);
+		printf("h: %i, w: %i\n", tex[i]->w, tex[i]->h);
+		i++;
+	}
+	game->texts = tex;
+}
 
 /*	Sets the initial player orientation to the correct direction.	*/
 

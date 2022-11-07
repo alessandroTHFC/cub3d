@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 16:22:07 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 11:29:52 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	update_player(t_root *game)
 {
 	game->me->tile_x = (int)(game->me->x[0] / (TILE));
 	game->me->tile_y = (int)(game->me->y[0] / (TILE));
-	draw_background(game, 0x009913e6, 0x00f7d8f9);
+	draw_background(game);
 	set_ray_angle(game);
 	if (game->map_toggle)
 	{
@@ -50,8 +50,6 @@ void	update_player(t_root *game)
 	if (game->map_toggle)
 	{
 		draw_player(game);
-		// mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
-		// 	game->mlx->minmap->img, 0, 0);
 	}
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
 		game->proj->img, 0, 0);

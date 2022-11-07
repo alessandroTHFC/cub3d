@@ -6,48 +6,99 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 16:17:46 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 12:06:27 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	is_wall(char **map, int x, int y)
+void	ray_loop(t_root *game, t_dda dda, int i)
 {
-	int	tx;
-	int	ty;
-
-	tx = x + 1;
-	ty = y + 1;
-	tx /= (TILE);
-	ty /= (TILE);
-	x /= (TILE);
-	y /= (TILE);
-	if (map[y][x] == '1' || map[ty][tx] == '1'
-		|| map[y][tx] == '1' || map[ty][x] == '1')
-		return (true);
-	return (false);
+	while (game->map[dda.x_y[1] / TILE][dda.x_y[0] / TILE] != '1' && i++ < 50)
+	{
+		dda.dx = dist(dda.x_y[0], dda.x_y[1], dda.v_check[0], dda.v_check[1]);
+		dda.dy = dist(dda.x_y[0], dda.x_y[1], dda.h_check[0], dda.h_check[1]);
+		if (dda.dy < dda.dx)
+		{
+			dda.x_y[0] = dda.h_check[0];
+			dda.x_y[1] = dda.h_check[1];
+			if (game->map[dda.h_check[1] / TILE][dda.h_check[0] / TILE] == '1')
+				break ;
+			dda.h_check[0] += dda.h_step[0];
+			dda.h_check[1] += dda.h_step[1];
+		}
+		else
+		{
+			dda.x_y[0] = dda.v_check[0];
+			dda.x_y[1] = dda.v_check[1];
+			if (game->map[dda.v_check[1] / TILE][dda.v_check[0] / TILE] == '1')
+				break ;
+			dda.v_check[0] += dda.v_step[0];
+			dda.v_check[1] += dda.v_step[1];
+		}
+	}
+	normalise_ray(game, dda.x_y, 0xFF00FF);
+	find_projection(game, dda.x_y);
 }
 
-void	normalise_ray(t_root *game, int x_y[2], int colour)
+void	edge_case(t_root *game, t_dda dda, float angle)
 {
-	int	x[2];
-	int	y[2];
-
-	x[0] = game->me->x[0] * game->tile / TILE;
-	x[1] = x_y[0] * game->tile / TILE;
-	y[0] = game->me->y[0] * game->tile / TILE;
-	y[1] = x_y[1] * game->tile / TILE;
-	if (game->map_toggle)
-		draw_line(game->mlx->minmap, x, y, colour);
+	if (angle == M_PI || !angle)
+	{
+		dda.v_check[0] = dda.x_y[0];
+		dda.v_check[1] = dda.x_y[1];
+		dda.h_check[0] = dda.x_y[0];
+		dda.h_check[1] = dda.x_y[1];
+		dda.h_step[1] = TILE;
+		dda.h_step[0] = 0;
+		dda.v_step[0] = TILE;
+		dda.v_step[1] = 0;
+	}
+	dda.dx = dist(dda.x_y[0], dda.x_y[1], dda.v_check[0], dda.v_check[1]);
+	dda.dy = dist(dda.x_y[0], dda.x_y[1], dda.h_check[0], dda.h_check[1]);
+	if (dda.dx > dda.dy)
+	{
+		dda.x_y[0] = dda.h_check[0];
+		dda.x_y[1] = dda.h_check[1];
+	}
+	else
+	{
+		dda.x_y[0] = dda.v_check[0];
+		dda.x_y[1] = dda.v_check[1];
+	}
+	ray_loop(game, dda, 0);
 }
 
-float	dist(float ax, float ay, int bx, int by)
+void	set_step(t_root *game, t_dda dda, float angle)
 {
-	return (sqrt((bx - ax) * (bx - ax) + (by - ay) * (by - ay)));
+	if (angle > M_PI)
+	{
+		dda.h_check[1] -= 1;
+		dda.h_step[1] = -TILE;
+	}
+	if (angle < M_PI)
+	{
+		dda.h_check[1] += TILE;
+		dda.h_step[1] = TILE;
+	}
+	dda.h_check[0] = (dda.x_y[1] - dda.h_check[1]) * dda.a_tan + dda.x_y[0];
+	dda.h_step[0] = -dda.h_step[1] * dda.a_tan;
+	if (angle > (M_PI / 2) && angle < (3 * M_PI / 2))
+	{
+		dda.v_check[0] -= 1;
+		dda.v_step[0] = -TILE;
+	}
+	if (angle < (M_PI / 2) || angle > (3 * M_PI / 2))
+	{
+		dda.v_check[0] += TILE;
+		dda.v_step[0] = TILE;
+	}
+	dda.v_check[1] = (dda.x_y[0] - dda.v_check[0]) * dda.n_tan + dda.x_y[1];
+	dda.v_step[1] = -dda.v_step[0] * dda.n_tan;
+	edge_case(game, dda, angle);
 }
 
-void	more_ray(t_root *game)
+void	init_ray(t_root *game)
 {
 	t_dda	dda;
 	float	angle;
@@ -61,92 +112,9 @@ void	more_ray(t_root *game)
 	dda.n_tan = -tan(angle);
 	dda.x_y[0] = game->me->x[0];
 	dda.x_y[1] = game->me->y[0];
-	//init
 	dda.h_check[1] = (dda.x_y[1] / TILE) * TILE;
-	if (angle > M_PI)
-	{
-		dda.h_check[1] -= 1;
-		dda.h_step[1] = -TILE;
-	}
-	if (angle < M_PI)
-	{
-		dda.h_check[1] += TILE;
-		dda.h_step[1] = TILE;
-	}
-	dda.h_check[0] = (dda.x_y[1] - dda.h_check[1]) * dda.a_tan + dda.x_y[0];
-	dda.h_step[0] = -dda.h_step[1] * dda.a_tan;
 	dda.v_check[0] = (dda.x_y[0] / TILE) * TILE;
-	if (angle > (M_PI / 2) && angle < (3 * M_PI / 2))
-	{
-		dda.v_check[0] -= 1;
-		dda.v_step[0] = -TILE;
-	}
-	if (angle < (M_PI / 2) || angle > (3 * M_PI / 2))
-	{
-		dda.v_check[0] += TILE;
-		dda.v_step[0] = TILE;
-	}
-	dda.v_check[1] = (dda.x_y[0] - dda.v_check[0]) * dda.n_tan + dda.x_y[1];
-	dda.v_step[1] = -dda.v_step[0] * dda.n_tan;
-	if (angle == M_PI || !angle)
-	{
-		dda.v_check[0] = dda.x_y[0];
-		dda.v_check[1] = dda.x_y[1];
-		dda.h_check[0] = dda.x_y[0];
-		dda.h_check[1] = dda.x_y[1];
-		dda.h_step[1] = TILE;
-		dda.h_step[0] = 0;
-		dda.v_step[0] = TILE;
-		dda.v_step[1] = 0;
-	}
-	//set steps
-	dda.dx = dist(dda.x_y[0], dda.x_y[1], dda.v_check[0], dda.v_check[1]);
-	dda.dy = dist(dda.x_y[0], dda.x_y[1], dda.h_check[0], dda.h_check[1]);
-	if (dda.dx > dda.dy)
-	{
-		dda.x_y[0] = dda.h_check[0];
-		dda.x_y[1] = dda.h_check[1];
-	}
-	else
-	{
-		dda.x_y[0] = dda.v_check[0];
-		dda.x_y[1] = dda.v_check[1];
-	}
-	//set distance
-	int	i	= 0;
-	while (game->map[dda.x_y[1] / TILE][dda.x_y[0] / TILE] != '1')
-	{
-		dda.dx = dist(dda.x_y[0], dda.x_y[1], dda.v_check[0], dda.v_check[1]);
-		dda.dy = dist(dda.x_y[0], dda.x_y[1], dda.h_check[0], dda.h_check[1]);
-		if (dda.dy < dda.dx)
-		{
-			dda.x_y[0] = dda.h_check[0];
-			dda.x_y[1] = dda.h_check[1];
-			if (game->map[dda.h_check[1] / TILE][dda.h_check[0] / TILE] == '1')
-			{
-				break ;
-			}
-			dda.h_check[0] += dda.h_step[0];
-			dda.h_check[1] += dda.h_step[1];
-		}
-		else
-		{
-			dda.x_y[0] = dda.v_check[0];
-			dda.x_y[1] = dda.v_check[1];
-			if (game->map[dda.v_check[1] / TILE][dda.v_check[0] / TILE] == '1')
-			{
-				break ;
-			}
-			dda.v_check[0] += dda.v_step[0];
-			dda.v_check[1] += dda.v_step[1];
-		}
-		i++;
-		if (i > 50)
-			break ;
-	}
-	//calculate
-	normalise_ray(game, dda.x_y, 0xFF00FF);
-	find_projection(game, dda.x_y);
+	set_step(game, dda, angle);
 }
 
 void	set_ray_angle(t_root *game)
@@ -165,7 +133,7 @@ void	set_ray_angle(t_root *game)
 	while (i < game->win_width)
 	{
 		game->me->rangle = rad;
-		more_ray(game);
+		init_ray(game);
 		rad += (game->fov * (M_PI / 180)) / game->win_width;
 		i++;
 		x[1] = game->me->x[1];

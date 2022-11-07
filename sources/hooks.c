@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:40:18 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 14:36:12 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 11:33:15 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,23 @@ int	key_release(int key, t_root *game)
 	return (0);
 }
 
-int	mouse_move(int move, t_root *game)
-{
-	printf("%i\n", move);
-	if (move < 960)
-	{
-		printf("Going left\n");
-		game->key_pressed[LEFT] = true;
-		game->key_pressed[RIGHT] = false;
-	}
-	else
-	{
-		printf("Going right\n");
-		game->key_pressed[LEFT] = false;
-		game->key_pressed[RIGHT] = true;
-	}
-	return (0);
-}
+// int	mouse_move(int move, t_root *game)
+// {
+// 	printf("%i\n", move);
+// 	if (move < 960)
+// 	{
+// 		printf("Going left\n");
+// 		game->key_pressed[LEFT] = true;
+// 		game->key_pressed[RIGHT] = false;
+// 	}
+// 	else
+// 	{
+// 		printf("Going right\n");
+// 		game->key_pressed[LEFT] = false;
+// 		game->key_pressed[RIGHT] = true;
+// 	}
+// 	return (0);
+// }
 
 static bool	key_b(t_root *game, int key)
 {

@@ -6,41 +6,11 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 16:18:49 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 11:31:40 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-char *strs[4] = {
-	"./textures/shit.xpm",
-	"./textures/happy.xpm",
-	"./textures/tex.xpm",
-	"./textures/floral.xpm"
-};
-
-void	test(t_root *game)
-{
-	int				i;
-	t_textures		*tmp;
-	t_textures		**tex;
-
-	tex = malloc(sizeof(*tex) * 4);
-	i = 0;
-	while (i < 4)
-	{
-		tmp = malloc(sizeof(*tmp));
-		tmp->img.img = mlx_xpm_file_to_image(game->mlx->mlx,
-				strs[i], &tmp->w, &tmp->h);
-		tex[i] = tmp;
-		tex[i]->addr = mlx_get_data_addr(tex[i]->img.img,
-				&tex[i]->img.pixel_bits, &tex[i]->img.line_len,
-				&tex[i]->img.endian);
-		printf("h: %i, w: %i\n", tex[i]->w, tex[i]->h);
-		i++;
-	}
-	game->texts = tex;
-}
 
 static void	set_false(t_root *game)
 {
@@ -79,7 +49,8 @@ static void	init_mlx(t_root *game)
 	game->win_height = 1080;
 	game->fov = FOV;
 	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, game->win_width, game->win_height, "cub3d");
+	mlx.win = mlx_new_window(mlx.mlx, game->win_width,
+			game->win_height, "cub3d");
 	game->mlx = &mlx;
 	get_image(game);
 }
@@ -95,20 +66,21 @@ static void	init_projection(t_root *game)
 	game->proj = &img;
 }
 
+	// mlx_hook(game->mlx->win, 6, 1L << 6, mouse_move, game);
+
 void	init_root(t_root *game)
 {
 	game->map_toggle = false;
 	game->fish_toggle = true;
 	set_false(game);
 	init_mlx(game);
-	test(game);
+	apply_textures(game);
 	init_projection(game);
 	draw_map(game, true);
 	update_player(game);
 	mlx_do_key_autorepeatoff(game->mlx->mlx);
 	mlx_hook(game->mlx->win, 2, 1L << 0, key_press, game);
 	mlx_hook(game->mlx->win, 3, 1L << 1, key_release, game);
-	// mlx_hook(game->mlx->win, 6, 1L << 6, mouse_move, game);
 	mlx_hook(game->mlx->win, 17, 0, clean_exit, game);
 	mlx_loop_hook(game->mlx->mlx, game_hook, game);
 	mlx_loop(game->mlx->mlx);
