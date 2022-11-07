@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 15:21:48 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 16:02:27 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	ray_loop(t_root *game, t_dda dda, int i)
 		{
 			dda.x_y[0] = dda.h_check[0];
 			dda.x_y[1] = dda.h_check[1];
-			if (game->map[dda.h_check[1] / TILE][dda.h_check[0] / TILE] == '1')
-				break ;
 			dda.h_check[0] += dda.h_step[0];
 			dda.h_check[1] += dda.h_step[1];
 		}
@@ -31,8 +29,6 @@ void	ray_loop(t_root *game, t_dda dda, int i)
 		{
 			dda.x_y[0] = dda.v_check[0];
 			dda.x_y[1] = dda.v_check[1];
-			if (game->map[dda.v_check[1] / TILE][dda.v_check[0] / TILE] == '1')
-				break ;
 			dda.v_check[0] += dda.v_step[0];
 			dda.v_check[1] += dda.v_step[1];
 		}
@@ -119,24 +115,14 @@ void	init_ray(t_root *game)
 
 void	set_ray_angle(t_root *game)
 {
-	int		x[2];
-	int		y[2];
 	int		i;
-	double	rad;
 
-	x[0] = game->me->x[0];
-	x[1] = game->me->x[1];
-	y[0] = game->me->y[0];
-	y[1] = game->me->y[1];
 	i = 0;
-	rad = (-game->fov / 2) * (M_PI / 180);
+	game->me->rangle = (-game->fov / 2) * (M_PI / 180);
 	while (i < game->win_width)
 	{
-		game->me->rangle = rad;
 		init_ray(game);
-		rad += (game->fov * (M_PI / 180)) / game->win_width;
+		game->me->rangle += (game->fov * (M_PI / 180)) / game->win_width;
 		i++;
-		x[1] = game->me->x[1];
-		y[1] = game->me->y[1];
 	}
 }

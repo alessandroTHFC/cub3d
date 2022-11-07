@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 13:56:41 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 16:13:43 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	draw_player(t_root *game)
 	x[1] = (game->me->x[1] / TILE) * game->tile;
 	y[0] = (game->me->y[0] / TILE) * game->tile;
 	y[1] = (game->me->y[1] / TILE) * game->tile;
-	draw_line(game->proj, x, y, 0xCDEFAB);
+	draw_line(game->mlx->minmap, x, y, 0xCDEFAB);
 	x[0] -= 3;
 	x[1] = x[0] + 5;
 	y[0] -= 3;
@@ -30,7 +30,7 @@ void	draw_player(t_root *game)
 	i = 0;
 	while (i < 5)
 	{
-		draw_line(game->proj, x, y, 0xCDEFAB);
+		draw_line(game->mlx->minmap, x, y, 0xCDEFAB);
 		i++;
 		y[0]++;
 		y[1]++;
@@ -47,36 +47,27 @@ void	update_player(t_root *game)
 	{
 		draw_map(game, false);
 	}
+	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
+		game->proj->img, 0, 0);
 	if (game->map_toggle)
 	{
 		draw_player(game);
+		mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
+		game->mlx->minmap->img, 0, 0);
 	}
-	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
-		game->proj->img, 0, 0);
 }
 
 /*	Rotates the player on button press.	*/
 
 void	rot_player(t_root *game, int dir)
 {
-	double	x;
-	double	y;
-	double	rad;
-
-	rad = game->me->rad * dir;
-	x = game->me->x[1];
-	y = game->me->y[1];
-	x -= game->me->x[0];
-	y -= game->me->y[0];
-	game->me->x[1] = ((x * cos(rad)) - (y * sin(rad)));
-	game->me->y[1] = ((x * sin(rad)) + (y * cos(rad)));
-	game->me->x[1] += game->me->x[0];
-	game->me->y[1] += game->me->y[0];
-	game->me->angle += (5 * dir * (M_PI / 180));
+	game->me->angle += (10 * dir * (M_PI / 180));
 	if (game->me->angle < 0)
 		game->me->angle += 2 * M_PI;
 	if (game->me->angle > 2 * M_PI)
 		game->me->angle -= 2 * M_PI;
+	game->me->x[1] = game->me->x[0] + cos(game->me->angle) * (TILE / 2) + 5;
+	game->me->y[1] = game->me->y[0] + sin(game->me->angle) * (TILE / 2) + 5;
 	update_player(game);
 }
 

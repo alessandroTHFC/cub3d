@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 11:31:40 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 16:07:44 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,8 @@ static void	set_false(t_root *game)
 static void	get_image(t_root *game)
 {
 	static t_img	img;
-	int				width;
-	int				height;
 
-	width = game->map_width + 4;
-	height = game->map_height + 1;
-	width *= (TILE);
-	height *= (TILE);
-	img.img = mlx_new_image(game->mlx->mlx, width, 1080);
+	img.img = mlx_new_image(game->mlx->mlx, game->win_width, game->win_height);
 	img.addr = mlx_get_data_addr(img.img,
 			&img.pixel_bits,
 			&img.line_len, &img.endian);
