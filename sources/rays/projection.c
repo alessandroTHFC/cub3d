@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/03 15:36:00 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 15:11:26 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ int	add_shade(int colour, int side, int height)
 	(void)height;
 	if (side == 0)
 		return (colour);
-	red = (0xEF0000 & colour);
-	green = (0xEF00 & colour);
-	blue = (0xEF & colour);
-	colour = red + green + blue;
+	return (colour);
+	red = (0xFA & (colour >> 16));
+	green = (0xFA & (colour >> 8));
+	blue = (0xFA & colour);
+	colour = (red << 16) + (green << 8) + blue;
 	return (colour);
 }
 
@@ -65,31 +66,32 @@ void	draw_wall(t_root *game, int x, int y, int side)
 	i = 0;
 	x_err = (game->me->text_i * game->texts[game->i]->w) / (TILE);
 	x_err *= game->texts[game->i]->img.pixel_bits / 8;
-	while (x_y[1] != y_end)
-	{
-		if (x_y[1] > 0 && x_y[1] < game->win_height)
-			draw_pixel(game->proj, x_y,
-				add_shade(*(int *)(game->texts[game->i]->addr
-						+ ((int)i * game->texts[game->i]->img.line_len
-							+ x_err)), side, y));
+	while (++x_y[1] < -1)
 		i += step;
-		x_y[1]++;
+	while (x_y[1]++ != y_end)
+	{
+		if (x_y[1] >= game->win_height)
+			break ;
+		draw_pixel(game->proj, x_y,
+			add_shade(*(int *)(game->texts[game->i]->addr
+					+ ((int)i * game->texts[game->i]->img.line_len
+						+ x_err)), side, y));
+		i += step;
 	}
 }
 
 void	find_projection(t_root *game, int end[2])
 {
 	static int	scan;
-	double		dist;
+	double		distance;
 	int			height;
 	int			side;
 
 	side = find_side(game, end[0], end[1]);
-	dist = sqrt(ft_square(game->me->x[0] - end[0])
-			+ ft_square(game->me->y[0] - end[1]));
+	distance = dist(game->me->x[0], game->me->y[0], end[0], end[1]);
 	if (game->fish_toggle)
-		dist *= cos(game->me->rangle);
-	height = 550 - ((TILE * 50) / (dist)) * 10;
+		distance *= cos(game->me->rangle);
+	height = 550 - ((TILE * 50) / (distance)) * 10;
 	draw_wall(game, scan, height, side);
 	scan += 1;
 	if (scan == game->win_width)

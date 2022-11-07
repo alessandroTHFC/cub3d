@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 11:29:03 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 15:17:34 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,17 @@ void	apply_textures(t_root *game)
 	while (i < 4)
 	{
 		tmp = malloc(sizeof(*tmp));
-		printf("%s\n", game->paths[i]);
 		tmp->img.img = mlx_xpm_file_to_image(game->mlx->mlx,
 				game->paths[i], &tmp->w, &tmp->h);
+		if (!tmp->img.img)
+		{
+			printf("NOPE!\n");
+			exit(1);
+		}
 		tex[i] = tmp;
 		tex[i]->addr = mlx_get_data_addr(tex[i]->img.img,
 				&tex[i]->img.pixel_bits, &tex[i]->img.line_len,
 				&tex[i]->img.endian);
-		printf("h: %i, w: %i\n", tex[i]->w, tex[i]->h);
 		i++;
 	}
 	game->texts = tex;
@@ -63,7 +66,6 @@ void	init_player(t_root *game, int x, int y, char *dir)
 	x *= TILE;
 	y /= game->tile;
 	y *= TILE;
-	printf("x: %i, y: %i\n", x, y);
 	me.tile_x = x;
 	me.tile_y = y;
 	me.x[0] = TILE / 2 + me.tile_x;

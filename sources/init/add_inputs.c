@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 11:45:00 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 11:47:25 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 15:15:20 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	add_colour(t_root *game, int type, char *file, int i)
 	while (ft_isspace(file[i]) || file[i] == ',')
 		i++;
 	colour = (colour << 8) + ft_atoi(&file[i]);
-	printf("PATH: [%x]\n", colour);
+	printf("COLOUR: [%x]\n", colour);
 	game->colours[type] = colour;
 	while (ft_isdigit(file[i]))
 		i++;

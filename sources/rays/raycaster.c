@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 12:06:27 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 15:21:48 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ray_loop(t_root *game, t_dda dda, int i)
 {
-	while (game->map[dda.x_y[1] / TILE][dda.x_y[0] / TILE] != '1' && i++ < 50)
+	while (!is_wall(game->map, dda.x_y[0], dda.x_y[1]) && i++ < 50)
 	{
 		dda.dx = dist(dda.x_y[0], dda.x_y[1], dda.v_check[0], dda.v_check[1]);
 		dda.dy = dist(dda.x_y[0], dda.x_y[1], dda.h_check[0], dda.h_check[1]);

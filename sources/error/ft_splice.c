@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 12:15:24 by jbrown            #+#    #+#             */
-/*   Updated: 2022/10/24 15:45:08 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 12:52:29 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ char	**ft_splice(char *s, char c, t_root *game)
 	while (s[first] && i < no_of_strs)
 	{
 		last = findstring(&first, last, c, s);
-		game->map_width = last - first;
 		strs[i] = fillstring(s, first, last);
 		if (!strs[i])
 			return (freestrings(strs, i));
@@ -98,6 +97,5 @@ char	**ft_splice(char *s, char c, t_root *game)
 		i++;
 	}
 	strs[i] = NULL;
-	printf("Map h: %i, map w: %i\n", game->map_height, game->map_width);
 	return (strs);
 }

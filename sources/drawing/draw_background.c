@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 13:25:05 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 11:07:16 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 14:59:32 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,6 @@ void	draw_background(t_root *game)
 		y[0]++;
 		y[1]++;
 	}
+	x[1] = game->win_width - 1;
+	draw_line(game->proj, x, y, game->colours[1]);
 }

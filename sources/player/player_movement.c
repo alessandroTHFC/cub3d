@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 11:29:52 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 13:56:41 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	draw_player(t_root *game)
 	x[1] = (game->me->x[1] / TILE) * game->tile;
 	y[0] = (game->me->y[0] / TILE) * game->tile;
 	y[1] = (game->me->y[1] / TILE) * game->tile;
-	draw_line(game->proj, x, y, 0xABCDEFAB);
+	draw_line(game->proj, x, y, 0xCDEFAB);
 	x[0] -= 3;
 	x[1] = x[0] + 5;
 	y[0] -= 3;
@@ -30,7 +30,7 @@ void	draw_player(t_root *game)
 	i = 0;
 	while (i < 5)
 	{
-		draw_line(game->proj, x, y, 0xABCDEFAB);
+		draw_line(game->proj, x, y, 0xCDEFAB);
 		i++;
 		y[0]++;
 		y[1]++;
@@ -82,18 +82,21 @@ void	rot_player(t_root *game, int dir)
 
 void	move_player(t_root *game, int dir)
 {
-	int		dx;
-	int		dy;
+	double	x;
+	double	y;
 
-	dx = ((game->me->x[1] - game->me->x[0]) * dir) * 20;
-	dy = ((game->me->y[1] - game->me->y[0]) * dir) * 20;
-	if (!check_collision(game, dx / 20 + game->me->x[0],
-			dy / 20 + game->me->y[0]))
-		return ;
-	game->me->x[0] += dx / 20;
-	game->me->x[1] += dx / 20;
-	game->me->y[0] += dy / 20;
-	game->me->y[1] += dy / 20;
+	x = game->me->x[0] + cos(game->me->angle) * (dir * TILE / 2);
+	y = game->me->y[0] + sin(game->me->angle) * (dir * TILE / 2);
+	if (check_collision(game, x, game->me->y[0]))
+	{
+		game->me->x[0] = x;
+	}
+	if (check_collision(game, game->me->x[0], y))
+	{
+		game->me->y[0] = y;
+	}
+	game->me->x[1] = game->me->x[0] + cos(game->me->angle) * (TILE / 2) + 5;
+	game->me->y[1] = game->me->y[0] + sin(game->me->angle) * (TILE / 2) + 5;
 	update_player(game);
 }
 
@@ -110,15 +113,17 @@ void	strafe_player(t_root *game, int dir)
 		strafe += M_PI * 2;
 	if (strafe > M_PI * 2)
 		strafe -= M_PI * 2;
-	x = cos(strafe) * dir;
-	y = sin(strafe) * dir;
-	if (!check_collision(game, x + game->me->x[0], y + game->me->y[0]))
+	x = game->me->x[0] + cos(strafe) * (dir * TILE / 8);
+	y = game->me->y[0] + sin(strafe) * (dir * TILE / 8);
+	if (check_collision(game, x, game->me->y[0]))
 	{
-		return ;
+		game->me->x[0] = x;
 	}
-	game->me->x[0] += x;
-	game->me->x[1] += x;
-	game->me->y[0] += y;
-	game->me->y[1] += y;
+	if (check_collision(game, game->me->x[0], y))
+	{
+		game->me->y[0] = y;
+	}
+	game->me->x[1] = game->me->x[0] + cos(game->me->angle) * (TILE / 2) + 5;
+	game->me->y[1] = game->me->y[0] + sin(game->me->angle) * (TILE / 2) + 5;
 	update_player(game);
 }

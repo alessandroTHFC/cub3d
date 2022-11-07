@@ -6,11 +6,29 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 11:27:39 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/07 12:58:59 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	set_width(t_root *game)
+{
+	int	i;
+	int	curr;
+	int	biggest;
+
+	i = 0;
+	biggest = ft_strlen(game->map[i]);
+	while (game->map[i])
+	{
+		curr = ft_strlen(game->map[i]);
+		if (curr > biggest)
+			biggest = curr;
+		i++;
+	}
+	game->map_width = biggest;
+}
 
 void	draw_circle(t_mlx *mlx, int x, int y, int colour)
 {
@@ -62,14 +80,12 @@ void	import_map(char *map_loc, t_root *game)
 	char	*file;
 	char	*map;
 
-	printf("1\n");
 	fd = open(map_loc, O_RDONLY);
 	file = buffer_map(fd);
 	map = file;
-	printf("2\n");
 	map = get_textures(game, file);
-	printf("3\n");
 	game->map = ft_splice(map, '\n', game);
+	set_width(game);
 	error_checker(game);
 	free (file);
 	close (fd);
