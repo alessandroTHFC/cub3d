@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 16:02:27 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 14:21:17 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ray_loop(t_root *game, t_dda dda, int i)
 
 void	edge_case(t_root *game, t_dda dda, float angle)
 {
-	if (angle == M_PI || !angle)
+	if (angle == M_PI || angle == 0.0f)
 	{
 		dda.v_check[0] = dda.x_y[0];
 		dda.v_check[1] = dda.x_y[1];
@@ -67,6 +67,7 @@ void	edge_case(t_root *game, t_dda dda, float angle)
 
 void	set_step(t_root *game, t_dda dda, float angle)
 {
+	// printf("step\n");
 	if (angle > M_PI)
 	{
 		dda.h_check[1] -= 1;
@@ -99,6 +100,7 @@ void	init_ray(t_root *game)
 	t_dda	dda;
 	float	angle;
 
+	// printf("init\n");
 	angle = game->me->rangle + game->me->angle;
 	if (angle > (2 * M_PI))
 		angle -= (2 * M_PI);
@@ -119,6 +121,8 @@ void	set_ray_angle(t_root *game)
 
 	i = 0;
 	game->me->rangle = (-game->fov / 2) * (M_PI / 180);
+	if (game->map_toggle)
+		clear_layer(game, game->mlx->minmap);
 	while (i < game->win_width)
 	{
 		init_ray(game);

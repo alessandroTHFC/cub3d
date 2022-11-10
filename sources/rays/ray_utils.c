@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:06:13 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 12:08:10 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 13:51:58 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ void	normalise_ray(t_root *game, int x_y[2], int colour)
 	y[0] = game->me->y[0] * game->tile / TILE;
 	y[1] = x_y[1] * game->tile / TILE;
 	if (game->map_toggle)
+	{
 		draw_line(game->mlx->minmap, x, y, colour);
+	}
 }
 
 float	dist(float ax, float ay, int bx, int by)

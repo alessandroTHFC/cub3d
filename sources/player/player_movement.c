@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 16:13:43 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 14:08:49 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,63 @@ void	draw_player(t_root *game)
 	}
 }
 
+void	clear_layer(t_root *game, t_img *img)
+{
+	int	x_y[2];
+
+	x_y[1] = 0;
+	while (x_y[1] < game->win_height)
+	{
+		x_y[0] = 0;
+		while (x_y[0] < game->win_width)
+		{
+			draw_pixel(img, x_y, 0);
+			x_y[0]++;
+		}
+		x_y[0] = 0;
+		x_y[1]++;
+	}
+}
+
+void	draw_layer(t_root *game, t_img *img)
+{
+	int	colour;
+	int	x_y[2];
+	int	x_add;
+
+	x_add = img->pixel_bits / 8;
+	x_y[1] = 0;
+	while (x_y[1] < game->win_height)
+	{
+		x_y[0] = 0;
+		while (x_y[0] < game->win_width)
+		{
+			colour = *(int *)(img->addr + ((int)x_y[1] * img->line_len + x_y[0] * x_add));
+			if (colour)
+			{
+				draw_pixel(game->proj, x_y, colour);
+			}
+			x_y[0]++;
+		}
+		x_y[0] = 0;
+		x_y[1]++;
+	}
+}
+
 void	update_player(t_root *game)
 {
 	game->me->tile_x = (int)(game->me->x[0] / (TILE));
 	game->me->tile_y = (int)(game->me->y[0] / (TILE));
-	draw_background(game);
+	// draw_background(game);
 	set_ray_angle(game);
 	if (game->map_toggle)
 	{
 		draw_map(game, false);
+		draw_player(game);
+		draw_layer(game, game->mlx->minmap);
 	}
 	mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
 		game->proj->img, 0, 0);
-	if (game->map_toggle)
-	{
-		draw_player(game);
-		mlx_put_image_to_window(game->mlx->mlx, game->mlx->win,
-		game->mlx->minmap->img, 0, 0);
-	}
 }
 
 /*	Rotates the player on button press.	*/

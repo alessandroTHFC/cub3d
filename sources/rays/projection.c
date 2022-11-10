@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 15:11:26 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 14:11:03 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,26 @@ void	draw_wall(t_root *game, int x, int y, int side)
 	float	step;
 
 	x_y[0] = x;
-	x_y[1] = y;
+	x_y[1] = -1;
 	y_end = game->win_height - y;
 	step = game->texts[game->i]->h / (float)(y_end - y);
 	i = 0;
 	x_err = (game->me->text_i * game->texts[game->i]->w) / (TILE);
 	x_err *= game->texts[game->i]->img.pixel_bits / 8;
-	while (++x_y[1] < -1)
-		i += step;
-	while (x_y[1]++ != y_end)
+	while (x_y[1]++ < game->win_height - 1)
 	{
-		if (x_y[1] >= game->win_height)
-			break ;
-		draw_pixel(game->proj, x_y,
-			add_shade(*(int *)(game->texts[game->i]->addr
-					+ ((int)i * game->texts[game->i]->img.line_len
-						+ x_err)), side, y));
-		i += step;
+		if (x_y[1] >= y && x_y[1] < y_end)
+		{
+			draw_pixel(game->proj, x_y,
+				add_shade(*(int *)(game->texts[game->i]->img.addr
+						+ ((int)i * game->texts[game->i]->img.line_len
+							+ x_err)), side, y));
+			i += step;
+		}
+		else if (x_y[1] < game->win_height / 2)
+			draw_pixel(game->proj, x_y, game->colours[0]);
+		else
+			draw_pixel(game->proj, x_y, game->colours[1]);
 	}
 }
 

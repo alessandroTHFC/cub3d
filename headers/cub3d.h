@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 12:07:03 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 13:53:52 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ typedef struct s_mlx
 typedef struct s_textures
 {
 	t_img	img;
-	char	*addr;
 	int		h;
 	int		w;
 }	t_textures;
@@ -163,6 +162,7 @@ void	free_map(char **map);
 /*	MLX DRAWING	*/
 void	draw_square(t_root *game, int colour, int x_offset, int y_offset);
 void	draw_background(t_root *game);
+void	clear_layer(t_root *game, t_img *img);
 void	draw_line(t_img *img, int *x, int *y, int colour);
 void	draw_pixel(t_img *img, int *x_y, int colour);
 void	draw_map(t_root *game, bool init);

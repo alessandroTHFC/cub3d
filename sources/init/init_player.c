@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 15:17:34 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 13:34:48 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	apply_textures(t_root *game)
 			exit(1);
 		}
 		tex[i] = tmp;
-		tex[i]->addr = mlx_get_data_addr(tex[i]->img.img,
+		tex[i]->img.addr = mlx_get_data_addr(tex[i]->img.img,
 				&tex[i]->img.pixel_bits, &tex[i]->img.line_len,
 				&tex[i]->img.endian);
 		i++;
