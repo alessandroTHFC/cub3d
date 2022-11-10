@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 20:20:23 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/10 14:21:17 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 15:26:12 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,13 +120,13 @@ void	set_ray_angle(t_root *game)
 	int		i;
 
 	i = 0;
-	game->me->rangle = (-game->fov / 2) * (M_PI / 180);
+	// game->me->rangle = (-game->fov / 2) * (M_PI / 180);
 	if (game->map_toggle)
 		clear_layer(game, game->mlx->minmap);
 	while (i < game->win_width)
 	{
+		game->me->rangle = atan((i - ((float)game->win_width / 2)) / game->fov);//(game->fov * (M_PI / 180)) / game->win_width;
 		init_ray(game);
-		game->me->rangle += (game->fov * (M_PI / 180)) / game->win_width;
 		i++;
 	}
 }

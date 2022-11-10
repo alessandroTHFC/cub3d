@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/10 14:11:03 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 15:41:01 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	add_shade(int colour, int side, int height)
 	(void)height;
 	if (side == 0)
 		return (colour);
-	return (colour);
 	red = (0xFA & (colour >> 16));
 	green = (0xFA & (colour >> 8));
 	blue = (0xFA & colour);
@@ -60,16 +59,28 @@ void	draw_wall(t_root *game, int x, int y, int side)
 	float	step;
 
 	x_y[0] = x;
-	x_y[1] = -1;
+	x_y[1] = 0;
 	y_end = game->win_height - y;
 	step = game->texts[game->i]->h / (float)(y_end - y);
 	i = 0;
 	x_err = (game->me->text_i * game->texts[game->i]->w) / (TILE);
 	x_err *= game->texts[game->i]->img.pixel_bits / 8;
-	while (x_y[1]++ < game->win_height - 1)
+	if (y < 0)
+	{
+		i = step * -y;
+		y = 0;
+		// printf("%i\n", y);
+	}
+	// while (y < 0)
+	// {
+	// 	y++;
+	// 	i += step;
+	// }
+	while (x_y[1] < game->win_height - 1)
 	{
 		if (x_y[1] >= y && x_y[1] < y_end)
 		{
+			// draw_pixel(game->proj, x_y, add_shade(0xFF00FF, side, y));
 			draw_pixel(game->proj, x_y,
 				add_shade(*(int *)(game->texts[game->i]->img.addr
 						+ ((int)i * game->texts[game->i]->img.line_len
@@ -80,7 +91,9 @@ void	draw_wall(t_root *game, int x, int y, int side)
 			draw_pixel(game->proj, x_y, game->colours[0]);
 		else
 			draw_pixel(game->proj, x_y, game->colours[1]);
+		x_y[1]++;
 	}
+	(void)side;
 }
 
 void	find_projection(t_root *game, int end[2])

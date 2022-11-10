@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/10 13:36:24 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 16:03:23 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static void	init_projection(t_root *game)
 	game->proj = &img;
 }
 
-	// mlx_hook(game->mlx->win, 6, 1L << 6, mouse_move, game);
 
 void	init_root(t_root *game)
 {
 	game->map_toggle = false;
 	game->fish_toggle = true;
+	printf("mapx: %i\nmapy: %i\n", game->map_width, game->map_height);
 	set_false(game);
 	init_mlx(game);
 	apply_textures(game);
@@ -73,6 +73,8 @@ void	init_root(t_root *game)
 	draw_map(game, true);
 	update_player(game);
 	mlx_do_key_autorepeatoff(game->mlx->mlx);
+	mlx_mouse_hook(game->mlx->win, mouse_move, game);
+	// mlx_hook(game->mlx->win, 6, 1L << 6, mouse_move, game);
 	mlx_hook(game->mlx->win, 2, 1L << 0, key_press, game);
 	mlx_hook(game->mlx->win, 3, 1L << 1, key_release, game);
 	mlx_hook(game->mlx->win, 17, 0, clean_exit, game);

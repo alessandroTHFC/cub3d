@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/10 13:53:52 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 15:26:17 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include <stdbool.h>
 
 # define M_PI		3.14159265358979323846264338327950288
-# define TILE		10000
-# define FOV		60
+# define TILE		100000
+# define FOV		1000
 
 typedef struct s_slope
 {
@@ -41,10 +41,10 @@ typedef struct s_slope
 typedef struct s_dda
 {
 	int		x_y[2];
-	int		h_check[2];
-	int		v_check[2];
-	int		v_step[2];
-	int		h_step[2];
+	float	h_check[2];
+	float	v_check[2];
+	float	v_step[2];
+	float	h_step[2];
 	double	dx;
 	double	dy;
 	double	a_tan;

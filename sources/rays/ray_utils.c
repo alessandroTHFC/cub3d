@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:06:13 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/10 13:51:58 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/10 14:45:48 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ bool	is_wall(char **map, int x, int y)
 	ty = y + 1;
 	tx /= (TILE);
 	ty /= (TILE);
+	if (tx < 0 || tx > 44 || ty < 0 || ty > 13)
+	{
+		printf("No!\n");
+	}
 	x /= (TILE);
 	y /= (TILE);
 	if (map[y][x] == '1' || map[ty][tx] == '1'
