@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:13:45 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/10 15:26:17 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/14 15:28:22 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ typedef struct s_root
 
 /*	MAP_READING */
 char	*get_textures(t_root *game, char *file);
+void	clear_layer(t_root *game, t_img *img);
+void	draw_layer(t_root *game, t_img *img);
 /*	ERROR CHECKING	*/
 char	**ft_splice(char *s, char c, t_root *game);
 void	check_filetype(char *map_file);
@@ -167,6 +169,7 @@ void	draw_line(t_img *img, int *x, int *y, int colour);
 void	draw_pixel(t_img *img, int *x_y, int colour);
 void	draw_map(t_root *game, bool init);
 void	tile_size(t_root *game);
+void	draw_cursor(t_root *game);
 /*	HOOKS	*/
 int		key_press(int key, t_root *game);
 int		key_release(int key, t_root *game);

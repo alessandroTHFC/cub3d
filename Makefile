@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/11/10 12:22:53 by jbrown           ###   ########.fr        #
+#    Updated: 2022/11/14 14:59:39 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SOURCES	:=	$(SRCDIR)/main.c \
 			$(SRCDIR)/exit.c \
 			$(SRCDIR)/player/player_movement.c \
 			$(SRCDIR)/player/player_collision.c \
+			$(SRCDIR)/player/make_layers.c \
 			$(SRCDIR)/hooks.c \
 			$(SRCDIR)/init/get_textures.c \
 			$(SRCDIR)/init/add_inputs.c \
@@ -76,7 +77,7 @@ FCLN	:=	$(BUILDIR)
 #								COMPILER/FLAGS								   #
 ################################################################################
 CC		=	gcc
-COMFLAG	=	-Wall -Wextra -Werror -std=c99 -D_POSIX_C_SOURCE -O2 -I $(HDRDIR)
+COMFLAG	=	-Wall -Wextra -Werror -std=c99 -D_POSIX_C_SOURCE -O3 -I $(HDRDIR)
 
 CFLAGS		=	$(COMFLAG) -g
 LFLAGS		=	$(COMFLAG)

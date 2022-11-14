@@ -6,11 +6,28 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 15:32:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 12:59:39 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/14 15:28:04 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	draw_cursor(t_root *game)
+{
+	int	x[2];
+	int	y[2];
+
+	x[0] = game->win_width / 2 - 10;
+	x[1] = x[0] + 19;
+	y[0] = game->win_height / 2;
+	y[1] = y[0];
+	draw_line(game->proj, x, y, 0xFF000000);
+	x[0] += 10;
+	x[1] -= 9;
+	y[0] -= 10;
+	y[1] += 9;
+	draw_line(game->proj, x, y, 0xFF000000);
+}
 
 void	tile_size(t_root *game)
 {
