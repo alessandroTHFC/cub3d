@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:40:18 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/10 16:15:56 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/14 11:31:57 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	game_hook(t_root *game)
 	int	dir;
 	static int	x, y;
 
-	mlx_mouse_get_pos(game->mlx->win, &x, &y);
+	// mlx_mouse_get_pos(game->mlx->win, &x, &y);
 	printf("%i, %i\n", x, y);
 	if (key_b(game, LEFT) || key_b(game, S)
 		|| key_b(game, D) || key_b(game, DOWN))
@@ -96,8 +96,8 @@ int	game_hook(t_root *game)
 		move_player(game, dir);
 	if (key_b(game, A) || key_b(game, D))
 		strafe_player(game, dir);
-		rot_player(game, x - game->win_width / 2);
+		// rot_player(game, x - game->win_width / 2);
 	
-	mlx_mouse_move(game->mlx->win, game->win_width / 2, game->win_height / 2);
+	// mlx_mouse_move(game->mlx->win, game->win_width / 2, game->win_height / 2);
 	return (0);
 }

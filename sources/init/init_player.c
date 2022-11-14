@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 09:47:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/10 13:34:48 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/14 11:34:33 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	apply_textures(t_root *game)
 				game->paths[i], &tmp->w, &tmp->h);
 		if (!tmp->img.img)
 		{
+			printf("%s is not a valid path!\n", game->paths[i]);
 			printf("NOPE!\n");
 			exit(1);
 		}
