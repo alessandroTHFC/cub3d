@@ -1,9 +1,9 @@
-NO ./textures/lava.xpm
-SO ./textures/funky.xpm
+NO ./textures/funky.xpm
+SO ./textures/lava.xpm
 EA ./textures/east.xpm
 WE ./textures/west.xpm
 C 127,30,0
-F 0,30,127
+F 0,30,128
 
         111111111111111111111111
         1000000000110000000000001

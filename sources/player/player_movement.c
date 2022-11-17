@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 15:31:53 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/14 14:58:50 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/17 10:59:59 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	draw_player(t_root *game)
 
 void	update_player(t_root *game)
 {
+	game->me->x[1] = game->me->x[0] + cos(game->me->angle) * (TILE / 2) + 5;
+	game->me->y[1] = game->me->y[0] + sin(game->me->angle) * (TILE / 2) + 5;
 	game->me->tile_x = (int)(game->me->x[0] / (TILE));
 	game->me->tile_y = (int)(game->me->y[0] / (TILE));
 	set_ray_angle(game);
@@ -61,8 +63,6 @@ void	rot_player(t_root *game, int dir)
 		game->me->angle += 2 * M_PI;
 	if (game->me->angle > 2 * M_PI)
 		game->me->angle -= 2 * M_PI;
-	game->me->x[1] = game->me->x[0] + cos(game->me->angle) * (TILE / 2) + 5;
-	game->me->y[1] = game->me->y[0] + sin(game->me->angle) * (TILE / 2) + 5;
 }
 
 void	move_player(t_root *game, int dir)
@@ -80,11 +80,7 @@ void	move_player(t_root *game, int dir)
 	{
 		game->me->y[0] = y;
 	}
-	game->me->x[1] = game->me->x[0] + cos(game->me->angle) * (TILE / 4) + 5;
-	game->me->y[1] = game->me->y[0] + sin(game->me->angle) * (TILE / 4) + 5;
 }
-
-/*	Functional, a little bit wiggly. */
 
 void	strafe_player(t_root *game, int dir)
 {
@@ -107,6 +103,4 @@ void	strafe_player(t_root *game, int dir)
 	{
 		game->me->y[0] = y;
 	}
-	game->me->x[1] = game->me->x[0] + cos(game->me->angle) * (TILE / 2) + 5;
-	game->me->y[1] = game->me->y[0] + sin(game->me->angle) * (TILE / 2) + 5;
 }

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 11:45:06 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 11:27:52 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/17 13:26:25 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 void	check_filetype(char *map_file)
 {
 	size_t	i;
+	// char	*hello;
 
+	// hello = malloc(100);
+	// (void)hello;
 	i = strlen(map_file) - 4;
 	if (!ft_memcmp(&map_file[i], ".cub", 4))
 		return ;

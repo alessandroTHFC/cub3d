@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:50:36 by jbrown            #+#    #+#             */
-/*   Updated: 2022/09/14 22:10:54 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/17 12:18:14 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	check_count(t_root *game, int y, int x)
 	{
 		printf("\e[31m\e[1mError\nUnknown characters in the map!! \e[0m \n");
 		printf("this char is invalid %c\n", game->map[y][x]);
-		return (1);
+		exit(1);
 	}
 	if (game->map[y][x] == 'N' || game->map[y][x] == 'S' ||
 			game->map[y][x] == 'W' || game->map[y][x] == 'E')

@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/11/14 14:59:39 by jbrown           ###   ########.fr        #
+#    Updated: 2022/11/17 13:33:42 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,7 @@ FCLN	:=	$(BUILDIR)
 #								COMPILER/FLAGS								   #
 ################################################################################
 CC		=	gcc
-COMFLAG	=	-Wall -Wextra -Werror -std=c99 -D_POSIX_C_SOURCE -O3 -I $(HDRDIR)
+COMFLAG	=	-Wall -Wextra -Werror -std=c99 -D_POSIX_C_SOURCE -I $(HDRDIR)
 
 CFLAGS		=	$(COMFLAG) -g
 LFLAGS		=	$(COMFLAG)
@@ -142,6 +142,27 @@ $(MLX):
 		cd $(MLX) && bash configure >/dev/null;\
 		cd ../..; \
 	fi
+
+test:
+	./$(NAME) maps/maptest_border_error1.cub
+	sleep .5
+	./$(NAME) maps/maptest_border_error2.cub
+	sleep .5
+	./$(NAME) maps/maptest_border_error3.cub
+	sleep .5
+	./$(NAME) maps/maptest_border_error4.cub
+	sleep .5
+	./$(NAME) maps/maptest_invalid_file_ext.cu
+	sleep .5
+	./$(NAME) maps/maptest_no_textures.cub
+	sleep .5
+	./$(NAME) maps/maptest_wrong_macro.cub
+	sleep .5
+	./$(NAME) maps/maptest_invalid_char.cub
+	sleep .5
+	./$(NAME) maps/maptest_invalid_textures.cub
+	sleep .5
+	./$(NAME) maps/maptest_invalid_colour.cub
 
 clean:
 	@$(RM) $(CLNDIR)

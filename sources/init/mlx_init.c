@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:33:52 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/14 15:03:25 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/17 13:07:28 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,22 @@ static void	set_false(t_root *game)
 	game->key_pressed[RIGHT] = false;
 }
 
-static void	get_image(t_root *game)
+static void	init_projection(t_root *game)
 {
 	static t_img	img;
+	static t_img	img_other;
 
 	img.img = mlx_new_image(game->mlx->mlx, game->win_width, game->win_height);
 	img.addr = mlx_get_data_addr(img.img,
 			&img.pixel_bits,
 			&img.line_len, &img.endian);
-	game->mlx->minmap = &img;
+	img_other.img = mlx_new_image(game->mlx->mlx,
+			game->win_width, game->win_height);
+	img_other.addr = mlx_get_data_addr(img_other.img,
+			&img_other.pixel_bits,
+			&img_other.line_len, &img_other.endian);
+	game->proj = &img;
+	game->mlx->minmap = &img_other;
 }
 
 static void	init_mlx(t_root *game)
@@ -43,21 +50,11 @@ static void	init_mlx(t_root *game)
 	game->win_height = 1080;
 	game->fov = FOV;
 	mlx.mlx = mlx_init();
+	game->mlx = &mlx;
+	apply_textures(game);
 	mlx.win = mlx_new_window(mlx.mlx, game->win_width,
 			game->win_height, "cub3d");
-	game->mlx = &mlx;
-	get_image(game);
-}
-
-static void	init_projection(t_root *game)
-{
-	static t_img	img;
-
-	img.img = mlx_new_image(game->mlx->mlx, game->win_width, game->win_height);
-	img.addr = mlx_get_data_addr(img.img,
-			&img.pixel_bits,
-			&img.line_len, &img.endian);
-	game->proj = &img;
+	init_projection(game);
 }
 
 void	init_root(t_root *game)
@@ -68,7 +65,6 @@ void	init_root(t_root *game)
 	set_false(game);
 	init_mlx(game);
 	apply_textures(game);
-	init_projection(game);
 	draw_map(game, true);
 	update_player(game);
 	mlx_mouse_move(game->mlx->win, game->win_width / 2, game->win_height / 2);

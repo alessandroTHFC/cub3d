@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/14 15:27:51 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/17 14:02:58 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ int	add_shade(int colour, int side, int height)
 	return (colour);
 }
 
-void	set_wall_top(int *y, float *i, int step)
+void	set_wall_top(float *y, float *i, int step)
 {
 	if (*y < 0)
 	{
-		*i = step * -(*y);
+		*i = (float)(step * -(*y));
 		*y = 0;
 	}
 	else
@@ -52,7 +52,7 @@ int	draw_wall_segment(t_root *game, float i, int side, int y)
 	return (colour);
 }
 
-void	draw_wall(t_root *game, int x, int y, int side)
+void	draw_wall(t_root *game, int x, float y, int side)
 {
 	int		y_end;
 	int		x_y[2];
@@ -83,7 +83,7 @@ void	find_projection(t_root *game, int end[2])
 {
 	static int	scan;
 	double		distance;
-	int			height;
+	float		height;
 	int			side;
 
 	side = find_side(game, end[0], end[1]);

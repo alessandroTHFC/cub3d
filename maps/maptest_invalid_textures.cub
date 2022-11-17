@@ -1,5 +1,5 @@
-NO ./textures/lava.xpm
-SO ./textures/funky.xpm
+NO ./textues/funky.xpm
+SO ./textures/lava.xpm
 EA ./textures/east.xpm
 WE ./textures/west.xpm
 C 127,30,0

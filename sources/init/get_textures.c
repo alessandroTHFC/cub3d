@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 09:30:49 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/14 13:55:20 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/17 11:42:48 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	check_inputs(t_root *game)
 		return ;
 	if (game->colours[0] != -1 && game->colours[1] != -1)
 		return ;
-	printf("Paths not entered correctly!\n");
+	printf("\e[31m\e[1mError\nMissing Textures or Colours!\e[0m \n");
+	exit(1);
 }
 
 void	init_paths(t_root *game)
@@ -66,7 +67,7 @@ char	*get_textures(t_root *game, char *file)
 		i = path_check(game, file, i);
 		if (i < 0)
 		{
-			printf("Invalid Inputs!\n");
+			printf("\e[31m\e[1mError\nFormatting Invalid!\e[0m \n");
 			exit(1);
 		}
 		count++;

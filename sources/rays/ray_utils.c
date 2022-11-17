@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 12:06:13 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/10 14:45:48 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/17 11:08:40 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,6 @@ bool	is_wall(char **map, int x, int y)
 	ty = y + 1;
 	tx /= (TILE);
 	ty /= (TILE);
-	if (tx < 0 || tx > 44 || ty < 0 || ty > 13)
-	{
-		printf("No!\n");
-	}
 	x /= (TILE);
 	y /= (TILE);
 	if (map[y][x] == '1' || map[ty][tx] == '1'
@@ -38,10 +34,10 @@ void	normalise_ray(t_root *game, int x_y[2], int colour)
 	int	x[2];
 	int	y[2];
 
-	x[0] = game->me->x[0] * game->tile / TILE;
-	x[1] = x_y[0] * game->tile / TILE;
-	y[0] = game->me->y[0] * game->tile / TILE;
-	y[1] = x_y[1] * game->tile / TILE;
+	x[0] = (float)(game->me->x[0] * game->tile / TILE);
+	x[1] = (float)(x_y[0] * game->tile / TILE);
+	y[0] = (float)(game->me->y[0] * game->tile / TILE);
+	y[1] = (float)(x_y[1] * game->tile / TILE);
 	if (game->map_toggle)
 	{
 		draw_line(game->mlx->minmap, x, y, colour);

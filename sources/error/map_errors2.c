@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:51:32 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/14 14:37:56 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/17 12:21:58 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ int	end_string_validity(t_root *game)
 
 int	cardinal_space(t_root *game, int row, int idx, char c)
 {
+	if (!row || !idx)
+		return (10);
 	if (game->map[row - 1][idx] == c)
-	{
 		return (-1);
-	}
 	if (game->map[row + 1][idx] == c)
 		return (1);
 	if (game->map[row][idx - 1] == c)
@@ -99,7 +99,7 @@ int	internal_spaces(t_root *game)
 	row = 0;
 	while (++row < game->map_height)
 	{
-		idx = 1;
+		idx = 0;
 		while (game->map[row][idx])
 		{
 			c = game->map[row][idx];

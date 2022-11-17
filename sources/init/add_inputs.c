@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 11:45:00 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/14 14:54:57 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/17 13:12:46 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@ int	add_texture(t_root *game, int dir, char *file, int i)
 	return (j);
 }
 
-int	error_exit(char *msg)
+int	error_exit(char *msg, char *file)
 {
+	free(file);
 	printf("%s\n", msg);
 	return (1);
 }
@@ -61,13 +62,13 @@ int	add_colour(t_root *game, int type, char *file, int i)
 			i++;
 		if ((tmp < 0 || tmp > 127)
 			|| ((file[i] != ',' && count <= 2) && file[i] != '\n'))
-			exit(error_exit("\e[31m\e[1mError\nAw Hell Naw\e[0m \n"));
+			exit(error_exit("\e[31m\e[1mError\nInvalid Colour!\e[0m", file));
 		colour = (colour << 8) + tmp;
 		while (count < 2 && (ft_isspace(file[i]) || file[i] == ','))
 			i++;
 	}
 	if (file[i] != '\n')
-		exit(error_exit("\e[31m\e[1mError\nthis one\e[0m \n"));
+		exit(error_exit("\e[31m\e[1mError\nInvalid Colour!\e[0m", file));
 	game->colours[type] = colour;
 	while (file[i] != '\n')
 		i++;
