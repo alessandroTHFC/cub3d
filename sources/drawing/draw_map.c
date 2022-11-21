@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 15:32:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/14 15:28:04 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/21 13:43:40 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ void	tile_size(t_root *game)
 	int	y;
 
 	x = game->win_width / game->map_width;
-	y = game->win_height / game->map_height;
-	if (x < y)
-		game->tile = x;
-	else
+	y = game->win_height / (game->map_height + 1);
+	if (y < x)
 		game->tile = y;
+	else
+		game->tile = x;
 }
 
 void	draw_map(t_root *game, bool init)
