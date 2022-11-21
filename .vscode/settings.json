@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "errno.h": "c",
+        "mlx.h": "c",
+        "macros.h": "c"
+    }
+}
