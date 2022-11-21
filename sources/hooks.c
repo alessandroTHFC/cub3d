@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:40:18 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/17 13:53:11 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/21 10:23:30 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	toggles(int key, t_root *game)
 int	key_press(int key, t_root *game)
 {
 	key = (short)key + OFFSET;
-	printf("key pressed: %i\n", key);
 	if (key == EXIT)
 		clean_exit(game);
 	if (key == FTOGGLE || key == MTOGGLE || key == FOVUP || key == FOVDOWN)

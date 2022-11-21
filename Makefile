@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/11/17 13:33:42 by jbrown           ###   ########.fr        #
+#    Updated: 2022/11/21 10:04:13 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ FCLN	:=	$(BUILDIR)
 CC		=	gcc
 COMFLAG	=	-Wall -Wextra -Werror -std=c99 -D_POSIX_C_SOURCE -I $(HDRDIR)
 
-CFLAGS		=	$(COMFLAG) -g
+CFLAGS		=	$(COMFLAG) -g -O2
 LFLAGS		=	$(COMFLAG)
 
 ################################################################################

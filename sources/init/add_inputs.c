@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 11:45:00 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/17 13:12:46 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/21 10:21:37 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	add_colour(t_root *game, int type, char *file, int i)
 		tmp = ft_atoi(&file[i]);
 		while (ft_isdigit(file[i]))
 			i++;
-		if ((tmp < 0 || tmp > 127)
+		if ((tmp < 0 || tmp > 255)
 			|| ((file[i] != ',' && count <= 2) && file[i] != '\n'))
 			exit(error_exit("\e[31m\e[1mError\nInvalid Colour!\e[0m", file));
 		colour = (colour << 8) + tmp;

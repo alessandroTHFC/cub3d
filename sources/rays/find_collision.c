@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 19:19:09 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 12:07:10 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/21 10:25:57 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ int	find_side(t_root *game, int x, int y)
 	else if (north == '0' && south == '1' && west == '1')
 		count = 1;
 	else if (east == '1' && west == '0')
-		count = 3;
-	else
 		count = 2;
+	else
+		count = 3;
 	set_index(game, x, y, count);
 	if (count > 1)
 		return (-1);

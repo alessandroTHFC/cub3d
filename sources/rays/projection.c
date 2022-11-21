@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 13:07:30 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/17 14:02:58 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/21 10:17:42 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	add_shade(int colour, int side, int height)
 	return (colour);
 }
 
-void	set_wall_top(float *y, float *i, int step)
+void	set_wall_top(float *y, float *i, float step)
 {
 	if (*y < 0)
 	{
