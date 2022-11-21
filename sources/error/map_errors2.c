@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:51:32 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/17 12:21:58 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/21 15:16:51 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	internal_spaces(t_root *game)
 					|| cardinal_space(game, row, idx, '\0'))
 				{
 					printf("\e[31m\e[1mError\n  Invalid Spaces in the Map.");
-					printf(" Fucked \e[0m \n");
+					printf(" x: %i, y: %i \e[0m \n", idx, row);
 					return (1);
 				}
 			}

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:17:51 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/07 12:58:59 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/21 13:48:31 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ void	import_map(char *map_loc, t_root *game)
 	char	*map;
 
 	fd = open(map_loc, O_RDONLY);
+	if (fd < 0)
+	{
+		printf("\e[31m\e[1mError\nMap File Invalid!\e[0m \n");
+		exit(1);
+	}
 	file = buffer_map(fd);
 	map = file;
 	map = get_textures(game, file);

@@ -3,7 +3,7 @@ SO ./textures/lava.xpm
 EA ./textures/east.xpm
 WE ./textures/west.xpm
 C 127,30,0
-F 0,30,128
+F 0,30,256
 
         111111111111111111111111
         1000000000110000000000001

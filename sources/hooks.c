@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:40:18 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/21 10:23:30 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/11/21 13:56:35 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	toggles(int key, t_root *game)
 		game->fish_toggle = !game->fish_toggle;
 	if (key == MTOGGLE)
 		game->map_toggle = !game->map_toggle;
-	if (key == FOVUP && game->fov < 2000)
+	if (key == FOVUP && game->fov < 10000)
 		game->fov += 100;
-	if (key == FOVDOWN && game->fov > 500)
+	if (key == FOVDOWN && game->fov > 100)
 		game->fov -= 100;
 	update_player(game);
 }
