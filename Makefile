@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/02 11:38:42 by jbrown            #+#    #+#              #
-#    Updated: 2022/11/21 10:39:30 by jbrown           ###   ########.fr        #
+#    Updated: 2022/11/21 11:31:26 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,8 @@ IMPHDR	:=	$(LIBDIR)/libft/headers/libft.h \
 			$(LIBDIR)/mlx/mlx_int.h \
 			$(MLX_MACRO)
 
+DSTHDR	:= $(IDRDIR)/libft.h $(IDRDIR)/mlx.h $(IDRDIR)/mlx_int.h
+
 LIB		:=	$(shell find $(LIBDIR) -depth 1 -type d)
 OBJECTS	:=	$(SOURCES:$(SRCDIR)/%.c=$(BUILDIR)/%.o)
 
@@ -110,11 +112,15 @@ ALLLIB	=	$(LIB42)
 
 all: dirs libs $(NAME)
 
-dirs:
+dirs: $(TEMPDIR)
+
+$(TEMPDIR):
 	@$(MKDIR) $(TEMPDIR)
 	@printf "Made directories: %s\n" $(TEMPDIR)
 
-libs: $(MLX)
+libs: $(MLX) $(DSTHDR)
+
+$(DSTHDR):
 	@$(CP) $(IMPHDR) $(IDRDIR)
 	@$(MAKE) -C $(L42DIR)
 	@printf "Imported header: %s\n" $(IMPHDR)
@@ -143,7 +149,7 @@ $(MLX):
 		cd ../..; \
 	fi
 
-test:
+test: #doesn't work properly
 	./$(NAME) maps/maptest_border_error1.cub
 	sleep .5
 	./$(NAME) maps/maptest_border_error2.cub
@@ -165,11 +171,12 @@ test:
 	./$(NAME) maps/maptest_invalid_colour.cub
 
 clean:
-	@$(RM) $(CLNDIR)
+	@$(RM) $(OBJECTS)
 	@$(MAKE) clean -C $(L42DIR)
 	@printf "Cleaned: %s\n" $(CLNDIR)
 
 fclean: clean
+	@$(RM) $(CLNDIR)
 	@$(RM) $(FCLN)
 	@$(MAKE) fclean -C $(L42DIR)
 	@printf "Cleaned: %s\n" $(FCLN)

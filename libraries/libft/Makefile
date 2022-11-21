@@ -6,7 +6,7 @@
 #    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/19 11:39:22 by jbrown            #+#    #+#              #
-#    Updated: 2022/09/02 11:44:09 by jbrown           ###   ########.fr        #
+#    Updated: 2022/11/21 10:48:52 by jbrown           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,9 @@ BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): bonus
-#	$(CC) $(CFLAGS) $(SRCS)
-#	ar rcs $(NAME) $(OBJS)
+$(NAME):
+	$(CC) $(CFLAGS) $(SRCS) $(BONUS_SRCS)
+	ar rcs $(NAME) $(OBJS) $(BONUS_OBJS)
 
 bonus:
 	$(CC) $(CFLAGS) $(SRCS) $(BONUS_SRCS)
