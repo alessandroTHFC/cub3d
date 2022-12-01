@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 21:40:18 by jbrown            #+#    #+#             */
-/*   Updated: 2022/11/21 13:56:35 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/12/02 09:46:24 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ static bool	key_b(t_root *game, int key)
 
 int	game_hook(t_root *game)
 {
-	static int	y;
-	static int	x;
+	// static int	y;
+	// static int	x;
 
 	if (key_b(game, LEFT))
 		rot_player(game, -10);
@@ -72,14 +72,14 @@ int	game_hook(t_root *game)
 		strafe_player(game, 1);
 	if (key_b(game, D))
 		strafe_player(game, -1);
-	if (x != game->win_width / 2 && x)
-	{
-		mlx_mouse_move(game->mlx->win, game->win_width / 2,
-			game->win_height / 2);
-		rot_player(game, (x - game->win_width / 2) / 2);
-	}
-	mlx_mouse_get_pos(game->mlx->win, &x, &y);
-	mlx_mouse_hide();
+	// if (x != game->win_width / 2 && x)
+	// {
+	// 	mlx_mouse_move(game->mlx->win, game->win_width / 2,
+	// 		game->win_height / 2);
+	// 	rot_player(game, (x - game->win_width / 2) / 2);
+	// }
+	// mlx_mouse_get_pos(game->mlx->win, &x, &y);
+	// mlx_mouse_hide();
 	update_player(game);
 	return (0);
 }
